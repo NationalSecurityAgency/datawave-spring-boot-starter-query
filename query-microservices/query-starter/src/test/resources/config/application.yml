@@ -88,6 +88,13 @@ warehouse:
     ivaratorCacheScanTimeoutMinutes: 60
     modelName: 'DATAWAVE'
 
+datawave:
+  metadata:
+    all-metadata-auths:
+      - PRIVATE,PUBLIC
+    type-substitutions:
+      "[datawave.data.type.DateType]": "datawave.data.type.RawDateType"
+
 query:
   parser:
     skipTokenizeUnfieldedFields:
