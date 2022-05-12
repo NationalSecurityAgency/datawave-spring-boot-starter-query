@@ -233,7 +233,7 @@ public interface QueryStorageCache {
      *
      * @param task
      *            The task to updatge
-     *
+     *            
      * @return The updated query task
      */
     default QueryTask updateTask(QueryTask task) {
