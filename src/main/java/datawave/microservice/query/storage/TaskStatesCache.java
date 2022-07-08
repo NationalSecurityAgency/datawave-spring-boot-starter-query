@@ -1,7 +1,7 @@
 package datawave.microservice.query.storage;
 
+import datawave.core.query.logic.QueryKey;
 import datawave.microservice.cached.LockableCacheInspector;
-import datawave.services.query.logic.QueryKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheConfig;
@@ -39,7 +39,7 @@ public class TaskStatesCache {
      * @param queryId
      *            The query id
      */
-    @CacheEvict(key = "T(datawave.services.query.logic.QueryKey).toUUIDKey(#queryId)")
+    @CacheEvict(key = "T(datawave.core.query.logic.QueryKey).toUUIDKey(#queryId)")
     public void deleteTaskStates(String queryId) {
         if (log.isDebugEnabled()) {
             log.debug("Deleted task statuses for " + queryId);

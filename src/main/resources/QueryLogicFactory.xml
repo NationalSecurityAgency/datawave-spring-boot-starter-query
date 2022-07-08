@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="baseQueryLogic" class="datawave.services.query.logic.BaseQueryLogic" abstract="true" >
+    <bean id="baseQueryLogic" class="datawave.core.query.logic.BaseQueryLogic" abstract="true" >
         <!-- This is injected via MarkingConfig.java -->
         <property name="markingFunctions" ref="markingFunctions" />
         <!-- This is injected via QueryMetricConfiguration.java -->
@@ -157,9 +157,9 @@
         <property name="requiredRoles" ref="baseEventQueryRequiredRoles" />
     </bean>
 
-    <bean id="LuceneUUIDEventQuery" parent="baseQueryLogic" scope="prototype" class="datawave.services.query.logic.lookup.uuid.LookupUUIDQueryLogic">
+    <bean id="LuceneUUIDEventQuery" parent="baseQueryLogic" scope="prototype" class="datawave.core.query.logic.lookup.uuid.LookupUUIDQueryLogic">
         <constructor-arg name="delegateQueryLogic">
-            <bean parent="baseQueryLogic" scope="prototype" class="datawave.services.query.logic.composite.CompositeQueryLogic">
+            <bean parent="baseQueryLogic" scope="prototype" class="datawave.core.query.logic.composite.CompositeQueryLogic">
                 <property name="logicDescription" value="${datawave.query.logic.logics.LuceneUUIDEventQuery.logicDescription}" />
                 <property name="auditType" value="${datawave.query.logic.logics.LuceneUUIDEventQuery.auditType}" />
                 <property name="queryLogics">

@@ -1,10 +1,10 @@
 package datawave.microservice.query.logic.config;
 
+import datawave.core.query.result.event.DefaultResponseObjectFactory;
 import datawave.microservice.query.edge.EdgeModelProperties;
 import datawave.microservice.query.lookup.LookupProperties;
 import datawave.microservice.query.translateid.TranslateIdProperties;
 import datawave.query.data.UUIDType;
-import datawave.services.query.result.event.DefaultResponseObjectFactory;
 import datawave.webservice.query.result.event.ResponseObjectFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

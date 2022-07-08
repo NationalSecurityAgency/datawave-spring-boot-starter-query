@@ -1,10 +1,10 @@
 package datawave.microservice.query.edge;
 
+import datawave.core.common.edgedictionary.EdgeDictionaryProvider;
 import datawave.microservice.authorization.user.ProxiedUserDetails;
 import datawave.microservice.query.edge.config.EdgeDictionaryProviderProperties;
 import datawave.microservice.query.storage.QueryStorageCache;
 import datawave.security.authorization.JWTTokenHandler;
-import datawave.services.common.edgedictionary.EdgeDictionaryProvider;
 import datawave.webservice.dictionary.edge.EdgeDictionaryBase;
 import datawave.webservice.dictionary.edge.MetadataBase;
 import datawave.webservice.query.Query;
