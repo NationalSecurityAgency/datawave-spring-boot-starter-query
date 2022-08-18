@@ -1,7 +1,7 @@
 package datawave.microservice.query.logic.config;
 
 import datawave.core.query.result.event.DefaultResponseObjectFactory;
-import datawave.microservice.query.edge.EdgeModelProperties;
+import datawave.microservice.query.edge.config.EdgeModelProperties;
 import datawave.microservice.query.lookup.LookupProperties;
 import datawave.microservice.query.translateid.TranslateIdProperties;
 import datawave.query.data.UUIDType;
@@ -29,8 +29,7 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @ConditionalOnProperty(name = "datawave.query.logic.factory.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties({QueryLogicFactoryProperties.class, QueryParserProperties.class, LookupProperties.class, TranslateIdProperties.class,
         EdgeModelProperties.class})
-@ImportResource(locations = {"${datawave.query.logic.factory.xmlBeansPath:classpath:QueryLogicFactory.xml}",
-        "${datawave.query.edge.xmlBeansPath:classpath:EdgeQueryLogicFactory.xml}"})
+@ImportResource(locations = {"${datawave.query.logic.factory.xmlBeansPath:classpath:QueryLogicFactory.xml}"})
 public class QueryLogicFactoryConfiguration {
     
     private final Logger log = LoggerFactory.getLogger(this.getClass());

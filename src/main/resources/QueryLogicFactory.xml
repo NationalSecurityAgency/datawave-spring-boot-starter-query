@@ -546,23 +546,12 @@
         <property name="selectorExtractor" ref="DatawaveSelectorExtractor" />
     </bean>
 
-    <bean id="edgeEventQueryModel" class="datawave.query.model.edge.EdgeQueryModel" factory-method="loadModel">
-        <constructor-arg value="/DATAWAVE_EDGE.xml" />
-        <constructor-arg>
-            <bean class="datawave.microservice.query.edge.EdgeModelFieldsFactoryImpl">
-                <property name="baseFieldMap" ref="edgeModelBaseFieldMap"/>
-                <property name="keyUtilFieldMap" ref="edgeModelKeyUtilFieldMap"/>
-                <property name="transformFieldMap" ref="edgeModelTransformFieldMap"/>
-            </bean>
-        </constructor-arg>
-    </bean>
-
     <bean id="EdgeEventQuery" scope="prototype"  parent="BaseEventQuery" class="datawave.query.tables.edge.DefaultEdgeEventQueryLogic">
         <property name="checkpointable" value="${datawave.query.logic.logics.EdgeEventQuery.checkpointable}" />
         <property name="logicDescription" value="${datawave.query.logic.logics.EdgeEventQuery.logicDescription}" />
 
         <!-- This is injected via QueryLogicFactory.xml -->
-        <property name="edgeQueryModel" ref="edgeEventQueryModel" />
+        <property name="edgeQueryModel" ref="edgeQueryModel" />
 
         <!-- This is injected via EdgeModelFieldsFactoryImpl.java -->
         <property name="edgeModelFieldsFactory" ref="edgeModelFieldsFactory" />

@@ -8,10 +8,8 @@ import datawave.security.authorization.JWTTokenHandler;
 import datawave.webservice.dictionary.edge.EdgeDictionaryBase;
 import datawave.webservice.dictionary.edge.MetadataBase;
 import datawave.webservice.query.Query;
-import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-@Service("edgeDictionaryProvider")
 public class DefaultEdgeDictionaryProvider implements EdgeDictionaryProvider {
     
     protected final QueryStorageCache queryStorageCache;

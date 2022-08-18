@@ -1,9 +1,11 @@
-package datawave.microservice.query.edge;
+package datawave.microservice.query.edge.config;
 
+import datawave.webservice.model.FieldMapping;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Map;
 
 @Validated
@@ -15,6 +17,8 @@ public class EdgeModelProperties {
     private Map<String,String> keyUtilFieldMap;
     @NotNull
     private Map<String,String> transformFieldMap;
+    
+    private List<FieldMapping> fieldMappings;
     
     public Map<String,String> getBaseFieldMap() {
         return baseFieldMap;
@@ -38,5 +42,13 @@ public class EdgeModelProperties {
     
     public void setTransformFieldMap(Map<String,String> transformFieldMap) {
         this.transformFieldMap = transformFieldMap;
+    }
+    
+    public List<FieldMapping> getFieldMappings() {
+        return fieldMappings;
+    }
+    
+    public void setFieldMappings(List<FieldMapping> fieldMappings) {
+        this.fieldMappings = fieldMappings;
     }
 }

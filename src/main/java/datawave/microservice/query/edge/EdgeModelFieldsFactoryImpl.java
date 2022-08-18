@@ -2,18 +2,21 @@ package datawave.microservice.query.edge;
 
 import datawave.edge.model.EdgeModelFields;
 import datawave.edge.model.EdgeModelFieldsFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
+import datawave.microservice.query.edge.config.EdgeModelProperties;
 
 import java.util.Map;
 
-@Component
-@ConditionalOnProperty(name = "datawave.query.logic.factory.enabled", havingValue = "true", matchIfMissing = true)
 public class EdgeModelFieldsFactoryImpl implements EdgeModelFieldsFactory {
     
     private Map<String,String> baseFieldMap;
     private Map<String,String> keyUtilFieldMap;
     private Map<String,String> transformFieldMap;
+    
+    public EdgeModelFieldsFactoryImpl(EdgeModelProperties edgeModelProperties) {
+        this.baseFieldMap = edgeModelProperties.getBaseFieldMap();
+        this.keyUtilFieldMap = edgeModelProperties.getKeyUtilFieldMap();
+        this.transformFieldMap = edgeModelProperties.getTransformFieldMap();
+    }
     
     @Override
     public EdgeModelFields createFields() {
