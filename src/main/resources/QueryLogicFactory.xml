@@ -163,7 +163,7 @@
                 <property name="logicDescription" value="${datawave.query.logic.logics.LuceneUUIDEventQuery.logicDescription}" />
                 <property name="auditType" value="${datawave.query.logic.logics.LuceneUUIDEventQuery.auditType}" />
                 <property name="queryLogics">
-                    <map key-type="java.lang.String" value-type="datawave.webservice.query.logic.BaseQueryLogic">
+                    <map key-type="java.lang.String" value-type="datawave.core.query.logic.BaseQueryLogic">
                         <entry key="EventQuery">
                             <bean scope="prototype" parent="BaseEventQuery">
                                 <property name="auditType" value="${datawave.query.logic.logics.LuceneUUIDEventQuery.eventQuery.auditType}" />
