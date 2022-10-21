@@ -3,11 +3,13 @@ package datawave.microservice.query.logic.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
+import java.util.Set;
 
 @ConfigurationProperties(prefix = "datawave.query.parser")
 public class QueryParserProperties {
     private List<String> skipTokenizeUnfieldedFields;
     private List<String> tokenizedFields;
+    private Set<String> tokenizerStopwords;
     
     public List<String> getSkipTokenizeUnfieldedFields() {
         return skipTokenizeUnfieldedFields;
@@ -23,5 +25,13 @@ public class QueryParserProperties {
     
     public void setTokenizedFields(List<String> tokenizedFields) {
         this.tokenizedFields = tokenizedFields;
+    }
+    
+    public Set<String> getTokenizerStopwords() {
+        return tokenizerStopwords;
+    }
+    
+    public void setTokenizerStopwords(Set<String> tokenizerStopwords) {
+        this.tokenizerStopwords = tokenizerStopwords;
     }
 }

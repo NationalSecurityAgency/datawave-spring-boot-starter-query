@@ -1,5 +1,6 @@
 package datawave.microservice.query.planner.config;
 
+import datawave.microservice.query.logic.config.TransformRuleProperties;
 import datawave.query.planner.rules.NodeTransformRule;
 import datawave.query.planner.rules.RegexDotallTransformRule;
 import datawave.query.planner.rules.RegexPushdownTransformRule;
@@ -33,24 +34,30 @@ public class DefaultQueryPlannerConfig {
         return new DefaultQueryPlannerProperties();
     }
     
-    @Bean("RegexPushdownTransformRule")
+    @Bean
+    @ConfigurationProperties(prefix = "datawave.query.planner.transform-rules.regex-pushdown-transform-rule")
+    public TransformRuleProperties regexPushdownTransformRuleProperties() {
+        return new TransformRuleProperties();
+    }
+    
+    @Bean
     @Scope(SCOPE_PROTOTYPE)
     @ConditionalOnRequestedTransformRule("RegexPushdownTransformRule")
     public RegexPushdownTransformRule RegexPushdownTransformRule(
                     @Value("${datawave.query.planner.transformRules.RegexPushdownTransformRule.regexPatterns}") List<String> regexPatterns) {
         RegexPushdownTransformRule rule = new RegexPushdownTransformRule();
-        rule.setRegexPatterns(regexPatterns);
+        rule.setRegexPatterns(regexPushdownTransformRuleProperties().getRegexPatterns());
         return rule;
     }
     
-    @Bean("RegexDotallTransformRule")
+    @Bean
     @Scope(SCOPE_PROTOTYPE)
     @ConditionalOnRequestedTransformRule("RegexDotallTransformRule")
     public RegexDotallTransformRule RegexDotallTransformRule() {
         return new RegexDotallTransformRule();
     }
     
-    @Bean("RegexSimplifierTransformRule")
+    @Bean
     @Scope(SCOPE_PROTOTYPE)
     @ConditionalOnRequestedTransformRule("RegexSimplifierTransformRule")
     public RegexSimplifierTransformRule RegexSimplifierTransformRule() {

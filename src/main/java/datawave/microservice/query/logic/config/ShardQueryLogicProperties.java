@@ -1,5 +1,8 @@
 package datawave.microservice.query.logic.config;
 
+import datawave.data.type.Type;
+import datawave.query.cardinality.CardinalityConfiguration;
+import datawave.query.config.IndexHole;
 import datawave.query.iterator.ivarator.IvaratorCacheDirConfig;
 
 import java.util.ArrayList;
@@ -23,6 +26,15 @@ public class ShardQueryLogicProperties {
     private DataDecoratorTransformerConfig dataDecoratorTransformerConfig = new DataDecoratorTransformerConfig();
     private Map<String,String> querySyntaxParsers = new HashMap<>();
     private Set<String> requiredRoles = new HashSet<>();
+    private List<String> documentPermutations = new ArrayList<>();
+    private Map<String,String> queryMacroFunction = new HashMap<>();
+    private List<IndexHole> indexHoles = new ArrayList<>();
+    private Set<String> whindexMappingFields = new HashSet<>();
+    private Map<String,Map<String,String>> whindexFieldMappings = new HashMap<>();
+    private Map<String,Long> dnResultLimits = new HashMap<>();
+    private Set<String> blacklistedFields = new HashSet<>();
+    private CardinalityConfiguration cardinalityConfiguration = new CardinalityConfiguration();
+    private List<Type> dataTypes = new ArrayList<>();
     
     public static class DataDecoratorTransformerConfig {
         private List<String> requestedDecorators = new ArrayList<>();
@@ -123,5 +135,77 @@ public class ShardQueryLogicProperties {
     
     public void setRequiredRoles(Set<String> requiredRoles) {
         this.requiredRoles = requiredRoles;
+    }
+    
+    public List<String> getDocumentPermutations() {
+        return documentPermutations;
+    }
+    
+    public void setDocumentPermutations(List<String> documentPermutations) {
+        this.documentPermutations = documentPermutations;
+    }
+    
+    public Map<String,String> getQueryMacroFunction() {
+        return queryMacroFunction;
+    }
+    
+    public void setQueryMacroFunction(Map<String,String> queryMacroFunction) {
+        this.queryMacroFunction = queryMacroFunction;
+    }
+    
+    public List<IndexHole> getIndexHoles() {
+        return indexHoles;
+    }
+    
+    public void setIndexHoles(List<IndexHole> indexHoles) {
+        this.indexHoles = indexHoles;
+    }
+    
+    public Set<String> getWhindexMappingFields() {
+        return whindexMappingFields;
+    }
+    
+    public void setWhindexMappingFields(Set<String> whindexMappingFields) {
+        this.whindexMappingFields = whindexMappingFields;
+    }
+    
+    public Map<String,Map<String,String>> getWhindexFieldMappings() {
+        return whindexFieldMappings;
+    }
+    
+    public void setWhindexFieldMappings(Map<String,Map<String,String>> whindexFieldMappings) {
+        this.whindexFieldMappings = whindexFieldMappings;
+    }
+    
+    public Map<String,Long> getDnResultLimits() {
+        return dnResultLimits;
+    }
+    
+    public void setDnResultLimits(Map<String,Long> dnResultLimits) {
+        this.dnResultLimits = dnResultLimits;
+    }
+    
+    public Set<String> getBlacklistedFields() {
+        return blacklistedFields;
+    }
+    
+    public void setBlacklistedFields(Set<String> blacklistedFields) {
+        this.blacklistedFields = blacklistedFields;
+    }
+    
+    public CardinalityConfiguration getCardinalityConfiguration() {
+        return cardinalityConfiguration;
+    }
+    
+    public void setCardinalityConfiguration(CardinalityConfiguration cardinalityConfiguration) {
+        this.cardinalityConfiguration = cardinalityConfiguration;
+    }
+    
+    public List<Type> getDataTypes() {
+        return dataTypes;
+    }
+    
+    public void setDataTypes(List<Type> dataTypes) {
+        this.dataTypes = dataTypes;
     }
 }

@@ -5,22 +5,34 @@ import datawave.core.query.logic.QueryLogic;
 import datawave.core.query.logic.QueryLogicFactory;
 import datawave.microservice.authorization.user.ProxiedUserDetails;
 import datawave.microservice.query.logic.config.QueryLogicFactoryProperties;
+import datawave.security.authorization.JWTTokenHandler;
 import datawave.webservice.query.exception.DatawaveErrorCode;
 import datawave.webservice.query.exception.QueryException;
 import datawave.webservice.query.exception.UnauthorizedQueryException;
+import io.netty.channel.ChannelOption;
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.timeout.ReadTimeoutHandler;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.netty.http.client.HttpClient;
+import reactor.netty.tcp.TcpClient;
 
 import java.security.Principal;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @ConditionalOnProperty(name = "datawave.query.logic.factory.enabled", havingValue = "true", matchIfMissing = true)
@@ -33,8 +45,30 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
     
     private ApplicationContext applicationContext;
     
-    public DefaultQueryLogicFactory(QueryLogicFactoryProperties queryLogicFactoryProperties) {
+    private final WebClient webClient;
+    
+    private final JWTTokenHandler jwtTokenHandler;
+    
+    private final String authorizationUri;
+    
+    private ProxiedUserDetails serverUserDetails;
+    
+    public DefaultQueryLogicFactory(QueryLogicFactoryProperties queryLogicFactoryProperties, JWTTokenHandler jwtTokenHandler,
+                    @Qualifier("outboundNettySslContext") SslContext nettySslContext, WebClient.Builder webClientBuilder,
+                    @Value("${datawave.authorization.uri:https://authorization:8443/authorization/v1/authorize}") String authorizationUri) {
         this.queryLogicFactoryProperties = queryLogicFactoryProperties;
+        
+        // @formatter:off
+        TcpClient timeoutClient = TcpClient.create()
+                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 2000)
+                .doOnConnected(con -> con.addHandlerLast(new ReadTimeoutHandler(6)))
+                .secure(sslContextSpec -> sslContextSpec.sslContext(nettySslContext));
+        this.webClient = webClientBuilder.clone().clientConnector(new ReactorClientHttpConnector(HttpClient.from(timeoutClient))).build();
+        // @formatter:on
+        
+        this.jwtTokenHandler = jwtTokenHandler;
+        this.authorizationUri = authorizationUri;
+        this.serverUserDetails = getServerUserDetails();
     }
     
     @Override
@@ -79,7 +113,10 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
         }
         
         if (logic instanceof BaseQueryLogic) {
+            // update server user details
+            serverUserDetails = getServerUserDetails();
             ((BaseQueryLogic<?>) logic).setCurrentUser(currentUser);
+            ((BaseQueryLogic<?>) logic).setServerUser(serverUserDetails);
         }
         
         return logic;
@@ -103,5 +140,21 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+    }
+    
+    private ProxiedUserDetails getServerUserDetails() {
+        ProxiedUserDetails serverUserDetails = this.serverUserDetails;
+        if (serverUserDetails == null || (System.currentTimeMillis() > (this.serverUserDetails.getCreationTime() + TimeUnit.DAYS.toMillis(1)))) {
+            // @formatter:off
+            WebClient.ResponseSpec response = webClient.get()
+                    .uri(authorizationUri)
+                    .retrieve();
+            // @formatter:on
+            
+            String jwtString = response.bodyToMono(String.class).block(Duration.ofSeconds(30));
+            
+            serverUserDetails = new ProxiedUserDetails(jwtTokenHandler.createUsersFromToken(jwtString), System.currentTimeMillis());
+        }
+        return serverUserDetails;
     }
 }

@@ -62,6 +62,16 @@ public class QueryLogicFactoryConfiguration {
     
     @Bean
     @Scope(SCOPE_PROTOTYPE)
+    public Set<String> tokenizerStopwords(QueryParserProperties queryParserProperties) {
+        Set<String> tokenizerStopwords = new HashSet<>();
+        if (queryParserProperties.getTokenizerStopwords() != null) {
+            tokenizerStopwords.addAll(queryParserProperties.getTokenizerStopwords());
+        }
+        return tokenizerStopwords;
+    }
+    
+    @Bean
+    @Scope(SCOPE_PROTOTYPE)
     public List<UUIDType> uuidTypes(LookupProperties lookupProperties) {
         List<UUIDType> uuidTypes = new ArrayList<>();
         if (lookupProperties.getTypes() != null) {

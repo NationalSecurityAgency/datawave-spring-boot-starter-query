@@ -11,11 +11,11 @@
     <bean id="baseQueryLogic" class="datawave.core.query.logic.BaseQueryLogic" abstract="true" >
         <!-- This is injected via MarkingConfig.java -->
         <property name="markingFunctions" ref="markingFunctions" />
-        <!-- This is injected via QueryMetricConfiguration.java -->
+        <!-- This is injected via QueryLogicFactoryConfiguration.java -->
         <property name="responseObjectFactory" ref="responseObjectFactory" />
     </bean>
 
-    <!-- TODO: This has traditionally been included via MetadataHelperContext.xml -->
+    <!-- TODO: JWO: This has traditionally been included via MetadataHelperContext.xml -->
     <bean id="dateIndexHelperFactory" class="datawave.query.util.DateIndexHelperFactory" >
         <lookup-method name="createDateIndexHelper" bean="dateIndexHelper" />
     </bean>
