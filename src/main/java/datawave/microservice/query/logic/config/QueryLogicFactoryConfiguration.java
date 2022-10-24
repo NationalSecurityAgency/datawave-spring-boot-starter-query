@@ -71,7 +71,7 @@ public class QueryLogicFactoryConfiguration {
             
             @Override
             public ProxiedUserDetails get() {
-                synchronized(this) {
+                synchronized (this) {
                     if (serverUserDetails == null || (System.currentTimeMillis() > (this.serverUserDetails.getCreationTime() + TimeUnit.DAYS.toMillis(1)))) {
                         try {
                             // @formatter:off
@@ -79,9 +79,9 @@ public class QueryLogicFactoryConfiguration {
                                     .uri(authorizationUri)
                                     .retrieve();
                             // @formatter:on
-
+                            
                             String jwtString = response.bodyToMono(String.class).block(Duration.ofSeconds(30));
-
+                            
                             serverUserDetails = new ProxiedUserDetails(jwtTokenHandler.createUsersFromToken(jwtString), System.currentTimeMillis());
                         } catch (Exception e) {
                             log.warn("Unable to create server proxied user details via {}", authorizationUri);
