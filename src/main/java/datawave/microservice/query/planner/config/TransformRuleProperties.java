@@ -1,4 +1,4 @@
-package datawave.microservice.query.logic.config;
+package datawave.microservice.query.planner.config;
 
 import java.util.ArrayList;
 import java.util.List;
