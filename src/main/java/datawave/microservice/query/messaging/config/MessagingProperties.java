@@ -14,7 +14,7 @@ import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResu
 import static datawave.microservice.query.messaging.kafka.KafkaQueryResultsManager.KAFKA;
 
 @Validated
-@ConfigurationProperties(prefix = "query.messaging")
+@ConfigurationProperties(prefix = "datawave.query.messaging")
 public class MessagingProperties {
     // rabbit, kafka, or hazelcast
     @NotEmpty

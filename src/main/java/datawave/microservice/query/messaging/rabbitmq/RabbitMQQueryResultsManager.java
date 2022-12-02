@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 import static datawave.microservice.query.messaging.rabbitmq.RabbitMQQueryResultsManager.RABBITMQ;
 
 @Component
-@ConditionalOnProperty(name = "query.messaging.backend", havingValue = RABBITMQ)
+@ConditionalOnProperty(name = "datawave.query.messaging.backend", havingValue = RABBITMQ)
 public class RabbitMQQueryResultsManager implements QueryResultsManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     

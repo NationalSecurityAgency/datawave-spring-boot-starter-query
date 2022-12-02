@@ -10,6 +10,8 @@ import datawave.webservice.query.exception.DatawaveErrorCode;
 import datawave.webservice.query.exception.QueryException;
 import org.apache.accumulo.core.security.Authorizations;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
+@ConditionalOnProperty(name = "datawave.query.storage.cache.enabled", havingValue = "true", matchIfMissing = true)
 public class QueryStorageCacheImpl implements QueryStorageCache {
     
     private static final Logger log = Logger.getLogger(QueryStorageCacheImpl.class);
@@ -27,7 +30,8 @@ public class QueryStorageCacheImpl implements QueryStorageCache {
     private final TaskCache taskCache;
     private final QueryResultsManager queue;
     
-    public QueryStorageCacheImpl(QueryStatusCache queryStatusCache, TaskStatesCache taskStatesCache, TaskCache taskCache, QueryResultsManager queue) {
+    public QueryStorageCacheImpl(QueryStatusCache queryStatusCache, TaskStatesCache taskStatesCache, TaskCache taskCache,
+                    @Autowired(required = false) QueryResultsManager queue) {
         this.queryStatusCache = queryStatusCache;
         this.taskStatesCache = taskStatesCache;
         this.taskCache = taskCache;
@@ -443,7 +447,10 @@ public class QueryStorageCacheImpl implements QueryStorageCache {
             queryStatusCache.deleteQueryStatus(queryId);
             taskStatesCache.deleteTaskStates(queryId);
             taskCache.deleteTasks(queryId);
-            queue.deleteQuery(queryId);
+            
+            if (queue != null) {
+                queue.deleteQuery(queryId);
+            }
             return existed;
         } finally {
             lock.unlock();
@@ -455,9 +462,12 @@ public class QueryStorageCacheImpl implements QueryStorageCache {
      */
     @Override
     public void clear() {
-        for (QueryStatus query : queryStatusCache.getQueryStatus()) {
-            queue.emptyQuery(query.getQueryKey().getQueryId());
+        if (queue != null) {
+            for (QueryStatus query : queryStatusCache.getQueryStatus()) {
+                queue.emptyQuery(query.getQueryKey().getQueryId());
+            }
         }
+        
         queryStatusCache.clear();
         taskStatesCache.clear();
         taskCache.clear();

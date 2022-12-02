@@ -28,7 +28,7 @@ import java.util.concurrent.ExecutionException;
 import static datawave.microservice.query.messaging.kafka.KafkaQueryResultsManager.KAFKA;
 
 @Component
-@ConditionalOnProperty(name = "query.messaging.backend", havingValue = KAFKA)
+@ConditionalOnProperty(name = "datawave.query.messaging.backend", havingValue = KAFKA)
 public class KafkaQueryResultsManager implements QueryResultsManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     

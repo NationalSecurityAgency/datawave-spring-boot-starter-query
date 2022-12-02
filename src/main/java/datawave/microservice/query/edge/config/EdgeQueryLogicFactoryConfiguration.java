@@ -8,6 +8,11 @@ import datawave.microservice.query.storage.QueryStorageCache;
 import datawave.query.model.edge.EdgeQueryModel;
 import datawave.query.model.util.LoadModel;
 import datawave.security.authorization.JWTTokenHandler;
+import datawave.webservice.dictionary.edge.DefaultEdgeDictionary;
+import datawave.webservice.dictionary.edge.EdgeDictionaryBase;
+import datawave.webservice.dictionary.edge.MetadataBase;
+import datawave.webservice.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -32,8 +37,15 @@ public class EdgeQueryLogicFactoryConfiguration {
     }
     
     @Bean
-    public EdgeDictionaryProvider edgeDictionaryProvider(EdgeDictionaryProviderProperties edgeDictionaryProperties, QueryStorageCache queryStorageCache,
-                    WebClient.Builder webClientBuilder, JWTTokenHandler jwtTokenHandler) {
-        return new DefaultEdgeDictionaryProvider(edgeDictionaryProperties, queryStorageCache, webClientBuilder, jwtTokenHandler);
+    public EdgeDictionaryProvider edgeDictionaryProvider(EdgeDictionaryProviderProperties edgeDictionaryProperties,
+                    @Autowired(required = false) QueryStorageCache queryStorageCache, @Autowired(required = false) WebClient.Builder webClientBuilder,
+                    @Autowired(required = false) JWTTokenHandler jwtTokenHandler) {
+        if (queryStorageCache != null && webClientBuilder != null) {
+            return new DefaultEdgeDictionaryProvider(edgeDictionaryProperties, queryStorageCache, webClientBuilder, jwtTokenHandler);
+        } else {
+            // TODO: JWO: Figure out how to get the edge dictionary in a map reduce setting
+            // It could be passed as a property and loaded here
+            return (settings, metadataTableName) -> new DefaultEdgeDictionary();
+        }
     }
 }

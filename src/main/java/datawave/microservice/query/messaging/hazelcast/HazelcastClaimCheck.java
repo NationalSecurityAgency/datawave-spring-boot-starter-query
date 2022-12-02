@@ -19,7 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResultsManager.HAZELCAST;
 
 @Component
-@ConditionalOnExpression("${query.messaging.claimCheck.enabled:true} and ${query.messaging.claimCheck.backend:'" + HAZELCAST + "'} == '" + HAZELCAST + "'")
+@ConditionalOnExpression("${datawave.query.messaging.claimCheck.enabled:true} and ${datawave.query.messaging.claimCheck.backend:'" + HAZELCAST + "'} == '"
+                + HAZELCAST + "'")
 public class HazelcastClaimCheck implements ClaimCheck {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     

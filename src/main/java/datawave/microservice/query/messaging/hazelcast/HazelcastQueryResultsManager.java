@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResultsManager.HAZELCAST;
 
 @Component
-@ConditionalOnProperty(name = "query.messaging.backend", havingValue = HAZELCAST)
+@ConditionalOnProperty(name = "datawave.query.messaging.backend", havingValue = HAZELCAST)
 public class HazelcastQueryResultsManager implements QueryResultsManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     

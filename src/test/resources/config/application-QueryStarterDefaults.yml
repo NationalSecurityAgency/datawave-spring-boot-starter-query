@@ -534,10 +534,9 @@ datawave:
             modelFieldName: "ATTR3"
             direction: "FORWARD"
             indexOnly: false
-query:
-  messaging:
-    claimCheck:
-      enabled: false
+    messaging:
+      claimCheck:
+        enabled: false
 
 audit-client:
   discovery:

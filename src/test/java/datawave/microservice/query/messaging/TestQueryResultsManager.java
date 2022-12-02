@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 import static datawave.microservice.query.messaging.TestQueryResultsManager.TEST;
 
 @Component
-@ConditionalOnProperty(name = "query.messaging.backend", havingValue = TEST, matchIfMissing = true)
+@ConditionalOnProperty(name = "datawave.query.messaging.backend", havingValue = TEST, matchIfMissing = true)
 public class TestQueryResultsManager implements QueryResultsManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     
