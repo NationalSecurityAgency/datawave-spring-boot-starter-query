@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -39,7 +40,8 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
     
     private final Supplier<ProxiedUserDetails> serverProxiedUserDetailsSupplier;
     
-    public DefaultQueryLogicFactory(QueryLogicFactoryProperties queryLogicFactoryProperties, Supplier<ProxiedUserDetails> serverProxiedUserDetailsSupplier) {
+    public DefaultQueryLogicFactory(QueryLogicFactoryProperties queryLogicFactoryProperties,
+                    @Autowired(required = false) Supplier<ProxiedUserDetails> serverProxiedUserDetailsSupplier) {
         this.queryLogicFactoryProperties = queryLogicFactoryProperties;
         this.serverProxiedUserDetailsSupplier = serverProxiedUserDetailsSupplier;
     }
@@ -88,7 +90,10 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
         if (logic instanceof BaseQueryLogic) {
             // update server user details
             ((BaseQueryLogic<?>) logic).setCurrentUser(currentUser);
-            ((BaseQueryLogic<?>) logic).setServerUser(serverProxiedUserDetailsSupplier.get());
+            
+            if (serverProxiedUserDetailsSupplier != null) {
+                ((BaseQueryLogic<?>) logic).setServerUser(serverProxiedUserDetailsSupplier.get());
+            }
         }
         
         return logic;

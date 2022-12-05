@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -55,6 +56,7 @@ public class QueryLogicFactoryConfiguration {
     }
     
     @Bean
+    @ConditionalOnBean(name = "jwtTokenHandler")
     public Supplier<ProxiedUserDetails> serverProxiedUserDetailsSupplier(JWTTokenHandler jwtTokenHandler,
                     @Qualifier("outboundNettySslContext") SslContext nettySslContext, WebClient.Builder webClientBuilder,
                     @Value("${datawave.authorization.uri:https://authorization:8443/authorization/v1/authorize}") String authorizationUri) {
