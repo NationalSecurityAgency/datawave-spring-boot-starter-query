@@ -2,6 +2,8 @@ package datawave.microservice.query.logic;
 
 import datawave.core.query.logic.QueryLogic;
 import datawave.core.query.logic.QueryLogicFactory;
+import datawave.microservice.query.logic.config.QueryLogicFactoryProperties;
+import datawave.security.authorization.JWTTokenHandler;
 import datawave.webservice.query.exception.QueryException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -31,7 +33,13 @@ import java.util.Map;
 public class QueryLogicFactoryTest {
     
     @Autowired
-    QueryLogicFactory queryLogicFactory;
+    private QueryLogicFactoryProperties queryLogicFactoryProperties;
+    
+    @Autowired
+    private QueryLogicFactory queryLogicFactory;
+    
+    @Autowired
+    private JWTTokenHandler jwtTokenHandler;
     
     @Test
     public void createShardQueryLogicTest() throws QueryException, CloneNotSupportedException {

@@ -8,6 +8,8 @@ import datawave.microservice.query.logic.config.QueryLogicFactoryProperties;
 import datawave.webservice.query.exception.DatawaveErrorCode;
 import datawave.webservice.query.exception.QueryException;
 import datawave.webservice.query.exception.UnauthorizedQueryException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -21,10 +23,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
 @Component
 @ConditionalOnProperty(name = "datawave.query.logic.factory.enabled", havingValue = "true", matchIfMissing = true)
 public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationContextAware {
+    private final Logger log = LoggerFactory.getLogger(getClass());
     
     /**
      * Configuration for parameters that are for all query logic types
@@ -33,8 +37,11 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
     
     private ApplicationContext applicationContext;
     
-    public DefaultQueryLogicFactory(QueryLogicFactoryProperties queryLogicFactoryProperties) {
+    private final Supplier<ProxiedUserDetails> serverProxiedUserDetailsSupplier;
+    
+    public DefaultQueryLogicFactory(QueryLogicFactoryProperties queryLogicFactoryProperties, Supplier<ProxiedUserDetails> serverProxiedUserDetailsSupplier) {
         this.queryLogicFactoryProperties = queryLogicFactoryProperties;
+        this.serverProxiedUserDetailsSupplier = serverProxiedUserDetailsSupplier;
     }
     
     @Override
@@ -79,7 +86,9 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
         }
         
         if (logic instanceof BaseQueryLogic) {
+            // update server user details
             ((BaseQueryLogic<?>) logic).setCurrentUser(currentUser);
+            ((BaseQueryLogic<?>) logic).setServerUser(serverProxiedUserDetailsSupplier.get());
         }
         
         return logic;

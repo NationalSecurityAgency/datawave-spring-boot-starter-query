@@ -1,7 +1,9 @@
 package datawave.microservice.query.logic.config;
 
+import datawave.query.config.IndexHole;
 import datawave.query.iterator.ivarator.IvaratorCacheDirConfig;
 import datawave.query.language.parser.QueryParser;
+import datawave.query.tables.QueryMacroFunction;
 import datawave.query.transformer.EventQueryDataDecorator;
 import datawave.query.transformer.EventQueryDataDecoratorTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,5 +125,49 @@ public class BaseEventQueryConfiguration {
     @Scope(SCOPE_PROTOTYPE)
     public Set<String> baseEventQueryRequiredRoles() {
         return baseEventQueryProperties().getRequiredRoles();
+    }
+    
+    @Bean
+    @Scope(SCOPE_PROTOTYPE)
+    public List<String> baseEventQueryDocumentPermutations() {
+        return baseEventQueryProperties().getDocumentPermutations();
+    }
+    
+    @Bean
+    @Scope(SCOPE_PROTOTYPE)
+    public QueryMacroFunction baseEventQueryQueryMacroFunction() {
+        QueryMacroFunction queryMacroFunction = new QueryMacroFunction();
+        queryMacroFunction.setQueryMacros(baseEventQueryProperties().getQueryMacroFunction());
+        return queryMacroFunction;
+    }
+    
+    @Bean
+    @Scope(SCOPE_PROTOTYPE)
+    public List<IndexHole> baseEventQueryIndexHoles() {
+        return baseEventQueryProperties().getIndexHoles();
+    }
+    
+    @Bean
+    @Scope(SCOPE_PROTOTYPE)
+    public Set<String> baseEventQueryWhindexMappingFields() {
+        return baseEventQueryProperties().getWhindexMappingFields();
+    }
+    
+    @Bean
+    @Scope(SCOPE_PROTOTYPE)
+    public Map<String,Map<String,String>> baseEventQueryWhindexFieldMappings() {
+        return baseEventQueryProperties().getWhindexFieldMappings();
+    }
+    
+    @Bean
+    @Scope(SCOPE_PROTOTYPE)
+    public Map<String,Long> baseEventQueryDnResultLimits() {
+        return baseEventQueryProperties().getDnResultLimits();
+    }
+    
+    @Bean
+    @Scope(SCOPE_PROTOTYPE)
+    public Set<String> baseEventQueryBlacklistedFields() {
+        return baseEventQueryProperties().getBlacklistedFields();
     }
 }

@@ -2,7 +2,7 @@
 # goal here is to avoid creating multiple copies of this file across the various query microservices.
 #
 # If configured correctly, your microservice will automatically include this profile and it's properties
-# as a test resource.  Use the properties contained herein by activatin the QueryStarterDefaults profile.
+# as a test resource.  Use the properties contained herein by activating the QueryStarterDefaults profile.
 # If you want to override some of the values present here, create an additional profile and add your
 # overrides there.  Make sure your override profile is listed after the QueryStarterDefaults profile.
 
