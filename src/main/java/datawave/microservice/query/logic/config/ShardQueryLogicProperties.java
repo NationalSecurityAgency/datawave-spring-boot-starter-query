@@ -25,6 +25,7 @@ public class ShardQueryLogicProperties {
     private List<IvaratorCacheDirConfig> ivaratorCacheDirConfigs = new ArrayList<>();
     private DataDecoratorTransformerConfig dataDecoratorTransformerConfig = new DataDecoratorTransformerConfig();
     private Map<String,String> querySyntaxParsers = new HashMap<>();
+    private Set<String> mandatoryQuerySyntax = new HashSet<>();
     private Set<String> requiredRoles = new HashSet<>();
     private List<String> documentPermutations = new ArrayList<>();
     private Map<String,String> queryMacroFunction = new HashMap<>();
@@ -127,6 +128,14 @@ public class ShardQueryLogicProperties {
     
     public void setQuerySyntaxParsers(Map<String,String> querySyntaxParsers) {
         this.querySyntaxParsers = querySyntaxParsers;
+    }
+    
+    public Set<String> getMandatoryQuerySyntax() {
+        return mandatoryQuerySyntax;
+    }
+    
+    public void setMandatoryQuerySyntax(Set<String> mandatoryQuerySyntax) {
+        this.mandatoryQuerySyntax = mandatoryQuerySyntax;
     }
     
     public Set<String> getRequiredRoles() {

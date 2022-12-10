@@ -43,9 +43,23 @@ public class QueryLogicFactoryTest {
     
     @Test
     public void createShardQueryLogicTest() throws QueryException, CloneNotSupportedException {
-        QueryLogic<?> queryLogic = queryLogicFactory.getQueryLogic("EventQuery");
-        
-        Assertions.assertNotNull(queryLogic);
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("ContentQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("CountQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("DiscoveryQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("EdgeEventQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("ErrorCountQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("ErrorDiscoveryQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("ErrorEventQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("ErrorFieldIndexCountQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("EventQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("FacetedQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("FieldIndexCountQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("HitHighlights"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("IndexStatsQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("InternalQueryMetricsQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("LuceneUUIDEventQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("QueryMetricsQuery"));
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("TermFrequencyQuery"));
     }
     
     @ComponentScan(basePackages = "datawave.microservice")
