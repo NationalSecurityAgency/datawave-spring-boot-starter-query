@@ -544,16 +544,16 @@
         <property name="checkpointable" value="${datawave.query.logic.logics.EdgeEventQuery.checkpointable}" />
         <property name="logicDescription" value="${datawave.query.logic.logics.EdgeEventQuery.logicDescription}" />
 
-        <!-- This is injected via QueryLogicFactory.xml -->
+        <!-- This is injected via EdgeQueryLogicFactoryConfiguration.java and configured via configuration properties -->
         <property name="edgeQueryModel" ref="edgeQueryModel" />
 
-        <!-- This is injected via EdgeModelFieldsFactoryImpl.java -->
+        <!-- This is injected via EdgeQueryLogicFactoryConfiguration.java and configured via configuration properties -->
         <property name="edgeModelFieldsFactory" ref="edgeModelFieldsFactory" />
 
         <property name="edgeModelName" value="${datawave.query.logic.logics.EdgeEventQuery.edgeModelName}" />
         <property name="modelTableName" value="${datawave.query.logic.logics.EdgeEventQuery.modelTableName}" />
 
-        <!-- This is injected via DefaultEdgeDictionaryProvider.java -->
+        <!-- This is injected via EdgeQueryLogicFactoryConfiguration.java and configured via configuration properties -->
         <property name="edgeDictionaryProvider" ref="edgeDictionaryProvider" />
     </bean>
 </beans>
