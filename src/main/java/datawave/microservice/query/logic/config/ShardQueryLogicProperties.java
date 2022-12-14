@@ -37,7 +37,7 @@ public class ShardQueryLogicProperties {
     private CardinalityConfiguration cardinalityConfiguration = new CardinalityConfiguration();
     private List<Type> dataTypes = new ArrayList<>();
     private List<String> indexFilteringClassNames = new ArrayList<>();
-
+    
     public static class DataDecoratorTransformerConfig {
         private List<String> requestedDecorators = new ArrayList<>();
         private Map<String,Map<String,String>> dataDecorators = new HashMap<>();
@@ -130,7 +130,7 @@ public class ShardQueryLogicProperties {
     public void setQuerySyntaxParsers(Map<String,String> querySyntaxParsers) {
         this.querySyntaxParsers = querySyntaxParsers;
     }
-
+    
     public Set<String> getMandatoryQuerySyntax() {
         return mandatoryQuerySyntax;
     }
@@ -218,11 +218,11 @@ public class ShardQueryLogicProperties {
     public void setDataTypes(List<Type> dataTypes) {
         this.dataTypes = dataTypes;
     }
-
+    
     public List<String> getIndexFilteringClassNames() {
         return indexFilteringClassNames;
     }
-
+    
     public void setIndexFilteringClassNames(List<String> indexFilteringClassNames) {
         this.indexFilteringClassNames = indexFilteringClassNames;
     }

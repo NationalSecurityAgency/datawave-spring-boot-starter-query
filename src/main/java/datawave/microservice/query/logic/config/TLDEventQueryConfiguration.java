@@ -13,13 +13,13 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Configuration
 @ConditionalOnProperty(name = "datawave.query.logic.factory.enabled", havingValue = "true", matchIfMissing = true)
 public class TLDEventQueryConfiguration {
-
+    
     @Bean
     @ConfigurationProperties("datawave.query.logic.logics.t-l-d-event-query")
     public ShardQueryLogicProperties tldEventQueryProperties() {
         return new ShardQueryLogicProperties();
     }
-
+    
     @Bean
     @Scope(SCOPE_PROTOTYPE)
     public List<String> tldEventQueryIndexFilteringClassNames() {
