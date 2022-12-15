@@ -50,19 +50,19 @@ logging:
 
 spring.config.activate.on-profile: use-test
 
-query:
-  messaging:
-    backend:
-      test
+datawave:
+  query:
+    messaging:
+      backend: test
 
 ---
 
 spring.config.activate.on-profile: use-rabbit
 
-query:
-  messaging:
-    backend:
-      rabbitmq
+datawave:
+  query:
+    messaging:
+      backend: rabbitmq
 
 ---
 
@@ -76,21 +76,21 @@ spring:
       autoOffsetReset: earliest
       enableAutoCommit: false
 
-query:
-  messaging:
-    backend:
-      kafka
+datawave:
+  query:
+    messaging:
+      backend: kafka
 
 ---
 
 spring.config.activate.on-profile: use-hazelcast
 
-query:
-  messaging:
-    backend:
-      hazelcast
-    hazelcast:
-      splitBrainProtectionEnabled: false
+datawave:
+  query:
+    messaging:
+      backend: hazelcast
+      hazelcast:
+        splitBrainProtectionEnabled: false
 
 ---
 
@@ -103,10 +103,10 @@ spring:
       group-id: KafkaQueryQueueManager
       autoOffsetReset: earliest
       enableAutoCommit: false
-query:
-  messaging:
-    backend:
-      kafka
+datawave:
+  query:
+    messaging:
+      backend: kafka
 
 ---
 
