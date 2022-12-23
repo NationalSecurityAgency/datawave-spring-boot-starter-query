@@ -1,14 +1,13 @@
 package datawave.microservice.query.mapreduce.status;
 
-import datawave.microservice.authorization.user.ProxiedUserDetails;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryIdByJobIdCache;
 import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryIdByUsernameCache;
 import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryStatusCache;
-import datawave.microservice.query.mapreduce.status.cache.util.LockedCacheUpdateUtil;
 import datawave.microservice.query.mapreduce.status.cache.util.CacheUpdater;
+import datawave.microservice.query.mapreduce.status.cache.util.LockedCacheUpdateUtil;
 import datawave.webservice.query.Query;
 import datawave.webservice.query.exception.QueryException;
-import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
 import java.util.HashSet;
@@ -30,14 +29,14 @@ public class MapReduceQueryCache {
         this.queryStatusLockedCacheUpdateUtil = new LockedCacheUpdateUtil<>(queryStatusCache);
     }
     
-    public MapReduceQueryStatus createQuery(String mrQueryId, String jobName, MultiValueMap<String,String> parameters, ProxiedUserDetails currentUser)
+    public MapReduceQueryStatus createQuery(String mrQueryId, String jobName, MultiValueMap<String,String> parameters, DatawaveUserDetails currentUser)
                     throws InterruptedException {
         addQueryIdByUsernameLookup(currentUser.getUsername(), mrQueryId);
         return queryStatusCache.create(mrQueryId, jobName, parameters, null, currentUser);
     }
     
     public MapReduceQueryStatus createQuery(String mrQueryId, String jobName, MultiValueMap<String,String> parameters, Query query,
-                    ProxiedUserDetails currentUser) throws InterruptedException {
+                    DatawaveUserDetails currentUser) throws InterruptedException {
         addQueryIdByUsernameLookup(currentUser.getUsername(), mrQueryId);
         return queryStatusCache.create(mrQueryId, jobName, parameters, query, currentUser);
     }

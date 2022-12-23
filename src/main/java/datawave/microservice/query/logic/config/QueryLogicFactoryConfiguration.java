@@ -1,7 +1,7 @@
 package datawave.microservice.query.logic.config;
 
 import datawave.core.query.result.event.DefaultResponseObjectFactory;
-import datawave.microservice.authorization.user.ProxiedUserDetails;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.query.edge.config.EdgeModelProperties;
 import datawave.microservice.query.lookup.LookupProperties;
 import datawave.microservice.query.translateid.TranslateIdProperties;
@@ -57,7 +57,7 @@ public class QueryLogicFactoryConfiguration {
     
     @Bean
     @ConditionalOnBean(name = "jwtTokenHandler")
-    public Supplier<ProxiedUserDetails> serverProxiedUserDetailsSupplier(JWTTokenHandler jwtTokenHandler,
+    public Supplier<DatawaveUserDetails> serverProxiedUserDetailsSupplier(JWTTokenHandler jwtTokenHandler,
                     @Qualifier("outboundNettySslContext") SslContext nettySslContext, WebClient.Builder webClientBuilder,
                     @Value("${datawave.authorization.uri:https://authorization:8443/authorization/v1/authorize}") String authorizationUri) {
         // @formatter:off
@@ -68,11 +68,11 @@ public class QueryLogicFactoryConfiguration {
         WebClient webClient = webClientBuilder.clone().clientConnector(new ReactorClientHttpConnector(HttpClient.from(timeoutClient))).build();
         // @formatter:on
         
-        return new Supplier<ProxiedUserDetails>() {
-            ProxiedUserDetails serverUserDetails = null;
+        return new Supplier<DatawaveUserDetails>() {
+            DatawaveUserDetails serverUserDetails = null;
             
             @Override
-            public ProxiedUserDetails get() {
+            public DatawaveUserDetails get() {
                 synchronized (this) {
                     if (serverUserDetails == null || (System.currentTimeMillis() > (this.serverUserDetails.getCreationTime() + TimeUnit.DAYS.toMillis(1)))) {
                         try {
@@ -84,7 +84,7 @@ public class QueryLogicFactoryConfiguration {
                             
                             String jwtString = response.bodyToMono(String.class).block(Duration.ofSeconds(30));
                             
-                            serverUserDetails = new ProxiedUserDetails(jwtTokenHandler.createUsersFromToken(jwtString), System.currentTimeMillis());
+                            serverUserDetails = new DatawaveUserDetails(jwtTokenHandler.createUsersFromToken(jwtString), System.currentTimeMillis());
                         } catch (Exception e) {
                             log.warn("Unable to create server proxied user details via {}", authorizationUri);
                         }

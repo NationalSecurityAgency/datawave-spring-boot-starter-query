@@ -28,7 +28,6 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

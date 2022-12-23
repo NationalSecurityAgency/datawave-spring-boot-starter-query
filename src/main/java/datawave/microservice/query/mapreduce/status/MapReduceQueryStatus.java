@@ -1,18 +1,16 @@
 package datawave.microservice.query.mapreduce.status;
 
 import datawave.core.query.configuration.GenericQueryConfiguration;
-import datawave.microservice.authorization.user.ProxiedUserDetails;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.webservice.query.Query;
 import datawave.webservice.query.exception.DatawaveErrorCode;
 import datawave.webservice.results.mr.JobExecution;
 import datawave.webservice.results.mr.MapReduceInfoResponse;
-import datawave.webservice.results.mr.ResultFile;
 import org.apache.hadoop.mapreduce.JobStatus;
 import org.springframework.util.MultiValueMap;
 
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.Date;
 
 import static datawave.core.query.util.QueryUtil.PARAMETER_NAME_VALUE_SEPARATOR;
 import static datawave.core.query.util.QueryUtil.PARAMETER_SEPARATOR;
@@ -36,7 +34,7 @@ public class MapReduceQueryStatus implements Serializable {
     
     private MultiValueMap<String,String> parameters;
     
-    private ProxiedUserDetails currentUser;
+    private DatawaveUserDetails currentUser;
     
     private Query query;
     
@@ -143,11 +141,11 @@ public class MapReduceQueryStatus implements Serializable {
         this.parameters = parameters;
     }
     
-    public ProxiedUserDetails getCurrentUser() {
+    public DatawaveUserDetails getCurrentUser() {
         return currentUser;
     }
     
-    public void setCurrentUser(ProxiedUserDetails currentUser) {
+    public void setCurrentUser(DatawaveUserDetails currentUser) {
         this.currentUser = currentUser;
     }
     

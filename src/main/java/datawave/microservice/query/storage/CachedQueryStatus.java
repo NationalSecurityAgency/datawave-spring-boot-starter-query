@@ -3,7 +3,7 @@ package datawave.microservice.query.storage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import datawave.core.query.configuration.GenericQueryConfiguration;
 import datawave.core.query.logic.QueryKey;
-import datawave.microservice.authorization.user.ProxiedUserDetails;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.querymetric.BaseQueryMetric;
 import datawave.webservice.query.Query;
 import datawave.webservice.query.exception.DatawaveErrorCode;
@@ -227,12 +227,12 @@ public class CachedQueryStatus extends QueryStatus {
     }
     
     @Override
-    public ProxiedUserDetails getCurrentUser() {
+    public DatawaveUserDetails getCurrentUser() {
         return get().getCurrentUser();
     }
     
     @Override
-    public synchronized void setCurrentUser(ProxiedUserDetails currentUser) {
+    public synchronized void setCurrentUser(DatawaveUserDetails currentUser) {
         updateQueryStatus(() -> queryStatus.setCurrentUser(currentUser));
     }
     

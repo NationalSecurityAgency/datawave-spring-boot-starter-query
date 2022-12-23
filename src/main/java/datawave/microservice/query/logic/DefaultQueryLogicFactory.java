@@ -3,7 +3,7 @@ package datawave.microservice.query.logic;
 import datawave.core.query.logic.BaseQueryLogic;
 import datawave.core.query.logic.QueryLogic;
 import datawave.core.query.logic.QueryLogicFactory;
-import datawave.microservice.authorization.user.ProxiedUserDetails;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.query.logic.config.QueryLogicFactoryProperties;
 import datawave.webservice.query.exception.DatawaveErrorCode;
 import datawave.webservice.query.exception.QueryException;
@@ -38,10 +38,10 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
     
     private ApplicationContext applicationContext;
     
-    private final Supplier<ProxiedUserDetails> serverProxiedUserDetailsSupplier;
+    private final Supplier<DatawaveUserDetails> serverProxiedUserDetailsSupplier;
     
     public DefaultQueryLogicFactory(QueryLogicFactoryProperties queryLogicFactoryProperties,
-                    @Autowired(required = false) Supplier<ProxiedUserDetails> serverProxiedUserDetailsSupplier) {
+                    @Autowired(required = false) Supplier<DatawaveUserDetails> serverProxiedUserDetailsSupplier) {
         this.queryLogicFactoryProperties = queryLogicFactoryProperties;
         this.serverProxiedUserDetailsSupplier = serverProxiedUserDetailsSupplier;
     }
@@ -52,7 +52,7 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
     }
     
     @Override
-    public QueryLogic<?> getQueryLogic(String name, ProxiedUserDetails currentUser) throws QueryException {
+    public QueryLogic<?> getQueryLogic(String name, DatawaveUserDetails currentUser) throws QueryException {
         return getQueryLogic(name, currentUser, true);
     }
     
@@ -61,7 +61,7 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
         return getQueryLogic(name, null, false);
     }
     
-    private QueryLogic<?> getQueryLogic(String name, ProxiedUserDetails currentUser, boolean checkRoles) throws QueryException {
+    private QueryLogic<?> getQueryLogic(String name, DatawaveUserDetails currentUser, boolean checkRoles) throws QueryException {
         QueryLogic<?> logic;
         try {
             logic = (QueryLogic<?>) applicationContext.getBean(name);

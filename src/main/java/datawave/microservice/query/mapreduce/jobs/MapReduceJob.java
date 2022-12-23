@@ -2,7 +2,7 @@ package datawave.microservice.query.mapreduce.jobs;
 
 import datawave.core.common.connection.AccumuloConnectionFactory;
 import datawave.core.query.logic.QueryLogicFactory;
-import datawave.microservice.authorization.user.ProxiedUserDetails;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.query.mapreduce.config.MapReduceJobProperties;
 import datawave.microservice.query.mapreduce.config.MapReduceQueryProperties;
 import datawave.microservice.query.mapreduce.status.MapReduceQueryStatus;
@@ -41,7 +41,7 @@ public abstract class MapReduceJob {
         this.mapReduceJobProperties = mapReduceQueryProperties.getJobs().get(this.getClass().getSimpleName());
     }
     
-    public String createId(ProxiedUserDetails currentUser) {
+    public String createId(DatawaveUserDetails currentUser) {
         return UUID.randomUUID().toString();
     }
     

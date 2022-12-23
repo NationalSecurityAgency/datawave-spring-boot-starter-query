@@ -1,6 +1,6 @@
 package datawave.microservice.query.mapreduce.status.cache;
 
-import datawave.microservice.authorization.user.ProxiedUserDetails;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.cached.LockableCacheInspector;
 import datawave.microservice.query.mapreduce.status.MapReduceQueryStatus;
 import datawave.webservice.query.Query;
@@ -25,7 +25,7 @@ public class MapReduceQueryStatusCache extends LockableCache<MapReduceQueryStatu
     }
     
     @CachePut(key = "#id")
-    public MapReduceQueryStatus create(String id, String jobName, MultiValueMap<String,String> parameters, Query query, ProxiedUserDetails currentUser) {
+    public MapReduceQueryStatus create(String id, String jobName, MultiValueMap<String,String> parameters, Query query, DatawaveUserDetails currentUser) {
         MapReduceQueryStatus mapReduceQueryStatus = new MapReduceQueryStatus();
         mapReduceQueryStatus.setId(id);
         mapReduceQueryStatus.setState(DEFINED);

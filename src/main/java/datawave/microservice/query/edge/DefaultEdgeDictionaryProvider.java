@@ -1,7 +1,7 @@
 package datawave.microservice.query.edge;
 
 import datawave.core.common.edgedictionary.EdgeDictionaryProvider;
-import datawave.microservice.authorization.user.ProxiedUserDetails;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.query.edge.config.EdgeDictionaryProviderProperties;
 import datawave.microservice.query.storage.QueryStorageCache;
 import datawave.security.authorization.JWTTokenHandler;
@@ -26,7 +26,7 @@ public class DefaultEdgeDictionaryProvider implements EdgeDictionaryProvider {
     
     @Override
     public EdgeDictionaryBase<?,? extends MetadataBase<?>> getEdgeDictionary(Query settings, String metadataTableName) {
-        final ProxiedUserDetails currentUser = queryStorageCache.getQueryStatus(settings.getId().toString()).getCurrentUser();
+        final DatawaveUserDetails currentUser = queryStorageCache.getQueryStatus(settings.getId().toString()).getCurrentUser();
         
         final String bearerHeader = "Bearer " + jwtTokenHandler.createTokenFromUsers(currentUser.getPrimaryUser().getName(), currentUser.getProxiedUsers());
         

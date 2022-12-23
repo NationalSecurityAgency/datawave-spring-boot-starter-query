@@ -2,7 +2,7 @@ package datawave.microservice.query.storage;
 
 import datawave.core.query.logic.QueryCheckpoint;
 import datawave.core.query.logic.QueryKey;
-import datawave.microservice.authorization.user.ProxiedUserDetails;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.query.messaging.QueryResultsManager;
 import datawave.microservice.query.remote.QueryRequest;
 import datawave.webservice.query.Query;
@@ -54,7 +54,7 @@ public class QueryStorageCacheImpl implements QueryStorageCache {
      * @return The task key
      */
     @Override
-    public TaskKey defineQuery(String queryPool, Query query, ProxiedUserDetails currentUser, Set<Authorizations> calculatedAuthorizations, int count) {
+    public TaskKey defineQuery(String queryPool, Query query, DatawaveUserDetails currentUser, Set<Authorizations> calculatedAuthorizations, int count) {
         return storeQuery(queryPool, query, currentUser, calculatedAuthorizations, count, QueryStatus.QUERY_STATE.DEFINE);
     }
     
@@ -74,7 +74,7 @@ public class QueryStorageCacheImpl implements QueryStorageCache {
      * @return The task key
      */
     @Override
-    public TaskKey createQuery(String queryPool, Query query, ProxiedUserDetails currentUser, Set<Authorizations> calculatedAuthorizations, int count) {
+    public TaskKey createQuery(String queryPool, Query query, DatawaveUserDetails currentUser, Set<Authorizations> calculatedAuthorizations, int count) {
         return storeQuery(queryPool, query, currentUser, calculatedAuthorizations, count, QueryStatus.QUERY_STATE.CREATE);
     }
     
@@ -92,7 +92,7 @@ public class QueryStorageCacheImpl implements QueryStorageCache {
      * @return The plan task key
      */
     @Override
-    public TaskKey planQuery(String queryPool, Query query, ProxiedUserDetails currentUser, Set<Authorizations> calculatedAuthorizations) {
+    public TaskKey planQuery(String queryPool, Query query, DatawaveUserDetails currentUser, Set<Authorizations> calculatedAuthorizations) {
         return storeQuery(queryPool, query, currentUser, calculatedAuthorizations, 1, QueryStatus.QUERY_STATE.PLAN);
     }
     
@@ -110,11 +110,11 @@ public class QueryStorageCacheImpl implements QueryStorageCache {
      * @return The predict task key
      */
     @Override
-    public TaskKey predictQuery(String queryPool, Query query, ProxiedUserDetails currentUser, Set<Authorizations> calculatedAuthorizations) {
+    public TaskKey predictQuery(String queryPool, Query query, DatawaveUserDetails currentUser, Set<Authorizations> calculatedAuthorizations) {
         return storeQuery(queryPool, query, currentUser, calculatedAuthorizations, 1, QueryStatus.QUERY_STATE.PREDICT);
     }
     
-    private TaskKey storeQuery(String queryPool, Query query, ProxiedUserDetails currentUser, Set<Authorizations> calculatedAuthorizations, int count,
+    private TaskKey storeQuery(String queryPool, Query query, DatawaveUserDetails currentUser, Set<Authorizations> calculatedAuthorizations, int count,
                     QueryStatus.QUERY_STATE queryState) {
         UUID queryUuid = query.getId();
         if (queryUuid == null) {

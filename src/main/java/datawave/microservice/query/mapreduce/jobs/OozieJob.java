@@ -2,7 +2,7 @@ package datawave.microservice.query.mapreduce.jobs;
 
 import datawave.core.common.connection.AccumuloConnectionFactory;
 import datawave.core.query.logic.QueryLogicFactory;
-import datawave.microservice.authorization.user.ProxiedUserDetails;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.query.mapreduce.config.MapReduceQueryProperties;
 import datawave.microservice.query.mapreduce.status.MapReduceQueryStatus;
 import datawave.security.util.ProxiedEntityUtils;
@@ -36,7 +36,7 @@ public class OozieJob extends MapReduceJob {
     }
     
     @Override
-    public String createId(ProxiedUserDetails currentUser) {
+    public String createId(DatawaveUserDetails currentUser) {
         return String.join("_", ProxiedEntityUtils.getShortName(currentUser.getPrimaryUser().getName()), UUID.randomUUID().toString());
     }
     

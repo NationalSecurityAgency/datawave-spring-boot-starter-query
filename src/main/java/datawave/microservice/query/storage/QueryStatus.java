@@ -3,7 +3,7 @@ package datawave.microservice.query.storage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import datawave.core.query.configuration.GenericQueryConfiguration;
 import datawave.core.query.logic.QueryKey;
-import datawave.microservice.authorization.user.ProxiedUserDetails;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.querymetric.BaseQueryMetric.Prediction;
 import datawave.webservice.query.Query;
 import datawave.webservice.query.exception.DatawaveErrorCode;
@@ -46,7 +46,7 @@ public class QueryStatus implements Serializable {
     private QueryKey queryKey;
     private QUERY_STATE queryState = QUERY_STATE.DEFINE;
     private CREATE_STAGE createStage = CREATE_STAGE.CREATE;
-    private ProxiedUserDetails currentUser;
+    private DatawaveUserDetails currentUser;
     private Query query;
     private GenericQueryConfiguration config;
     private Set<String> calculatedAuths;
@@ -141,11 +141,11 @@ public class QueryStatus implements Serializable {
         this.predictions = predictions;
     }
     
-    public ProxiedUserDetails getCurrentUser() {
+    public DatawaveUserDetails getCurrentUser() {
         return currentUser;
     }
     
-    public void setCurrentUser(ProxiedUserDetails currentUser) {
+    public void setCurrentUser(DatawaveUserDetails currentUser) {
         this.currentUser = currentUser;
     }
     
