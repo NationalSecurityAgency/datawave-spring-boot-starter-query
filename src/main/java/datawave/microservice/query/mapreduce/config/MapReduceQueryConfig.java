@@ -99,10 +99,19 @@ public class MapReduceQueryConfig {
                 .filter(ps -> ps instanceof EnumerablePropertySource)
                 .map(ps -> ((EnumerablePropertySource<?>) ps).getPropertyNames())
                 .flatMap(Arrays::stream).distinct()
-                .forEach(prop -> propertiesMap.put(prop, env.getProperty(prop)));
+                .forEach(prop -> putProperty(propertiesMap, prop));
         // @formatter:on
         
         return propertiesMap;
+    }
+    
+    private void putProperty(Map<String,String> propertiesMap, String prop) {
+        Environment env = applicationContext.getEnvironment();
+        try {
+            propertiesMap.put(prop, env.getProperty(prop));
+        } catch (Exception e) {
+            // ignoring property
+        }
     }
     
     @ConditionalOnMapReduceJob("BulkResultsJob")

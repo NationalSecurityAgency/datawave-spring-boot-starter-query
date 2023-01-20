@@ -1,6 +1,5 @@
 package datawave.microservice.query.logic;
 
-import datawave.core.query.logic.BaseQueryLogic;
 import datawave.core.query.logic.QueryLogic;
 import datawave.core.query.logic.QueryLogicFactory;
 import datawave.microservice.authorization.user.DatawaveUserDetails;
@@ -87,13 +86,11 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
             logic.setPageByteTrigger(queryLogicFactoryProperties.getPageByteTrigger());
         }
         
-        if (logic instanceof BaseQueryLogic) {
-            // update server user details
-            ((BaseQueryLogic<?>) logic).setCurrentUser(currentUser);
-            
-            if (serverProxiedUserDetailsSupplier != null) {
-                ((BaseQueryLogic<?>) logic).setServerUser(serverProxiedUserDetailsSupplier.get());
-            }
+        // update server user details
+        logic.setCurrentUser(currentUser);
+        
+        if (serverProxiedUserDetailsSupplier != null) {
+            logic.setServerUser(serverProxiedUserDetailsSupplier.get());
         }
         
         return logic;
