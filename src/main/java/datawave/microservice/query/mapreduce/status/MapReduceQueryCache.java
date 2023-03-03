@@ -59,7 +59,7 @@ public class MapReduceQueryCache {
     }
     
     public String putQueryIdByJobIdLookup(String jobId, String mrQueryId) {
-        return queryIdByJobIdCache.put(jobId, mrQueryId);
+        return queryIdByJobIdCache.update(jobId, mrQueryId);
     }
     
     public String lookupQueryIdByJobId(String jobId) {

@@ -25,7 +25,7 @@ import java.util.Map;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Configuration
-public class DefaultQueryPlannerConfig {
+public class DefaultQueryPlannerConfiguration {
     @Bean
     @ConfigurationProperties(prefix = DefaultQueryPlannerProperties.PREFIX)
     public DefaultQueryPlannerProperties defaultQueryPlannerProperties() {

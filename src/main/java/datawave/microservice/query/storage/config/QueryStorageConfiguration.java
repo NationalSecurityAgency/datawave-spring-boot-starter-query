@@ -21,7 +21,7 @@ import java.util.function.Function;
 @Configuration
 @EnableCaching
 @ConditionalOnProperty(name = "datawave.query.storage.cache.enabled", havingValue = "true", matchIfMissing = true)
-public class QueryStorageConfig {
+public class QueryStorageConfiguration {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     
     @Bean

@@ -5,4 +5,4 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties(MessagingProperties.class)
-public class QueryMessagingConfig {}
+public class QueryMessagingConfiguration {}

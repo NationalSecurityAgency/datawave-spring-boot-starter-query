@@ -42,7 +42,7 @@ import java.util.function.Supplier;
 @Configuration
 @EnableCaching
 @ConditionalOnProperty(name = MapReduceQueryProperties.PREFIX + ".enabled", havingValue = "true", matchIfMissing = true)
-public class MapReduceQueryConfig {
+public class MapReduceQueryConfiguration {
     
     @Autowired
     private ApplicationContext applicationContext;

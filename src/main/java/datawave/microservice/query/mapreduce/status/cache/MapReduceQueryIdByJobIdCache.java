@@ -19,11 +19,6 @@ public class MapReduceQueryIdByJobIdCache extends LockableCache<String> {
         super(cacheInspector, CACHE_NAME);
     }
     
-    @CachePut(key = "#jobId")
-    public String put(String jobId, String id) {
-        return id;
-    }
-    
     @Override
     public String get(String jobId) {
         return cacheInspector.list(CACHE_NAME, String.class, jobId);

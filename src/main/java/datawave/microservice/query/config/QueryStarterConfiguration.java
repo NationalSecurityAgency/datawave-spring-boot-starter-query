@@ -8,4 +8,4 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties({QueryProperties.class, MapReduceQueryProperties.class, StreamingProperties.class, EdgeDictionaryProviderProperties.class})
-public class QueryStarterConfig {}
+public class QueryStarterConfiguration {}
