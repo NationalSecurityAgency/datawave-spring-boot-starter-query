@@ -7,6 +7,7 @@ import datawave.core.query.configuration.GenericQueryConfiguration;
 import datawave.core.query.configuration.QueryData;
 import datawave.core.query.logic.QueryLogic;
 import datawave.core.query.logic.QueryLogicFactory;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.authorization.util.AuthorizationsUtil;
 import datawave.microservice.mapreduce.bulkresults.map.SerializationFormat;
 import datawave.microservice.query.mapreduce.config.MapReduceQueryProperties;
@@ -14,13 +15,14 @@ import datawave.microservice.query.mapreduce.status.MapReduceQueryStatus;
 import datawave.mr.bulk.BulkInputFormat;
 import datawave.query.exceptions.NoResultsException;
 import datawave.query.iterator.QueryOptions;
+import datawave.security.authorization.UserOperations;
 import datawave.security.iterator.ConfigurableVisibilityFilter;
 import datawave.webservice.query.Query;
 import datawave.webservice.query.exception.DatawaveErrorCode;
 import datawave.webservice.query.exception.QueryException;
+import org.apache.accumulo.core.client.AccumuloClient;
 import org.apache.accumulo.core.client.BatchWriterConfig;
 import org.apache.accumulo.core.client.ClientConfiguration;
-import org.apache.accumulo.core.client.Connector;
 import org.apache.accumulo.core.client.IteratorSetting;
 import org.apache.accumulo.core.client.mapreduce.AccumuloOutputFormat;
 import org.apache.accumulo.core.client.security.tokens.PasswordToken;
@@ -59,6 +61,8 @@ import static datawave.microservice.query.mapreduce.config.MapReduceQueryPropert
 public class BulkResultsJob extends MapReduceJob {
     
     private final Map<String,String> propertiesMap;
+    
+    private UserOperations userOperations;
     
     /**
      * Container for query settings
@@ -296,7 +300,7 @@ public class BulkResultsJob extends MapReduceJob {
     
     private QuerySettings setupQuery(QueryLogicFactory queryLogicFactory, AccumuloConnectionFactory accumuloConnectionFactory,
                     MapReduceQueryStatus mapReduceQueryStatus) throws Exception {
-        Connector connector = null;
+        AccumuloClient client = null;
         QueryLogic<?> logic = null;
         try {
             String userDN = mapReduceQueryStatus.getCurrentUser().getPrimaryUser().getDn().subjectDN();
@@ -307,21 +311,27 @@ public class BulkResultsJob extends MapReduceJob {
             
             // Get an accumulo connection
             Map<String,String> trackingMap = accumuloConnectionFactory.getTrackingMap(Thread.currentThread().getStackTrace());
-            connector = accumuloConnectionFactory.getConnection(userDN, proxyServers, logic.getConnectionPriority(), trackingMap);
+            client = accumuloConnectionFactory.getClient(userDN, proxyServers, logic.getConnectionPriority(), trackingMap);
             
             // Merge user auths with the auths that they use in the Query
+            // the query principal is our local principal unless the query logic has a different user operations
+            DatawaveUserDetails queryUserDetails = (DatawaveUserDetails) ((logic.getUserOperations() == null) ? mapReduceQueryStatus.getCurrentUser()
+                            : logic.getUserOperations().getRemoteUser(mapReduceQueryStatus.getCurrentUser()));
+            // the overall principal (the one with combined auths across remote user operations) is our own user operations (probably the UserOperationsBean)
+            DatawaveUserDetails overallUserDetails = (DatawaveUserDetails) ((userOperations == null) ? mapReduceQueryStatus.getCurrentUser()
+                            : userOperations.getRemoteUser(mapReduceQueryStatus.getCurrentUser()));
             Set<Authorizations> runtimeQueryAuthorizations = AuthorizationsUtil
-                            .getDowngradedAuthorizations(mapReduceQueryStatus.getQuery().getQueryAuthorizations(), mapReduceQueryStatus.getCurrentUser());
+                            .getDowngradedAuthorizations(mapReduceQueryStatus.getQuery().getQueryAuthorizations(), overallUserDetails, queryUserDetails);
             
             // Initialize the logic so that the configuration contains all of the iterator options
-            GenericQueryConfiguration queryConfig = logic.initialize(connector, mapReduceQueryStatus.getQuery(), runtimeQueryAuthorizations);
+            GenericQueryConfiguration queryConfig = logic.initialize(client, mapReduceQueryStatus.getQuery(), runtimeQueryAuthorizations);
             
             String base64EncodedQuery = BulkResultsFileOutputMapper.serializeQuery(mapReduceQueryStatus.getQuery());
             
             return new QuerySettings(logic, queryConfig, base64EncodedQuery, mapReduceQueryStatus.getQuery().getClass(), runtimeQueryAuthorizations);
         } finally {
-            if (null != logic && null != connector)
-                accumuloConnectionFactory.returnConnection(connector);
+            if (null != logic && null != client)
+                accumuloConnectionFactory.returnClient(client);
         }
     }
     
@@ -381,5 +391,9 @@ public class BulkResultsJob extends MapReduceJob {
         // }
         
         writeProperties(id, job, fs, classpath, systemProperties);
+    }
+    
+    public void setUserOperations(UserOperations userOperations) {
+        this.userOperations = userOperations;
     }
 }

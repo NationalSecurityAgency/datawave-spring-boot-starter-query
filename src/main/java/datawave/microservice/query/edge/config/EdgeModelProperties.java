@@ -1,6 +1,6 @@
 package datawave.microservice.query.edge.config;
 
-import datawave.webservice.model.FieldMapping;
+import datawave.query.model.FieldMapping;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
