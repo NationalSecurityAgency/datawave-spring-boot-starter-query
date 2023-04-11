@@ -20,17 +20,16 @@ import datawave.security.iterator.ConfigurableVisibilityFilter;
 import datawave.webservice.query.Query;
 import datawave.webservice.query.exception.DatawaveErrorCode;
 import datawave.webservice.query.exception.QueryException;
+import org.apache.accumulo.core.client.Accumulo;
 import org.apache.accumulo.core.client.AccumuloClient;
 import org.apache.accumulo.core.client.BatchWriterConfig;
-import org.apache.accumulo.core.client.ClientConfiguration;
 import org.apache.accumulo.core.client.IteratorSetting;
-import org.apache.accumulo.core.client.mapreduce.AccumuloOutputFormat;
-import org.apache.accumulo.core.client.security.tokens.PasswordToken;
 import org.apache.accumulo.core.data.Key;
 import org.apache.accumulo.core.data.Mutation;
 import org.apache.accumulo.core.data.Range;
 import org.apache.accumulo.core.data.Value;
 import org.apache.accumulo.core.security.Authorizations;
+import org.apache.accumulo.hadoop.mapreduce.AccumuloOutputFormat;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.NullWritable;
@@ -40,7 +39,6 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.OutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-import org.apache.log4j.Level;
 
 import javax.ws.rs.WebApplicationException;
 import java.io.IOException;
@@ -182,20 +180,19 @@ public class BulkResultsJob extends MapReduceJob {
                 job.setOutputValueClass(Mutation.class);
                 job.setNumReduceTasks(0);
                 job.setOutputFormatClass(AccumuloOutputFormat.class);
-                AccumuloOutputFormat.setZooKeeperInstance(job,
-                                ClientConfiguration.loadDefault().withInstance(mapReduceJobProperties.getAccumulo().getInstanceName())
-                                                .withZkHosts(mapReduceJobProperties.getAccumulo().getZookeepers()));
-                AccumuloOutputFormat.setConnectorInfo(job, mapReduceJobProperties.getAccumulo().getUsername(),
-                                new PasswordToken(mapReduceJobProperties.getAccumulo().getPassword()));
-                AccumuloOutputFormat.setCreateTables(job, true);
-                AccumuloOutputFormat.setDefaultTableName(job, tableName);
+                
+                // formatter:off
+                Properties clientProps = Accumulo.newClientProperties()
+                                .to(mapReduceJobProperties.getAccumulo().getInstanceName(), mapReduceJobProperties.getAccumulo().getZookeepers())
+                                .as(mapReduceJobProperties.getAccumulo().getUsername(), mapReduceJobProperties.getAccumulo().getPassword())
+                                .batchWriterConfig(new BatchWriterConfig().setMaxLatency(30, TimeUnit.SECONDS).setMaxMemory(10485760).setMaxWriteThreads(2))
+                                .build();
+                
+                AccumuloOutputFormat.configure().clientProperties(clientProps).createTables(true).defaultTable(tableName).store(job);
+                // formatter:on
+                
+                // TODO: this is not supported on the new output format -- just use normal logging configuration
                 // AccumuloOutputFormat.loglevel
-                AccumuloOutputFormat.setLogLevel(job, Level.INFO);
-                // AccumuloOutputFormat.maxlatency
-                // AccumuloOutputFormat.maxmemory
-                // AccumuloOutputFormat.writethreads
-                AccumuloOutputFormat.setBatchWriterOptions(job,
-                                new BatchWriterConfig().setMaxLatency(30, TimeUnit.SECONDS).setMaxMemory(10485760).setMaxWriteThreads(2));
             }
         } catch (WebApplicationException wex) {
             throw wex;
