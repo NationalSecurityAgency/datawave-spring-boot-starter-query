@@ -39,6 +39,9 @@ class KafkaQueryResultsListener implements QueryResultsListener, AcknowledgingMe
     
     public KafkaQueryResultsListener(MessagingProperties messagingProperties, ConsumerFactory<String,String> kafkaConsumerFactory, String listenerId,
                     String queryId) {
+        if (log.isTraceEnabled()) {
+            log.trace("Creating kafka query results listener for " + queryId + " with listenerId " + listenerId);
+        }
         this.queryId = queryId;
         ContainerProperties containerProps = new ContainerProperties(queryId);
         containerProps.setClientId(listenerId);
@@ -63,6 +66,13 @@ class KafkaQueryResultsListener implements QueryResultsListener, AcknowledgingMe
         
         container.setBeanName(listenerId + "-" + queryId);
         container.start();
+        if (log.isTraceEnabled()) {
+            if (container.isRunning()) {
+                log.trace("Container started for " + listenerId);
+            } else {
+                log.trace("Container not yet started for " + listenerId);
+            }
+        }
     }
     
     @Override

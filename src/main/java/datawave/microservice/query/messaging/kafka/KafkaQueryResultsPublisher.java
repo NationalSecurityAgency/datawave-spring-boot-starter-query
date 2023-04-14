@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -33,9 +34,12 @@ class KafkaQueryResultsPublisher implements QueryResultsPublisher {
         boolean success = false;
         try {
             // @formatter:off
-            kafkaTemplate
+            SendResult<String,String> sendResult = kafkaTemplate
                     .send(MessageBuilder.withPayload(objectMapper.writeValueAsString(result)).build())
                     .get(interval, timeUnit);
+            if (log.isTraceEnabled()) {
+                log.trace("Send result: " + sendResult);
+            }
             // @formatter:on
             success = true;
         } catch (JsonProcessingException e) {
