@@ -4,6 +4,7 @@ import datawave.core.query.logic.QueryLogic;
 import datawave.core.query.logic.QueryLogicFactory;
 import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.query.logic.config.QueryLogicFactoryProperties;
+import datawave.security.authorization.ProxiedUserDetails;
 import datawave.webservice.query.exception.DatawaveErrorCode;
 import datawave.webservice.query.exception.QueryException;
 import datawave.webservice.query.exception.UnauthorizedQueryException;
@@ -17,7 +18,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -46,12 +46,7 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
     }
     
     @Override
-    public QueryLogic<?> getQueryLogic(String name, Principal principal) throws QueryException, IllegalArgumentException, CloneNotSupportedException {
-        throw new UnsupportedOperationException("Using a principal to create a query logic is not supported for spring boot microservice deployments");
-    }
-    
-    @Override
-    public QueryLogic<?> getQueryLogic(String name, DatawaveUserDetails currentUser) throws QueryException {
+    public QueryLogic<?> getQueryLogic(String name, ProxiedUserDetails currentUser) throws QueryException {
         return getQueryLogic(name, currentUser, true);
     }
     
@@ -60,7 +55,7 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
         return getQueryLogic(name, null, false);
     }
     
-    private QueryLogic<?> getQueryLogic(String name, DatawaveUserDetails currentUser, boolean checkRoles) throws QueryException {
+    private QueryLogic<?> getQueryLogic(String name, ProxiedUserDetails currentUser, boolean checkRoles) throws QueryException {
         QueryLogic<?> logic;
         try {
             logic = (QueryLogic<?>) applicationContext.getBean(name);
