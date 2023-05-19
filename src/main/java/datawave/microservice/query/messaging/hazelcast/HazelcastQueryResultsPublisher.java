@@ -8,6 +8,7 @@ import datawave.microservice.query.messaging.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class HazelcastQueryResultsPublisher implements QueryResultsPublisher {
@@ -36,5 +37,10 @@ public class HazelcastQueryResultsPublisher implements QueryResultsPublisher {
             log.error("Interrupted waiting for hazelcast offer", e);
         }
         return success;
+    }
+    
+    @Override
+    public void close() throws IOException {
+        // do nothing
     }
 }

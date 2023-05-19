@@ -1,8 +1,9 @@
 package datawave.microservice.query.messaging;
 
+import java.io.Closeable;
 import java.util.concurrent.TimeUnit;
 
-public interface QueryResultsPublisher {
+public interface QueryResultsPublisher extends Closeable {
     
     /**
      * Publishes a result for the query

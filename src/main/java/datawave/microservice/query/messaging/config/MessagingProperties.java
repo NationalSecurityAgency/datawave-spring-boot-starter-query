@@ -92,11 +92,9 @@ public class MessagingProperties {
         @PositiveOrZero
         private long idleBetweenPollsMillis = 0L;
         
-        @PositiveOrZero
-        private long sendTimeout = 10;
+        private int partitions = -1;
         
-        @NotNull
-        private TimeUnit sendTimeUnit = TimeUnit.SECONDS;
+        private int replicas = -1;
         
         public long getPollTimeoutMillis() {
             return pollTimeoutMillis;
@@ -114,24 +112,20 @@ public class MessagingProperties {
             this.idleBetweenPollsMillis = idleBetweenPollsMillis;
         }
         
-        public long getSendTimeout() {
-            return sendTimeout;
+        public int getPartitions() {
+            return partitions;
         }
         
-        public long getSendTimeoutMillis() {
-            return sendTimeUnit.toMillis(sendTimeout);
+        public void setPartitions(int partitions) {
+            this.partitions = partitions;
         }
         
-        public void setSendTimeout(long sendTimeout) {
-            this.sendTimeout = sendTimeout;
+        public int getReplicas() {
+            return replicas;
         }
         
-        public TimeUnit getSendTimeUnit() {
-            return sendTimeUnit;
-        }
-        
-        public void setSendTimeUnit(TimeUnit sendTimeUnit) {
-            this.sendTimeUnit = sendTimeUnit;
+        public void setReplicas(int replicas) {
+            this.replicas = replicas;
         }
     }
     

@@ -12,6 +12,7 @@ import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -114,5 +115,10 @@ class RabbitMQQueryResultsPublisher implements QueryResultsPublisher {
         }
         
         return finalResult;
+    }
+    
+    @Override
+    public void close() throws IOException {
+        rabbitTemplate.destroy();
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.integration.support.MessageBuilder;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -52,5 +53,11 @@ class KafkaQueryResultsPublisher implements QueryResultsPublisher {
             log.error("Execution exception waiting for kafka send result", e);
         }
         return success;
+    }
+    
+    @Override
+    public void close() throws IOException {
+        kafkaTemplate.flush();
+        kafkaTemplate.destroy();
     }
 }

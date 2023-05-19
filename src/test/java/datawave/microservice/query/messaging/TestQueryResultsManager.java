@@ -51,9 +51,17 @@ public class TestQueryResultsManager implements QueryResultsManager {
     
     @Override
     public QueryResultsPublisher createPublisher(String queryId) {
-        return (result, interval, timeUnit) -> {
-            sendMessage(queryId, result);
-            return true;
+        return new QueryResultsPublisher() {
+            @Override
+            public boolean publish(Result result, long interval, TimeUnit timeUnit) {
+                sendMessage(queryId, result);
+                return true;
+            }
+            
+            @Override
+            public void close() throws IOException {
+                // do nothing
+            }
         };
     }
     

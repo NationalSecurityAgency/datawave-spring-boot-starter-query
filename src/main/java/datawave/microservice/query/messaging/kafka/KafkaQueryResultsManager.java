@@ -14,6 +14,7 @@ import org.apache.kafka.common.TopicPartitionInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -56,6 +57,7 @@ public class KafkaQueryResultsManager implements QueryResultsManager {
      */
     @Override
     public QueryResultsListener createListener(String listenerId, String queryId) {
+        createTopic(queryId);
         return new KafkaQueryResultsListener(messagingProperties, kafkaConsumerFactory, listenerId, queryId);
     }
     
@@ -68,6 +70,7 @@ public class KafkaQueryResultsManager implements QueryResultsManager {
      */
     @Override
     public QueryResultsPublisher createPublisher(String queryId) {
+        createTopic(queryId);
         KafkaTemplate<String,String> kafkaTemplate = new KafkaTemplate<>(kafkaProducerFactory);
         kafkaTemplate.setDefaultTopic(queryId);
         return new KafkaQueryResultsPublisher(kafkaTemplate);
@@ -86,10 +89,30 @@ public class KafkaQueryResultsManager implements QueryResultsManager {
     
     private void deleteTopic(String topic) {
         try {
-            if (adminClient.listTopics().names().get().contains("topic")) {
+            if (adminClient.listTopics().names().get().contains(topic)) {
                 // @formatter:off
                 adminClient
                         .deleteTopics(Collections.singleton(topic))
+                        .topicNameValues()
+                        .get(topic)
+                        .get();
+                // @formatter:on
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            log.error("Failed to delete topic " + topic, e);
+        }
+    }
+    
+    private void createTopic(String topic) {
+        try {
+            if (!adminClient.listTopics().names().get().contains(topic)) {
+                // @formatter:off
+                adminClient
+                        .createTopics(Collections.singleton(TopicBuilder
+                                .name(topic)
+                                .partitions(messagingProperties.getKafka().getPartitions())
+                                .replicas(messagingProperties.getKafka().getReplicas())
+                                .build()))
                         .values()
                         .get(topic)
                         .get();

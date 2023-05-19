@@ -96,7 +96,8 @@ class KafkaQueryResultsListener implements QueryResultsListener, AcknowledgingMe
             }
         }
         
-        container.stop(false);
+        container.stop(true);
+        container.destroy();
     }
     
     @Override
