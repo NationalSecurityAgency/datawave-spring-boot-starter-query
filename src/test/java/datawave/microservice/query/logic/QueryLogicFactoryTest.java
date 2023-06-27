@@ -1,9 +1,5 @@
 package datawave.microservice.query.logic;
 
-import datawave.core.query.logic.QueryLogicFactory;
-import datawave.microservice.query.logic.config.QueryLogicFactoryProperties;
-import datawave.security.authorization.JWTTokenHandler;
-import datawave.webservice.query.exception.QueryException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +13,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import datawave.core.query.logic.QueryLogicFactory;
+import datawave.microservice.query.logic.config.QueryLogicFactoryProperties;
+import datawave.security.authorization.JWTTokenHandler;
+import datawave.webservice.query.exception.QueryException;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)

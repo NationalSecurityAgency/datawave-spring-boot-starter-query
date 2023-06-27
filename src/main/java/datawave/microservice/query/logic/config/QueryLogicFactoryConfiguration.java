@@ -1,16 +1,17 @@
 package datawave.microservice.query.logic.config;
 
-import datawave.core.query.result.event.DefaultResponseObjectFactory;
-import datawave.microservice.authorization.user.DatawaveUserDetails;
-import datawave.microservice.query.edge.config.EdgeModelProperties;
-import datawave.microservice.query.lookup.LookupProperties;
-import datawave.microservice.query.translateid.TranslateIdProperties;
-import datawave.query.data.UUIDType;
-import datawave.security.authorization.JWTTokenHandler;
-import datawave.webservice.query.result.event.ResponseObjectFactory;
-import io.netty.channel.ChannelOption;
-import io.netty.handler.ssl.SslContext;
-import io.netty.handler.timeout.ReadTimeoutHandler;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,20 +26,20 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import datawave.core.query.result.event.DefaultResponseObjectFactory;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
+import datawave.microservice.query.edge.config.EdgeModelProperties;
+import datawave.microservice.query.lookup.LookupProperties;
+import datawave.microservice.query.translateid.TranslateIdProperties;
+import datawave.query.data.UUIDType;
+import datawave.security.authorization.JWTTokenHandler;
+import datawave.webservice.query.result.event.ResponseObjectFactory;
+import io.netty.channel.ChannelOption;
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.timeout.ReadTimeoutHandler;
 import reactor.netty.http.client.HttpClient;
 import reactor.netty.tcp.TcpClient;
-
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
-
-import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Configuration
 @ConditionalOnProperty(name = "datawave.query.logic.factory.enabled", havingValue = "true", matchIfMissing = true)

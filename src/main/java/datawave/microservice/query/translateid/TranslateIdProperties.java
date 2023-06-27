@@ -1,11 +1,8 @@
 package datawave.microservice.query.translateid;
 
-import datawave.query.data.UUIDType;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
+import static datawave.microservice.query.QueryParameters.QUERY_PAGESIZE;
+import static datawave.microservice.query.QueryParameters.QUERY_PAGETIMEOUT;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,8 +11,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static datawave.microservice.query.QueryParameters.QUERY_PAGESIZE;
-import static datawave.microservice.query.QueryParameters.QUERY_PAGETIMEOUT;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
+
+import datawave.query.data.UUIDType;
 
 @Validated
 @ConfigurationProperties(prefix = "datawave.query.translateid")

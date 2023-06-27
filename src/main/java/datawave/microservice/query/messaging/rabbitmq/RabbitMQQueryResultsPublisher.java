@@ -1,16 +1,6 @@
 package datawave.microservice.query.messaging.rabbitmq;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import datawave.microservice.query.messaging.ClaimCheck;
-import datawave.microservice.query.messaging.QueryResultsPublisher;
-import datawave.microservice.query.messaging.Result;
-import datawave.microservice.query.messaging.config.MessagingProperties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.MessageProperties;
-import org.springframework.amqp.rabbit.connection.CorrelationData;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import static datawave.microservice.query.messaging.rabbitmq.RabbitMQQueryResultsManager.QUERY_RESULTS_EXCHANGE;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,7 +8,19 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import static datawave.microservice.query.messaging.rabbitmq.RabbitMQQueryResultsManager.QUERY_RESULTS_EXCHANGE;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.MessageProperties;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import datawave.microservice.query.messaging.ClaimCheck;
+import datawave.microservice.query.messaging.QueryResultsPublisher;
+import datawave.microservice.query.messaging.Result;
+import datawave.microservice.query.messaging.config.MessagingProperties;
 
 class RabbitMQQueryResultsPublisher implements QueryResultsPublisher {
     private final Logger log = LoggerFactory.getLogger(this.getClass());

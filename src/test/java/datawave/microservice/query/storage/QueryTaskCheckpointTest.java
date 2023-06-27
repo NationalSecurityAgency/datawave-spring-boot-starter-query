@@ -1,26 +1,28 @@
 package datawave.microservice.query.storage;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.guava.GuavaModule;
-import com.zaxxer.sparsebits.SparseBitSet;
-import datawave.core.query.configuration.QueryData;
-import datawave.core.query.logic.QueryCheckpoint;
-import datawave.core.query.logic.QueryKey;
-import datawave.microservice.query.remote.QueryRequest;
-import datawave.query.config.ShardQueryConfiguration;
-import datawave.webservice.query.QueryImpl;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
+
 import org.apache.accumulo.core.client.IteratorSetting;
 import org.apache.accumulo.core.data.Key;
 import org.apache.accumulo.core.data.Range;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.guava.GuavaModule;
+import com.zaxxer.sparsebits.SparseBitSet;
+
+import datawave.core.query.configuration.QueryData;
+import datawave.core.query.logic.QueryCheckpoint;
+import datawave.core.query.logic.QueryKey;
+import datawave.microservice.query.remote.QueryRequest;
+import datawave.query.config.ShardQueryConfiguration;
+import datawave.webservice.query.QueryImpl;
 
 public class QueryTaskCheckpointTest {
     @Test

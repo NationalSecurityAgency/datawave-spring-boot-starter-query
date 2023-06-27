@@ -1,5 +1,17 @@
 package datawave.microservice.query.mapreduce.jobs;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.UUID;
+
+import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang.StringUtils;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.mapreduce.Job;
+import org.springframework.util.MultiValueMap;
+
 import datawave.core.common.connection.AccumuloConnectionFactory;
 import datawave.core.query.logic.QueryLogicFactory;
 import datawave.microservice.authorization.user.DatawaveUserDetails;
@@ -7,17 +19,6 @@ import datawave.microservice.query.mapreduce.config.MapReduceQueryProperties;
 import datawave.microservice.query.mapreduce.status.MapReduceQueryStatus;
 import datawave.security.util.ProxiedEntityUtils;
 import datawave.webservice.common.audit.Auditor;
-import org.apache.commons.lang.NotImplementedException;
-import org.apache.commons.lang.StringUtils;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.mapreduce.Job;
-import org.springframework.util.MultiValueMap;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.UUID;
 
 public class OozieJob extends MapReduceJob {
     

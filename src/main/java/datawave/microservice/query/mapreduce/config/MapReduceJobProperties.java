@@ -1,9 +1,9 @@
 package datawave.microservice.query.mapreduce.config;
 
-import datawave.microservice.config.accumulo.AccumuloProperties;
-
 import java.util.List;
 import java.util.Map;
+
+import datawave.microservice.config.accumulo.AccumuloProperties;
 
 public class MapReduceJobProperties {
     private String startingClass = null;

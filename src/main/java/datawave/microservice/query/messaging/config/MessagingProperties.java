@@ -1,17 +1,18 @@
 package datawave.microservice.query.messaging.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
+import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResultsManager.HAZELCAST;
+import static datawave.microservice.query.messaging.kafka.KafkaQueryResultsManager.KAFKA;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-import java.util.concurrent.TimeUnit;
 
-import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResultsManager.HAZELCAST;
-import static datawave.microservice.query.messaging.kafka.KafkaQueryResultsManager.KAFKA;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
 
 @Validated
 @ConfigurationProperties(prefix = "datawave.query.messaging")

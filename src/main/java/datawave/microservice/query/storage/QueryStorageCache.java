@@ -1,14 +1,15 @@
 package datawave.microservice.query.storage;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.accumulo.core.security.Authorizations;
+
 import datawave.core.query.logic.QueryCheckpoint;
 import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.query.remote.QueryRequest;
 import datawave.webservice.query.Query;
-import org.apache.accumulo.core.security.Authorizations;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Set;
 
 /**
  * This is an interface to the query storage service

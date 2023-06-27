@@ -1,15 +1,13 @@
 package datawave.microservice.query.mapreduce.jobs;
 
-import datawave.core.common.connection.AccumuloConnectionFactory;
-import datawave.core.query.logic.QueryLogicFactory;
-import datawave.microservice.authorization.user.DatawaveUserDetails;
-import datawave.microservice.query.mapreduce.config.MapReduceJobProperties;
-import datawave.microservice.query.mapreduce.config.MapReduceQueryProperties;
-import datawave.microservice.query.mapreduce.status.MapReduceQueryStatus;
-import datawave.webservice.common.audit.AuditParameters;
-import datawave.webservice.query.exception.BadRequestQueryException;
-import datawave.webservice.query.exception.DatawaveErrorCode;
-import datawave.webservice.query.exception.QueryException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.Map;
+import java.util.Properties;
+import java.util.UUID;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -20,13 +18,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.MultiValueMap;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.Map;
-import java.util.Properties;
-import java.util.UUID;
+import datawave.core.common.connection.AccumuloConnectionFactory;
+import datawave.core.query.logic.QueryLogicFactory;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
+import datawave.microservice.query.mapreduce.config.MapReduceJobProperties;
+import datawave.microservice.query.mapreduce.config.MapReduceQueryProperties;
+import datawave.microservice.query.mapreduce.status.MapReduceQueryStatus;
+import datawave.webservice.common.audit.AuditParameters;
+import datawave.webservice.query.exception.BadRequestQueryException;
+import datawave.webservice.query.exception.DatawaveErrorCode;
+import datawave.webservice.query.exception.QueryException;
 
 public abstract class MapReduceJob {
     

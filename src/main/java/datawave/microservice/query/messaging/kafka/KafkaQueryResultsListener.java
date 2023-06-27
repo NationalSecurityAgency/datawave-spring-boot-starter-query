@@ -1,11 +1,13 @@
 package datawave.microservice.query.messaging.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import datawave.microservice.query.messaging.AcknowledgementCallback;
-import datawave.microservice.query.messaging.QueryResultsListener;
-import datawave.microservice.query.messaging.Result;
-import datawave.microservice.query.messaging.config.MessagingProperties;
+import static datawave.microservice.query.messaging.AcknowledgementCallback.Status.ACK;
+import static datawave.microservice.query.messaging.AcknowledgementCallback.Status.NACK;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
+
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +19,13 @@ import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.support.Acknowledgment;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static datawave.microservice.query.messaging.AcknowledgementCallback.Status.ACK;
-import static datawave.microservice.query.messaging.AcknowledgementCallback.Status.NACK;
+import datawave.microservice.query.messaging.AcknowledgementCallback;
+import datawave.microservice.query.messaging.QueryResultsListener;
+import datawave.microservice.query.messaging.Result;
+import datawave.microservice.query.messaging.config.MessagingProperties;
 
 /**
  * A listener for Kafka Query Results

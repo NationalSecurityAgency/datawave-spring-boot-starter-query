@@ -1,16 +1,17 @@
 package datawave.microservice.query.storage;
 
-import datawave.core.query.logic.QueryKey;
-import datawave.microservice.cached.LockableCacheInspector;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import datawave.core.query.logic.QueryKey;
+import datawave.microservice.cached.LockableCacheInspector;
 
 @CacheConfig(cacheNames = QueryStatusCache.CACHE_NAME)
 public class QueryStatusCache {

@@ -1,9 +1,12 @@
 package datawave.microservice.query.messaging.kafka;
 
-import datawave.microservice.query.messaging.QueryResultsListener;
-import datawave.microservice.query.messaging.QueryResultsManager;
-import datawave.microservice.query.messaging.QueryResultsPublisher;
-import datawave.microservice.query.messaging.config.MessagingProperties;
+import static datawave.microservice.query.messaging.kafka.KafkaQueryResultsManager.KAFKA;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.DeleteRecordsResult;
 import org.apache.kafka.clients.admin.RecordsToDelete;
@@ -21,12 +24,10 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-
-import static datawave.microservice.query.messaging.kafka.KafkaQueryResultsManager.KAFKA;
+import datawave.microservice.query.messaging.QueryResultsListener;
+import datawave.microservice.query.messaging.QueryResultsManager;
+import datawave.microservice.query.messaging.QueryResultsPublisher;
+import datawave.microservice.query.messaging.config.MessagingProperties;
 
 @Component
 @ConditionalOnProperty(name = "datawave.query.messaging.backend", havingValue = KAFKA)

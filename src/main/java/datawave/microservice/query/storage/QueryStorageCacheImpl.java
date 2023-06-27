@@ -1,5 +1,16 @@
 package datawave.microservice.query.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+import org.apache.accumulo.core.security.Authorizations;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Service;
+
 import datawave.core.query.logic.QueryCheckpoint;
 import datawave.core.query.logic.QueryKey;
 import datawave.microservice.authorization.user.DatawaveUserDetails;
@@ -8,16 +19,6 @@ import datawave.microservice.query.remote.QueryRequest;
 import datawave.webservice.query.Query;
 import datawave.webservice.query.exception.DatawaveErrorCode;
 import datawave.webservice.query.exception.QueryException;
-import org.apache.accumulo.core.security.Authorizations;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 @Service
 @ConditionalOnProperty(name = "datawave.query.storage.cache.enabled", havingValue = "true", matchIfMissing = true)

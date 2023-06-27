@@ -1,5 +1,7 @@
 package datawave.microservice.query.util;
 
+import static datawave.microservice.query.storage.QueryStatus.QUERY_STATE.CREATE;
+
 import datawave.microservice.query.config.QueryProperties;
 import datawave.microservice.query.messaging.QueryResultsManager;
 import datawave.microservice.query.storage.QueryStatus;
@@ -8,8 +10,6 @@ import datawave.microservice.query.storage.QueryStorageLock;
 import datawave.webservice.query.exception.DatawaveErrorCode;
 import datawave.webservice.query.exception.NotFoundQueryException;
 import datawave.webservice.query.exception.QueryException;
-
-import static datawave.microservice.query.storage.QueryStatus.QUERY_STATE.CREATE;
 
 public class QueryStatusUpdateUtil {
     

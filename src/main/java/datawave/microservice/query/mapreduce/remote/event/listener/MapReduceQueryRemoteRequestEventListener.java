@@ -1,7 +1,7 @@
 package datawave.microservice.query.mapreduce.remote.event.listener;
 
-import datawave.microservice.query.mapreduce.remote.MapReduceQueryRequestHandler;
-import datawave.microservice.query.remote.QueryRequestHandler;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.bus.ConditionalOnBusEnabled;
@@ -10,7 +10,8 @@ import org.springframework.cloud.bus.event.RemoteMapReduceQueryRequestEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import datawave.microservice.query.mapreduce.remote.MapReduceQueryRequestHandler;
+import datawave.microservice.query.remote.QueryRequestHandler;
 
 @Component
 @ConditionalOnBusEnabled

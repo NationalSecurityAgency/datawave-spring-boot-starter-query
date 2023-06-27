@@ -1,18 +1,6 @@
 package datawave.microservice.query.logic.config;
 
-import datawave.query.config.IndexHole;
-import datawave.query.iterator.ivarator.IvaratorCacheDirConfig;
-import datawave.query.language.parser.QueryParser;
-import datawave.query.tables.QueryMacroFunction;
-import datawave.query.transformer.EventQueryDataDecorator;
-import datawave.query.transformer.EventQueryDataDecoratorTransformer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +9,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+
+import datawave.query.config.IndexHole;
+import datawave.query.iterator.ivarator.IvaratorCacheDirConfig;
+import datawave.query.language.parser.QueryParser;
+import datawave.query.tables.QueryMacroFunction;
+import datawave.query.transformer.EventQueryDataDecorator;
+import datawave.query.transformer.EventQueryDataDecoratorTransformer;
 
 @Configuration
 @ConditionalOnProperty(name = "datawave.query.logic.factory.enabled", havingValue = "true", matchIfMissing = true)

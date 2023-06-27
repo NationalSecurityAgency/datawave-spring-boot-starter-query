@@ -1,16 +1,16 @@
 package datawave.microservice.query.logic.config;
 
-import datawave.data.type.Type;
-import datawave.query.cardinality.CardinalityConfiguration;
-import datawave.query.config.IndexHole;
-import datawave.query.iterator.ivarator.IvaratorCacheDirConfig;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import datawave.data.type.Type;
+import datawave.query.cardinality.CardinalityConfiguration;
+import datawave.query.config.IndexHole;
+import datawave.query.iterator.ivarator.IvaratorCacheDirConfig;
 
 /**
  * Additional configuration for complex types used to configure ShardQueryLogic instances.

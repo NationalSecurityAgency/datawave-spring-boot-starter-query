@@ -1,9 +1,9 @@
 package datawave.microservice.query.logic.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "datawave.query.logic.factory")
 public class QueryLogicFactoryProperties {

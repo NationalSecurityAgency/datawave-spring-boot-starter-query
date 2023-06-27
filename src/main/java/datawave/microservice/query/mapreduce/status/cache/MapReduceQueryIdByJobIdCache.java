@@ -1,13 +1,14 @@
 package datawave.microservice.query.mapreduce.status.cache;
 
-import datawave.microservice.cached.LockableCacheInspector;
+import static datawave.microservice.query.mapreduce.status.cache.MapReduceQueryIdByJobIdCache.CACHE_NAME;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 
-import static datawave.microservice.query.mapreduce.status.cache.MapReduceQueryIdByJobIdCache.CACHE_NAME;
+import datawave.microservice.cached.LockableCacheInspector;
 
 @CacheConfig(cacheNames = CACHE_NAME)
 public class MapReduceQueryIdByJobIdCache extends LockableCache<String> {

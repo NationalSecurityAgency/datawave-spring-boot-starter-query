@@ -1,9 +1,8 @@
 package datawave.microservice.query.mapreduce.status.cache;
 
-import datawave.microservice.authorization.user.DatawaveUserDetails;
-import datawave.microservice.cached.LockableCacheInspector;
-import datawave.microservice.query.mapreduce.status.MapReduceQueryStatus;
-import datawave.webservice.query.Query;
+import static datawave.microservice.query.mapreduce.status.MapReduceQueryStatus.MapReduceQueryState.DEFINED;
+import static datawave.microservice.query.mapreduce.status.cache.MapReduceQueryStatusCache.CACHE_NAME;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheConfig;
@@ -11,8 +10,10 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.util.MultiValueMap;
 
-import static datawave.microservice.query.mapreduce.status.MapReduceQueryStatus.MapReduceQueryState.DEFINED;
-import static datawave.microservice.query.mapreduce.status.cache.MapReduceQueryStatusCache.CACHE_NAME;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
+import datawave.microservice.cached.LockableCacheInspector;
+import datawave.microservice.query.mapreduce.status.MapReduceQueryStatus;
+import datawave.webservice.query.Query;
 
 @CacheConfig(cacheNames = CACHE_NAME)
 public class MapReduceQueryStatusCache extends LockableCache<MapReduceQueryStatus> {

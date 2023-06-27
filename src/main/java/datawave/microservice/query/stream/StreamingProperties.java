@@ -1,13 +1,15 @@
 package datawave.microservice.query.stream;
 
-import datawave.microservice.query.config.ThreadPoolTaskExecutorProperties;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.http.MediaType;
+import java.util.concurrent.TimeUnit;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
-import java.util.concurrent.TimeUnit;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.http.MediaType;
+
+import datawave.microservice.query.config.ThreadPoolTaskExecutorProperties;
 
 @ConfigurationProperties(prefix = "datawave.query.stream")
 public class StreamingProperties {

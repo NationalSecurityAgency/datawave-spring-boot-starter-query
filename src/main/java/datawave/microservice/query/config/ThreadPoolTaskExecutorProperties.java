@@ -1,10 +1,10 @@
 package datawave.microservice.query.config;
 
-import org.springframework.validation.annotation.Validated;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+
+import org.springframework.validation.annotation.Validated;
 
 @Validated
 public class ThreadPoolTaskExecutorProperties {

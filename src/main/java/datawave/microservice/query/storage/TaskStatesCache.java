@@ -1,12 +1,13 @@
 package datawave.microservice.query.storage;
 
-import datawave.core.query.logic.QueryKey;
-import datawave.microservice.cached.LockableCacheInspector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
+
+import datawave.core.query.logic.QueryKey;
+import datawave.microservice.cached.LockableCacheInspector;
 
 @CacheConfig(cacheNames = TaskStatesCache.CACHE_NAME)
 public class TaskStatesCache {

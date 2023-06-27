@@ -1,17 +1,19 @@
 package datawave.microservice.query.messaging.hazelcast;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hazelcast.core.HazelcastInstance;
-import datawave.microservice.query.messaging.QueryResultsListener;
-import datawave.microservice.query.messaging.QueryResultsManager;
-import datawave.microservice.query.messaging.QueryResultsPublisher;
-import datawave.microservice.query.messaging.config.MessagingProperties;
+import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResultsManager.HAZELCAST;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResultsManager.HAZELCAST;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hazelcast.core.HazelcastInstance;
+
+import datawave.microservice.query.messaging.QueryResultsListener;
+import datawave.microservice.query.messaging.QueryResultsManager;
+import datawave.microservice.query.messaging.QueryResultsPublisher;
+import datawave.microservice.query.messaging.config.MessagingProperties;
 
 @Component
 @ConditionalOnProperty(name = "datawave.query.messaging.backend", havingValue = HAZELCAST)

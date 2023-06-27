@@ -1,19 +1,20 @@
 package datawave.microservice.query.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
+import static datawave.microservice.query.QueryParameters.QUERY_MAX_RESULTS_OVERRIDE;
+import static datawave.microservice.query.QueryParameters.QUERY_PAGESIZE;
+import static datawave.microservice.query.QueryParameters.QUERY_PAGETIMEOUT;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import static datawave.microservice.query.QueryParameters.QUERY_MAX_RESULTS_OVERRIDE;
-import static datawave.microservice.query.QueryParameters.QUERY_PAGESIZE;
-import static datawave.microservice.query.QueryParameters.QUERY_PAGETIMEOUT;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
 
 @Validated
 @ConfigurationProperties(prefix = "datawave.query")

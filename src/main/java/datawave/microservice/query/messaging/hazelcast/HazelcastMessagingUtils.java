@@ -1,10 +1,10 @@
 package datawave.microservice.query.messaging.hazelcast;
 
+import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResultsManager.SPLIT_BRAIN_PROTECTION_NAME;
+
 import com.hazelcast.collection.IQueue;
 import com.hazelcast.config.QueueConfig;
 import com.hazelcast.core.HazelcastInstance;
-
-import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResultsManager.SPLIT_BRAIN_PROTECTION_NAME;
 
 public class HazelcastMessagingUtils {
     

@@ -1,11 +1,11 @@
 package datawave.microservice.query.mapreduce.config;
 
-import org.apache.hadoop.mapreduce.InputFormat;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.hadoop.mapreduce.InputFormat;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = MapReduceQueryProperties.PREFIX)
 public class MapReduceQueryProperties {

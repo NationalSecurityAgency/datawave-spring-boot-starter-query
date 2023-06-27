@@ -1,5 +1,11 @@
 package datawave.microservice.query.mapreduce.status;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import org.springframework.util.MultiValueMap;
+
 import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryIdByJobIdCache;
 import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryIdByUsernameCache;
@@ -8,11 +14,6 @@ import datawave.microservice.query.mapreduce.status.cache.util.CacheUpdater;
 import datawave.microservice.query.mapreduce.status.cache.util.LockedCacheUpdateUtil;
 import datawave.webservice.query.Query;
 import datawave.webservice.query.exception.QueryException;
-import org.springframework.util.MultiValueMap;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 public class MapReduceQueryCache {
     private MapReduceQueryStatusCache queryStatusCache;

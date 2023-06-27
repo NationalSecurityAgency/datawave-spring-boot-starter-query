@@ -1,12 +1,14 @@
 package datawave.microservice.query.edge.config;
 
-import datawave.query.model.FieldMapping;
+import java.util.List;
+import java.util.Map;
+
+import javax.validation.constraints.NotNull;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Map;
+import datawave.query.model.FieldMapping;
 
 @Validated
 @ConfigurationProperties(prefix = "datawave.query.edge.model")

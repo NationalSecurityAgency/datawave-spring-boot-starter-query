@@ -1,8 +1,8 @@
 package datawave.microservice.query.mapreduce.status.cache;
 
-import datawave.microservice.cached.LockableCacheInspector;
-
 import java.util.concurrent.TimeUnit;
+
+import datawave.microservice.cached.LockableCacheInspector;
 
 public abstract class LockableCache<T> {
     protected final LockableCacheInspector cacheInspector;

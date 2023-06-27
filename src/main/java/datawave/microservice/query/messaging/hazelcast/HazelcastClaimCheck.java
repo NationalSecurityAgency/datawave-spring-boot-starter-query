@@ -1,22 +1,24 @@
 package datawave.microservice.query.messaging.hazelcast;
 
+import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResultsManager.HAZELCAST;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hazelcast.collection.IQueue;
 import com.hazelcast.core.HazelcastInstance;
+
 import datawave.microservice.query.messaging.ClaimCheck;
 import datawave.microservice.query.messaging.config.MessagingProperties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.stereotype.Component;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResultsManager.HAZELCAST;
 
 @Component
 @ConditionalOnExpression("${datawave.query.messaging.claimCheck.enabled:true} and ${datawave.query.messaging.claimCheck.backend:'" + HAZELCAST + "'} == '"

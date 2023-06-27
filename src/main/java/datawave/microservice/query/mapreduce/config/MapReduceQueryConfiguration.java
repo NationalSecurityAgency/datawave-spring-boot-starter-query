@@ -1,17 +1,15 @@
 package datawave.microservice.query.mapreduce.config;
 
-import com.hazelcast.spring.cache.HazelcastCacheManager;
-import datawave.microservice.cached.CacheInspector;
-import datawave.microservice.cached.LockableCacheInspector;
-import datawave.microservice.cached.LockableHazelcastCacheInspector;
-import datawave.microservice.cached.UniversalLockableCacheInspector;
-import datawave.microservice.query.mapreduce.jobs.BulkResultsJob;
-import datawave.microservice.query.mapreduce.jobs.MapReduceJob;
-import datawave.microservice.query.mapreduce.jobs.OozieJob;
-import datawave.microservice.query.mapreduce.status.MapReduceQueryCache;
-import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryIdByJobIdCache;
-import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryIdByUsernameCache;
-import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryStatusCache;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -29,15 +27,19 @@ import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import com.hazelcast.spring.cache.HazelcastCacheManager;
+
+import datawave.microservice.cached.CacheInspector;
+import datawave.microservice.cached.LockableCacheInspector;
+import datawave.microservice.cached.LockableHazelcastCacheInspector;
+import datawave.microservice.cached.UniversalLockableCacheInspector;
+import datawave.microservice.query.mapreduce.jobs.BulkResultsJob;
+import datawave.microservice.query.mapreduce.jobs.MapReduceJob;
+import datawave.microservice.query.mapreduce.jobs.OozieJob;
+import datawave.microservice.query.mapreduce.status.MapReduceQueryCache;
+import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryIdByJobIdCache;
+import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryIdByUsernameCache;
+import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryStatusCache;
 
 @Configuration
 @EnableCaching

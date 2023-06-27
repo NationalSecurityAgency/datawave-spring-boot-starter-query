@@ -1,13 +1,12 @@
 package datawave.microservice.query.logic;
 
-import datawave.core.query.logic.QueryLogic;
-import datawave.core.query.logic.QueryLogicFactory;
-import datawave.microservice.authorization.user.DatawaveUserDetails;
-import datawave.microservice.query.logic.config.QueryLogicFactoryProperties;
-import datawave.security.authorization.ProxiedUserDetails;
-import datawave.webservice.query.exception.DatawaveErrorCode;
-import datawave.webservice.query.exception.QueryException;
-import datawave.webservice.query.exception.UnauthorizedQueryException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Supplier;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -18,12 +17,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Supplier;
+import datawave.core.query.logic.QueryLogic;
+import datawave.core.query.logic.QueryLogicFactory;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
+import datawave.microservice.query.logic.config.QueryLogicFactoryProperties;
+import datawave.security.authorization.ProxiedUserDetails;
+import datawave.webservice.query.exception.DatawaveErrorCode;
+import datawave.webservice.query.exception.QueryException;
+import datawave.webservice.query.exception.UnauthorizedQueryException;
 
 @Component
 @ConditionalOnProperty(name = "datawave.query.logic.factory.enabled", havingValue = "true", matchIfMissing = true)

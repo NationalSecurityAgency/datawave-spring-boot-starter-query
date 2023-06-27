@@ -1,13 +1,15 @@
 package datawave.microservice.query.storage;
 
+import java.util.Collection;
+import java.util.Objects;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Sets;
-import datawave.core.query.configuration.QueryData;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Collection;
-import java.util.Objects;
+import datawave.core.query.configuration.QueryData;
 
 /**
  * A task description

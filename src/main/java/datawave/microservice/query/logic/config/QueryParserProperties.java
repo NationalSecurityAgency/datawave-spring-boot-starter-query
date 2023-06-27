@@ -1,9 +1,9 @@
 package datawave.microservice.query.logic.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import java.util.List;
 import java.util.Set;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "datawave.query.parser")
 public class QueryParserProperties {

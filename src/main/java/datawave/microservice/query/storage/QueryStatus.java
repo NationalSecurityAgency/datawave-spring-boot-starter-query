@@ -1,16 +1,7 @@
 package datawave.microservice.query.storage;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import datawave.core.query.configuration.GenericQueryConfiguration;
-import datawave.core.query.logic.QueryKey;
-import datawave.microservice.authorization.user.DatawaveUserDetails;
-import datawave.microservice.querymetric.BaseQueryMetric.Prediction;
-import datawave.webservice.query.Query;
-import datawave.webservice.query.exception.DatawaveErrorCode;
-import org.apache.accumulo.core.security.Authorizations;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import static datawave.microservice.query.storage.QueryStatus.QUERY_STATE.CLOSE;
+import static datawave.microservice.query.storage.QueryStatus.QUERY_STATE.CREATE;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStreamWriter;
@@ -21,8 +12,19 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static datawave.microservice.query.storage.QueryStatus.QUERY_STATE.CLOSE;
-import static datawave.microservice.query.storage.QueryStatus.QUERY_STATE.CREATE;
+import org.apache.accumulo.core.security.Authorizations;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import datawave.core.query.configuration.GenericQueryConfiguration;
+import datawave.core.query.logic.QueryKey;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
+import datawave.microservice.querymetric.BaseQueryMetric.Prediction;
+import datawave.webservice.query.Query;
+import datawave.webservice.query.exception.DatawaveErrorCode;
 
 public class QueryStatus implements Serializable {
     /**

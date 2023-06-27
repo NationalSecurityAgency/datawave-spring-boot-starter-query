@@ -1,14 +1,16 @@
 package datawave.microservice.query.storage;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import datawave.core.query.logic.QueryCheckpoint;
-import datawave.core.query.logic.QueryKey;
-import datawave.microservice.query.remote.QueryRequest;
+import java.io.Serializable;
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import datawave.core.query.logic.QueryCheckpoint;
+import datawave.core.query.logic.QueryKey;
+import datawave.microservice.query.remote.QueryRequest;
 
 /**
  * A query task is an action to perform for a specified query.

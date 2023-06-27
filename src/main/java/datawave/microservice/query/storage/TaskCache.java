@@ -1,9 +1,12 @@
 package datawave.microservice.query.storage;
 
-import datawave.core.query.logic.QueryCheckpoint;
-import datawave.core.query.logic.QueryKey;
-import datawave.microservice.cached.LockableCacheInspector;
-import datawave.microservice.query.remote.QueryRequest;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +14,10 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import datawave.core.query.logic.QueryCheckpoint;
+import datawave.core.query.logic.QueryKey;
+import datawave.microservice.cached.LockableCacheInspector;
+import datawave.microservice.query.remote.QueryRequest;
 
 @CacheConfig(cacheNames = TaskCache.CACHE_NAME)
 public class TaskCache {

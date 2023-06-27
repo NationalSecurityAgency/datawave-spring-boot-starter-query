@@ -1,5 +1,7 @@
 package datawave.microservice.query.edge;
 
+import org.springframework.web.reactive.function.client.WebClient;
+
 import datawave.core.common.edgedictionary.EdgeDictionaryProvider;
 import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.query.edge.config.EdgeDictionaryProviderProperties;
@@ -8,7 +10,6 @@ import datawave.security.authorization.JWTTokenHandler;
 import datawave.webservice.dictionary.edge.EdgeDictionaryBase;
 import datawave.webservice.dictionary.edge.MetadataBase;
 import datawave.webservice.query.Query;
-import org.springframework.web.reactive.function.client.WebClient;
 
 public class DefaultEdgeDictionaryProvider implements EdgeDictionaryProvider {
     

@@ -1,13 +1,15 @@
 package datawave.microservice.query.storage;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import datawave.core.query.logic.QueryKey;
+import java.io.Serializable;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import datawave.core.query.logic.QueryKey;
 
 public class TaskKey extends QueryKey implements Serializable {
     private static final long serialVersionUID = -2589618312956104322L;

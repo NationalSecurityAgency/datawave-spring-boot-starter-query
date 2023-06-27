@@ -1,9 +1,15 @@
 package datawave.microservice.query.planner.config;
 
-import datawave.query.planner.rules.NodeTransformRule;
-import datawave.query.planner.rules.RegexDotallTransformRule;
-import datawave.query.planner.rules.RegexPushdownTransformRule;
-import datawave.query.planner.rules.RegexSimplifierTransformRule;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.annotation.Bean;
@@ -14,15 +20,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
+import datawave.query.planner.rules.NodeTransformRule;
+import datawave.query.planner.rules.RegexDotallTransformRule;
+import datawave.query.planner.rules.RegexPushdownTransformRule;
+import datawave.query.planner.rules.RegexSimplifierTransformRule;
 
 @Configuration
 public class DefaultQueryPlannerConfiguration {

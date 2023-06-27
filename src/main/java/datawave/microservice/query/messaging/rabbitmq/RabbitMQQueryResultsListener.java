@@ -1,12 +1,14 @@
 package datawave.microservice.query.messaging.rabbitmq;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rabbitmq.client.Channel;
-import datawave.microservice.query.messaging.AcknowledgementCallback;
-import datawave.microservice.query.messaging.ClaimCheck;
-import datawave.microservice.query.messaging.QueryResultsListener;
-import datawave.microservice.query.messaging.Result;
+import static datawave.microservice.query.messaging.AcknowledgementCallback.Status.ACK;
+import static datawave.microservice.query.messaging.AcknowledgementCallback.Status.NACK;
+import static datawave.microservice.query.messaging.rabbitmq.RabbitMQQueryResultsManager.QUERY_QUEUE_PREFIX;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AcknowledgeMode;
@@ -17,14 +19,14 @@ import org.springframework.amqp.rabbit.listener.MessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistry;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rabbitmq.client.Channel;
 
-import static datawave.microservice.query.messaging.AcknowledgementCallback.Status.ACK;
-import static datawave.microservice.query.messaging.AcknowledgementCallback.Status.NACK;
-import static datawave.microservice.query.messaging.rabbitmq.RabbitMQQueryResultsManager.QUERY_QUEUE_PREFIX;
+import datawave.microservice.query.messaging.AcknowledgementCallback;
+import datawave.microservice.query.messaging.ClaimCheck;
+import datawave.microservice.query.messaging.QueryResultsListener;
+import datawave.microservice.query.messaging.Result;
 
 /**
  * A listener for RabbitMQ Query Results

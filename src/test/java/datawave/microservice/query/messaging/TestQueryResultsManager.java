@@ -1,9 +1,6 @@
 package datawave.microservice.query.messaging;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
+import static datawave.microservice.query.messaging.TestQueryResultsManager.TEST;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +15,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import static datawave.microservice.query.messaging.TestQueryResultsManager.TEST;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
 @Component
 @ConditionalOnProperty(name = "datawave.query.messaging.backend", havingValue = TEST, matchIfMissing = true)

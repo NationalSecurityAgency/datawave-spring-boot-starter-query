@@ -1,16 +1,18 @@
 package datawave.microservice.query.messaging.hazelcast;
 
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hazelcast.collection.IQueue;
 import com.hazelcast.spi.exception.DistributedObjectDestroyedException;
+
 import datawave.microservice.query.messaging.QueryResultsListener;
 import datawave.microservice.query.messaging.Result;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 public class HazelcastQueryResultsListener implements QueryResultsListener {
     private final Logger log = LoggerFactory.getLogger(this.getClass());

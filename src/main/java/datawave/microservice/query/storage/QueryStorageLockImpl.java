@@ -1,8 +1,8 @@
 package datawave.microservice.query.storage;
 
-import datawave.microservice.cached.LockableCacheInspector;
-
 import java.util.concurrent.TimeUnit;
+
+import datawave.microservice.cached.LockableCacheInspector;
 
 /**
  * A lock object for a query status

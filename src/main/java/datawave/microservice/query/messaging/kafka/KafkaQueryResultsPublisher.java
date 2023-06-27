@@ -1,19 +1,21 @@
 package datawave.microservice.query.messaging.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import datawave.microservice.query.messaging.QueryResultsPublisher;
-import datawave.microservice.query.messaging.Result;
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import datawave.microservice.query.messaging.QueryResultsPublisher;
+import datawave.microservice.query.messaging.Result;
 
 class KafkaQueryResultsPublisher implements QueryResultsPublisher {
     private final Logger log = LoggerFactory.getLogger(this.getClass());

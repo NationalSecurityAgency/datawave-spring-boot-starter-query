@@ -1,10 +1,10 @@
 package datawave.microservice.query.edge;
 
+import java.util.Map;
+
 import datawave.edge.model.EdgeModelFields;
 import datawave.edge.model.EdgeModelFieldsFactory;
 import datawave.microservice.query.edge.config.EdgeModelProperties;
-
-import java.util.Map;
 
 public class EdgeModelFieldsFactoryImpl implements EdgeModelFieldsFactory {
     

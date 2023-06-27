@@ -1,18 +1,23 @@
 package datawave.microservice.query.storage;
 
-import com.hazelcast.config.Config;
-import com.hazelcast.core.Hazelcast;
-import com.hazelcast.core.HazelcastInstance;
-import datawave.core.query.configuration.GenericQueryConfiguration;
-import datawave.core.query.logic.QueryCheckpoint;
-import datawave.core.query.logic.QueryKey;
-import datawave.microservice.query.messaging.QueryResultsListener;
-import datawave.microservice.query.messaging.QueryResultsManager;
-import datawave.microservice.query.messaging.Result;
-import datawave.microservice.query.remote.QueryRequest;
-import datawave.query.config.ShardQueryConfiguration;
-import datawave.webservice.query.Query;
-import datawave.webservice.query.QueryImpl;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.accumulo.core.security.Authorizations;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;
@@ -32,23 +37,20 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
+import com.hazelcast.config.Config;
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import datawave.core.query.configuration.GenericQueryConfiguration;
+import datawave.core.query.logic.QueryCheckpoint;
+import datawave.core.query.logic.QueryKey;
+import datawave.microservice.query.messaging.QueryResultsListener;
+import datawave.microservice.query.messaging.QueryResultsManager;
+import datawave.microservice.query.messaging.Result;
+import datawave.microservice.query.remote.QueryRequest;
+import datawave.query.config.ShardQueryConfiguration;
+import datawave.webservice.query.Query;
+import datawave.webservice.query.QueryImpl;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)

@@ -1,25 +1,22 @@
 package datawave.microservice.query.mapreduce.jobs;
 
-import datawave.core.common.connection.AccumuloConnectionFactory;
-import datawave.core.mapreduce.bulkresults.map.BulkResultsFileOutputMapper;
-import datawave.core.mapreduce.bulkresults.map.BulkResultsTableOutputMapper;
-import datawave.core.query.configuration.GenericQueryConfiguration;
-import datawave.core.query.configuration.QueryData;
-import datawave.core.query.logic.QueryLogic;
-import datawave.core.query.logic.QueryLogicFactory;
-import datawave.microservice.authorization.user.DatawaveUserDetails;
-import datawave.microservice.authorization.util.AuthorizationsUtil;
-import datawave.microservice.mapreduce.bulkresults.map.SerializationFormat;
-import datawave.microservice.query.mapreduce.config.MapReduceQueryProperties;
-import datawave.microservice.query.mapreduce.status.MapReduceQueryStatus;
-import datawave.mr.bulk.BulkInputFormat;
-import datawave.query.exceptions.NoResultsException;
-import datawave.query.iterator.QueryOptions;
-import datawave.security.authorization.UserOperations;
-import datawave.security.iterator.ConfigurableVisibilityFilter;
-import datawave.webservice.query.Query;
-import datawave.webservice.query.exception.DatawaveErrorCode;
-import datawave.webservice.query.exception.QueryException;
+import static datawave.microservice.query.mapreduce.config.MapReduceQueryProperties.FORMAT;
+import static datawave.microservice.query.mapreduce.config.MapReduceQueryProperties.OUTPUT_FORMAT;
+import static datawave.microservice.query.mapreduce.config.MapReduceQueryProperties.OUTPUT_TABLE_NAME;
+import static datawave.microservice.query.mapreduce.config.MapReduceQueryProperties.QUERY_ID;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import javax.ws.rs.WebApplicationException;
+
 import org.apache.accumulo.core.client.Accumulo;
 import org.apache.accumulo.core.client.AccumuloClient;
 import org.apache.accumulo.core.client.BatchWriterConfig;
@@ -40,21 +37,26 @@ import org.apache.hadoop.mapreduce.OutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-import javax.ws.rs.WebApplicationException;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
-import static datawave.microservice.query.mapreduce.config.MapReduceQueryProperties.FORMAT;
-import static datawave.microservice.query.mapreduce.config.MapReduceQueryProperties.OUTPUT_FORMAT;
-import static datawave.microservice.query.mapreduce.config.MapReduceQueryProperties.OUTPUT_TABLE_NAME;
-import static datawave.microservice.query.mapreduce.config.MapReduceQueryProperties.QUERY_ID;
+import datawave.core.common.connection.AccumuloConnectionFactory;
+import datawave.core.mapreduce.bulkresults.map.BulkResultsFileOutputMapper;
+import datawave.core.mapreduce.bulkresults.map.BulkResultsTableOutputMapper;
+import datawave.core.query.configuration.GenericQueryConfiguration;
+import datawave.core.query.configuration.QueryData;
+import datawave.core.query.logic.QueryLogic;
+import datawave.core.query.logic.QueryLogicFactory;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
+import datawave.microservice.authorization.util.AuthorizationsUtil;
+import datawave.microservice.mapreduce.bulkresults.map.SerializationFormat;
+import datawave.microservice.query.mapreduce.config.MapReduceQueryProperties;
+import datawave.microservice.query.mapreduce.status.MapReduceQueryStatus;
+import datawave.mr.bulk.BulkInputFormat;
+import datawave.query.exceptions.NoResultsException;
+import datawave.query.iterator.QueryOptions;
+import datawave.security.authorization.UserOperations;
+import datawave.security.iterator.ConfigurableVisibilityFilter;
+import datawave.webservice.query.Query;
+import datawave.webservice.query.exception.DatawaveErrorCode;
+import datawave.webservice.query.exception.QueryException;
 
 public class BulkResultsJob extends MapReduceJob {
     

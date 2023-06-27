@@ -1,17 +1,19 @@
 package datawave.microservice.query.storage;
 
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.apache.accumulo.core.security.Authorizations;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import datawave.core.query.configuration.GenericQueryConfiguration;
 import datawave.core.query.logic.QueryKey;
 import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.querymetric.BaseQueryMetric;
 import datawave.webservice.query.Query;
 import datawave.webservice.query.exception.DatawaveErrorCode;
-import org.apache.accumulo.core.security.Authorizations;
-
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * This class will cache a QueryStatus object for a specified query. The underlying storage will be polled at a specified interval, or on demand if the current

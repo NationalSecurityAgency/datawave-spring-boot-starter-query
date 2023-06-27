@@ -1,7 +1,11 @@
 package datawave.microservice.query.logic.config;
 
-import datawave.query.iterator.ivarator.IvaratorCacheDirConfig;
-import datawave.query.language.parser.QueryParser;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,11 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
+import datawave.query.iterator.ivarator.IvaratorCacheDirConfig;
+import datawave.query.language.parser.QueryParser;
 
 @Configuration
 @ConditionalOnProperty(name = "datawave.query.logic.factory.enabled", havingValue = "true", matchIfMissing = true)

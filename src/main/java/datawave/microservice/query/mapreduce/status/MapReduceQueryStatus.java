@@ -1,17 +1,5 @@
 package datawave.microservice.query.mapreduce.status;
 
-import datawave.core.query.configuration.GenericQueryConfiguration;
-import datawave.microservice.authorization.user.DatawaveUserDetails;
-import datawave.webservice.query.Query;
-import datawave.webservice.query.exception.DatawaveErrorCode;
-import datawave.webservice.results.mr.JobExecution;
-import datawave.webservice.results.mr.MapReduceInfoResponse;
-import org.apache.hadoop.mapreduce.JobStatus;
-import org.springframework.util.MultiValueMap;
-
-import java.io.Serializable;
-import java.util.Collections;
-
 import static datawave.core.query.util.QueryUtil.PARAMETER_NAME_VALUE_SEPARATOR;
 import static datawave.core.query.util.QueryUtil.PARAMETER_SEPARATOR;
 import static datawave.microservice.query.mapreduce.status.MapReduceQueryStatus.MapReduceQueryState.CANCELED;
@@ -19,6 +7,19 @@ import static datawave.microservice.query.mapreduce.status.MapReduceQueryStatus.
 import static datawave.microservice.query.mapreduce.status.MapReduceQueryStatus.MapReduceQueryState.RUNNING;
 import static datawave.microservice.query.mapreduce.status.MapReduceQueryStatus.MapReduceQueryState.SUBMITTED;
 import static datawave.microservice.query.mapreduce.status.MapReduceQueryStatus.MapReduceQueryState.SUCCEEDED;
+
+import java.io.Serializable;
+import java.util.Collections;
+
+import org.apache.hadoop.mapreduce.JobStatus;
+import org.springframework.util.MultiValueMap;
+
+import datawave.core.query.configuration.GenericQueryConfiguration;
+import datawave.microservice.authorization.user.DatawaveUserDetails;
+import datawave.webservice.query.Query;
+import datawave.webservice.query.exception.DatawaveErrorCode;
+import datawave.webservice.results.mr.JobExecution;
+import datawave.webservice.results.mr.MapReduceInfoResponse;
 
 public class MapReduceQueryStatus implements Serializable {
     

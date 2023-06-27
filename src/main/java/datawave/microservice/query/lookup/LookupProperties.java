@@ -1,13 +1,15 @@
 package datawave.microservice.query.lookup;
 
-import datawave.query.data.UUIDType;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
+
+import datawave.query.data.UUIDType;
 
 @Validated
 @ConfigurationProperties(prefix = "datawave.query.lookup")
