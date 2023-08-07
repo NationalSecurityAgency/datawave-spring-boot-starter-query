@@ -20,9 +20,9 @@ import com.zaxxer.sparsebits.SparseBitSet;
 import datawave.core.query.configuration.QueryData;
 import datawave.core.query.logic.QueryCheckpoint;
 import datawave.core.query.logic.QueryKey;
+import datawave.microservice.query.QueryImpl;
 import datawave.microservice.query.remote.QueryRequest;
 import datawave.query.config.ShardQueryConfiguration;
-import datawave.webservice.query.QueryImpl;
 
 public class QueryTaskCheckpointTest {
     @Test

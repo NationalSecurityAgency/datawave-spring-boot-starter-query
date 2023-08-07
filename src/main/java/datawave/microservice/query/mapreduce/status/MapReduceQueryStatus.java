@@ -16,7 +16,7 @@ import org.springframework.util.MultiValueMap;
 
 import datawave.core.query.configuration.GenericQueryConfiguration;
 import datawave.microservice.authorization.user.DatawaveUserDetails;
-import datawave.webservice.query.Query;
+import datawave.microservice.query.Query;
 import datawave.webservice.query.exception.DatawaveErrorCode;
 import datawave.webservice.results.mr.JobExecution;
 import datawave.webservice.results.mr.MapReduceInfoResponse;

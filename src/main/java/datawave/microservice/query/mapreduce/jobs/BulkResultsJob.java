@@ -47,6 +47,7 @@ import datawave.core.query.logic.QueryLogicFactory;
 import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.authorization.util.AuthorizationsUtil;
 import datawave.microservice.mapreduce.bulkresults.map.SerializationFormat;
+import datawave.microservice.query.Query;
 import datawave.microservice.query.mapreduce.config.MapReduceQueryProperties;
 import datawave.microservice.query.mapreduce.status.MapReduceQueryStatus;
 import datawave.mr.bulk.BulkInputFormat;
@@ -54,7 +55,6 @@ import datawave.query.exceptions.NoResultsException;
 import datawave.query.iterator.QueryOptions;
 import datawave.security.authorization.UserOperations;
 import datawave.security.iterator.ConfigurableVisibilityFilter;
-import datawave.webservice.query.Query;
 import datawave.webservice.query.exception.DatawaveErrorCode;
 import datawave.webservice.query.exception.QueryException;
 

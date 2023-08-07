@@ -12,8 +12,8 @@ import org.springframework.util.MultiValueMap;
 
 import datawave.microservice.authorization.user.DatawaveUserDetails;
 import datawave.microservice.cached.LockableCacheInspector;
+import datawave.microservice.query.Query;
 import datawave.microservice.query.mapreduce.status.MapReduceQueryStatus;
-import datawave.webservice.query.Query;
 
 @CacheConfig(cacheNames = CACHE_NAME)
 public class MapReduceQueryStatusCache extends LockableCache<MapReduceQueryStatus> {

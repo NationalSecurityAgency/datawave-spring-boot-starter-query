@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 import datawave.core.query.logic.QueryCheckpoint;
 import datawave.core.query.logic.QueryKey;
 import datawave.microservice.authorization.user.DatawaveUserDetails;
+import datawave.microservice.query.Query;
 import datawave.microservice.query.messaging.QueryResultsManager;
 import datawave.microservice.query.remote.QueryRequest;
-import datawave.webservice.query.Query;
 import datawave.webservice.query.exception.DatawaveErrorCode;
 import datawave.webservice.query.exception.QueryException;
 

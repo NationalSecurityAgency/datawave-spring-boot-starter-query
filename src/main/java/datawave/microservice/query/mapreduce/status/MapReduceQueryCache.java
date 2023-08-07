@@ -7,12 +7,12 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.util.MultiValueMap;
 
 import datawave.microservice.authorization.user.DatawaveUserDetails;
+import datawave.microservice.query.Query;
 import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryIdByJobIdCache;
 import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryIdByUsernameCache;
 import datawave.microservice.query.mapreduce.status.cache.MapReduceQueryStatusCache;
 import datawave.microservice.query.mapreduce.status.cache.util.CacheUpdater;
 import datawave.microservice.query.mapreduce.status.cache.util.LockedCacheUpdateUtil;
-import datawave.webservice.query.Query;
 import datawave.webservice.query.exception.QueryException;
 
 public class MapReduceQueryCache {

@@ -44,13 +44,13 @@ import com.hazelcast.core.HazelcastInstance;
 import datawave.core.query.configuration.GenericQueryConfiguration;
 import datawave.core.query.logic.QueryCheckpoint;
 import datawave.core.query.logic.QueryKey;
+import datawave.microservice.query.Query;
+import datawave.microservice.query.QueryImpl;
 import datawave.microservice.query.messaging.QueryResultsListener;
 import datawave.microservice.query.messaging.QueryResultsManager;
 import datawave.microservice.query.messaging.Result;
 import datawave.microservice.query.remote.QueryRequest;
 import datawave.query.config.ShardQueryConfiguration;
-import datawave.webservice.query.Query;
-import datawave.webservice.query.QueryImpl;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)

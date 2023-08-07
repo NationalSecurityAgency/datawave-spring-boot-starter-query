@@ -11,8 +11,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import datawave.core.query.configuration.GenericQueryConfiguration;
 import datawave.core.query.logic.QueryKey;
 import datawave.microservice.authorization.user.DatawaveUserDetails;
+import datawave.microservice.query.Query;
 import datawave.microservice.querymetric.BaseQueryMetric;
-import datawave.webservice.query.Query;
 import datawave.webservice.query.exception.DatawaveErrorCode;
 
 /**
