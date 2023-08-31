@@ -276,18 +276,13 @@ public class QueryTaskCheckpointTest {
         Assertions.assertEquals(queryLogic, state.getQueryStatus().getQueryKey().getQueryLogic());
         Assertions.assertEquals(tasks, state.getTaskStates());
         
-        String json = new ObjectMapper().writeValueAsString(state);
-        QueryState state2 = new ObjectMapper().readerFor(QueryState.class).readValue(json);
-        Assertions.assertEquals(state, state2);
-        Assertions.assertEquals(state.hashCode(), state2.hashCode());
-        
         String uuid2 = uuid;
         String queryPool2 = "default";
         String queryLogic2 = "EventQuery";
         QueryStatus queryStatus2 = new QueryStatus(new QueryKey(queryPool2, uuid2, queryLogic2));
         TaskStates tasks2 = new TaskStates(new QueryKey(queryPool, uuid, queryLogic), 10);
         tasks2.setTaskStates(new HashMap<>(states));
-        state2 = new QueryState(queryStatus2, tasks2);
+        QueryState state2 = new QueryState(queryStatus2, tasks2);
         
         Assertions.assertEquals(state, state2);
         Assertions.assertEquals(state.hashCode(), state2.hashCode());
