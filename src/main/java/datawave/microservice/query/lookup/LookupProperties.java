@@ -14,6 +14,8 @@ import datawave.query.data.UUIDType;
 @Validated
 @ConfigurationProperties(prefix = "datawave.query.lookup")
 public class LookupProperties {
+    @NotEmpty
+    private String pool = "unassigned";
     private Map<String,UUIDType> types = new HashMap<>();
     protected int batchLookupLimit = 100;
     @NotEmpty
@@ -22,6 +24,14 @@ public class LookupProperties {
     protected String columnVisibility;
     @NotEmpty
     protected String contentQueryLogicName = "ContentQuery";
+    
+    public String getPool() {
+        return pool;
+    }
+    
+    public void setPool(String pool) {
+        this.pool = pool;
+    }
     
     public Map<String,UUIDType> getTypes() {
         return types;

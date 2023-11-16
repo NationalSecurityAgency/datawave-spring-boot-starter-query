@@ -19,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @ConfigurationProperties(prefix = "datawave.query")
 public class QueryProperties {
+    private List<String> adminRoles = Arrays.asList("Administrator", "JBossAdministrator");
     @NotEmpty
     private String privilegedRole = "PrivilegedUser";
     // The amount of time to wait for the lock to be acquired
@@ -43,6 +44,14 @@ public class QueryProperties {
     private QueryExpirationProperties expiration = new QueryExpirationProperties();
     private NextCallProperties nextCall = new NextCallProperties();
     private DefaultParameterProperties defaultParams = new DefaultParameterProperties();
+    
+    public List<String> getAdminRoles() {
+        return adminRoles;
+    }
+    
+    public void setAdminRoles(List<String> adminRoles) {
+        this.adminRoles = adminRoles;
+    }
     
     public String getPrivilegedRole() {
         return privilegedRole;
