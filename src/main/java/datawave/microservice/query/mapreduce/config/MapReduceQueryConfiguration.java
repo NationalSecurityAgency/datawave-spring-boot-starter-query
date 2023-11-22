@@ -50,7 +50,8 @@ public class MapReduceQueryConfiguration {
     private ApplicationContext applicationContext;
     
     @Bean
-    public MapReduceQueryIdByJobIdCache mapReduceQueryIdByJobIdCache(Function<CacheManager,CacheInspector> cacheInspectorFactory,
+    public MapReduceQueryIdByJobIdCache mapReduceQueryIdByJobIdCache(
+                    @Qualifier("cacheInspectorFactory") Function<CacheManager,CacheInspector> cacheInspectorFactory,
                     @Qualifier("cacheManager") CacheManager cacheManager) {
         LockableCacheInspector lockableCacheInspector = null;
         if (cacheManager instanceof HazelcastCacheManager) {
@@ -62,7 +63,8 @@ public class MapReduceQueryConfiguration {
     }
     
     @Bean
-    public MapReduceQueryIdByUsernameCache mapReduceQueryIdByUsernameCache(Function<CacheManager,CacheInspector> cacheInspectorFactory,
+    public MapReduceQueryIdByUsernameCache mapReduceQueryIdByUsernameCache(
+                    @Qualifier("cacheInspectorFactory") Function<CacheManager,CacheInspector> cacheInspectorFactory,
                     @Qualifier("cacheManager") CacheManager cacheManager) {
         LockableCacheInspector lockableCacheInspector = null;
         if (cacheManager instanceof HazelcastCacheManager) {
@@ -74,7 +76,7 @@ public class MapReduceQueryConfiguration {
     }
     
     @Bean
-    public MapReduceQueryStatusCache mapReduceQueryStatusCache(Function<CacheManager,CacheInspector> cacheInspectorFactory,
+    public MapReduceQueryStatusCache mapReduceQueryStatusCache(@Qualifier("cacheInspectorFactory") Function<CacheManager,CacheInspector> cacheInspectorFactory,
                     @Qualifier("cacheManager") CacheManager cacheManager) {
         LockableCacheInspector lockableCacheInspector = null;
         if (cacheManager instanceof HazelcastCacheManager) {

@@ -4,6 +4,7 @@ import java.util.function.Function;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -27,7 +28,8 @@ public class QueryStorageConfiguration {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     
     @Bean
-    public QueryStatusCache queryStatusCache(Function<CacheManager,CacheInspector> cacheInspectorFactory, CacheManager cacheManager) {
+    public QueryStatusCache queryStatusCache(@Qualifier("cacheInspectorFactory") Function<CacheManager,CacheInspector> cacheInspectorFactory,
+                    CacheManager cacheManager) {
         log.debug("Using " + cacheManager.getClass() + " for caching");
         LockableCacheInspector lockableCacheInspector;
         if (cacheManager instanceof HazelcastCacheManager)
@@ -38,7 +40,8 @@ public class QueryStorageConfiguration {
     }
     
     @Bean
-    public TaskStatesCache taskStatesCache(Function<CacheManager,CacheInspector> cacheInspectorFactory, CacheManager cacheManager) {
+    public TaskStatesCache taskStatesCache(@Qualifier("cacheInspectorFactory") Function<CacheManager,CacheInspector> cacheInspectorFactory,
+                    CacheManager cacheManager) {
         log.debug("Using " + cacheManager.getClass() + " for caching");
         LockableCacheInspector lockableCacheInspector;
         if (cacheManager instanceof HazelcastCacheManager)
@@ -49,7 +52,7 @@ public class QueryStorageConfiguration {
     }
     
     @Bean
-    public TaskCache taskCache(Function<CacheManager,CacheInspector> cacheInspectorFactory, CacheManager cacheManager) {
+    public TaskCache taskCache(@Qualifier("cacheInspectorFactory") Function<CacheManager,CacheInspector> cacheInspectorFactory, CacheManager cacheManager) {
         log.debug("Using " + cacheManager.getClass() + " for caching");
         LockableCacheInspector lockableCacheInspector;
         if (cacheManager instanceof HazelcastCacheManager)
