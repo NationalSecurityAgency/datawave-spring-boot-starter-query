@@ -62,6 +62,8 @@ public class QueryStatus implements Serializable {
     private long numResultsGenerated = 0L;
     private int activeNextCalls = 0;
     private long lastPageNumber = 0L;
+    private boolean allowLongRunningQueryEmptyPages = false;
+    private int longRunningQueryTimeouts = 0;
     
     private long nextCount;
     private long seekCount;
@@ -320,6 +322,22 @@ public class QueryStatus implements Serializable {
     
     public void setLastUpdatedMillis(long lastUpdatedMillis) {
         this.lastUpdatedMillis = lastUpdatedMillis;
+    }
+    
+    public boolean isAllowLongRunningQueryEmptyPages() {
+        return allowLongRunningQueryEmptyPages;
+    }
+    
+    public void setAllowLongRunningQueryEmptyPages(boolean allowLongRunningQueryEmptyPages) {
+        this.allowLongRunningQueryEmptyPages = allowLongRunningQueryEmptyPages;
+    }
+    
+    public int getLongRunningQueryTimeouts() {
+        return longRunningQueryTimeouts;
+    }
+    
+    public void setLongRunningQueryTimeouts(int longRunningQueryTimeouts) {
+        this.longRunningQueryTimeouts = longRunningQueryTimeouts;
     }
     
     @Override
