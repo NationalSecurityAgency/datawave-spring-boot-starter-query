@@ -33,7 +33,7 @@ public class ShardQueryLogicProperties {
     private Set<String> whindexMappingFields = new HashSet<>();
     private Map<String,Map<String,String>> whindexFieldMappings = new HashMap<>();
     private Map<String,Long> dnResultLimits = new HashMap<>();
-    private Set<String> blacklistedFields = new HashSet<>();
+    private Set<String> disallowlistedFields = new HashSet<>();
     private CardinalityConfiguration cardinalityConfiguration = new CardinalityConfiguration();
     private List<Type> dataTypes = new ArrayList<>();
     private List<String> indexFilteringClassNames = new ArrayList<>();
@@ -195,12 +195,12 @@ public class ShardQueryLogicProperties {
         this.dnResultLimits = dnResultLimits;
     }
     
-    public Set<String> getBlacklistedFields() {
-        return blacklistedFields;
+    public Set<String> getDisallowlistedFields() {
+        return disallowlistedFields;
     }
     
-    public void setBlacklistedFields(Set<String> blacklistedFields) {
-        this.blacklistedFields = blacklistedFields;
+    public void setDisallowlistedFields(Set<String> disallowlistedFields) {
+        this.disallowlistedFields = disallowlistedFields;
     }
     
     public CardinalityConfiguration getCardinalityConfiguration() {

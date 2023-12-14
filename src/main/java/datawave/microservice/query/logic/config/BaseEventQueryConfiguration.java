@@ -166,7 +166,7 @@ public class BaseEventQueryConfiguration {
     
     @Bean
     @Scope(SCOPE_PROTOTYPE)
-    public Set<String> baseEventQueryBlacklistedFields() {
-        return baseEventQueryProperties().getBlacklistedFields();
+    public Set<String> baseEventQueryDisallowlistedFields() {
+        return baseEventQueryProperties().getDisallowlistedFields();
     }
 }
