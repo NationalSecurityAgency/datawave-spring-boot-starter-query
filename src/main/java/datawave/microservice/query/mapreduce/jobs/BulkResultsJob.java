@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
@@ -312,6 +313,13 @@ public class BulkResultsJob extends MapReduceJob {
             Map<String,String> trackingMap = accumuloConnectionFactory.getTrackingMap(Thread.currentThread().getStackTrace());
             client = accumuloConnectionFactory.getClient(userDN, proxyServers, logic.getConnectionPriority(), trackingMap);
             
+            Query query = mapReduceQueryStatus.getQuery();
+            if (query.getQueryAuthorizations() == null) {
+                logic.preInitialize(query, AuthorizationsUtil.buildAuthorizations(null));
+            } else {
+                logic.preInitialize(query,
+                                AuthorizationsUtil.buildAuthorizations(Collections.singleton(AuthorizationsUtil.splitAuths(query.getQueryAuthorizations()))));
+            }
             // Merge user auths with the auths that they use in the Query
             // the query principal is our local principal unless the query logic has a different user operations
             DatawaveUserDetails queryUserDetails = (DatawaveUserDetails) ((logic.getUserOperations() == null) ? mapReduceQueryStatus.getCurrentUser()
@@ -319,15 +327,15 @@ public class BulkResultsJob extends MapReduceJob {
             // the overall principal (the one with combined auths across remote user operations) is our own user operations (probably the UserOperationsBean)
             DatawaveUserDetails overallUserDetails = (DatawaveUserDetails) ((userOperations == null) ? mapReduceQueryStatus.getCurrentUser()
                             : userOperations.getRemoteUser(mapReduceQueryStatus.getCurrentUser()));
-            Set<Authorizations> runtimeQueryAuthorizations = AuthorizationsUtil
-                            .getDowngradedAuthorizations(mapReduceQueryStatus.getQuery().getQueryAuthorizations(), overallUserDetails, queryUserDetails);
+            Set<Authorizations> runtimeQueryAuthorizations = AuthorizationsUtil.getDowngradedAuthorizations(query.getQueryAuthorizations(), overallUserDetails,
+                            queryUserDetails);
             
             // Initialize the logic so that the configuration contains all of the iterator options
-            GenericQueryConfiguration queryConfig = logic.initialize(client, mapReduceQueryStatus.getQuery(), runtimeQueryAuthorizations);
+            GenericQueryConfiguration queryConfig = logic.initialize(client, query, runtimeQueryAuthorizations);
             
-            String base64EncodedQuery = BulkResultsFileOutputMapper.serializeQuery(mapReduceQueryStatus.getQuery());
+            String base64EncodedQuery = BulkResultsFileOutputMapper.serializeQuery(query);
             
-            return new QuerySettings(logic, queryConfig, base64EncodedQuery, mapReduceQueryStatus.getQuery().getClass(), runtimeQueryAuthorizations);
+            return new QuerySettings(logic, queryConfig, base64EncodedQuery, query.getClass(), runtimeQueryAuthorizations);
         } finally {
             if (null != logic && null != client)
                 accumuloConnectionFactory.returnClient(client);
