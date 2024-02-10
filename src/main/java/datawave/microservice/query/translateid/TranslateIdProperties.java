@@ -42,7 +42,7 @@ public class TranslateIdProperties {
         Map<String,UUIDType> allowedTypes = new HashMap<>();
         if (allowedUUIDQueryLogicName != null && types != null) {
             for (Map.Entry<String,UUIDType> uuidType : types.entrySet()) {
-                if (uuidType.getValue().getQueryLogic().equalsIgnoreCase(allowedUUIDQueryLogicName)) {
+                if (allowedUUIDQueryLogicName.equalsIgnoreCase(uuidType.getValue().getQueryLogic("default"))) {
                     allowedTypes.put(uuidType.getKey(), uuidType.getValue());
                 }
             }
@@ -100,7 +100,7 @@ public class TranslateIdProperties {
         if (this.allowedUUIDQueryLogicName != null && types != null) {
             List<String> entriesToRemove = new ArrayList<>();
             for (Map.Entry<String,UUIDType> uuidEntry : types.entrySet()) {
-                if (!uuidEntry.getValue().getQueryLogic().equalsIgnoreCase(allowedUUIDQueryLogicName)) {
+                if (allowedUUIDQueryLogicName.equalsIgnoreCase(uuidEntry.getValue().getQueryLogic("default"))) {
                     entriesToRemove.add(uuidEntry.getKey());
                 }
             }
