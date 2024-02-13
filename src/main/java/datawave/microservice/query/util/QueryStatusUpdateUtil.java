@@ -25,7 +25,7 @@ public class QueryStatusUpdateUtil {
         // we can only call next on a created query
         if (queryStatus.getQueryState() == CREATE) {
             // increment the concurrent next count
-            if (queryStatus.getActiveNextCalls() < queryProperties.getNextCall().getConcurrency()) {
+            if (queryStatus.getActiveNextCalls() < queryStatus.getMaxConcurrentNextCalls()) {
                 queryStatus.setActiveNextCalls(queryStatus.getActiveNextCalls() + 1);
                 
                 // update the last used datetime for the query

@@ -61,6 +61,7 @@ public class QueryStatus implements Serializable {
     private long numResultsConsumed = 0L;
     private long numResultsGenerated = 0L;
     private int activeNextCalls = 0;
+    private int maxConcurrentNextCalls = 1;
     private long lastPageNumber = 0L;
     private boolean allowLongRunningQueryEmptyPages = false;
     
@@ -278,12 +279,28 @@ public class QueryStatus implements Serializable {
         this.activeNextCalls = activeNextCalls;
     }
     
+    public int getMaxConcurrentNextCalls() {
+        return maxConcurrentNextCalls;
+    }
+    
+    public void setMaxConcurrentNextCalls(int maxConcurrentNextCalls) {
+        this.maxConcurrentNextCalls = maxConcurrentNextCalls;
+    }
+    
     public long getLastPageNumber() {
         return lastPageNumber;
     }
     
     public void setLastPageNumber(long lastPageNumber) {
         this.lastPageNumber = lastPageNumber;
+    }
+    
+    public boolean isAllowLongRunningQueryEmptyPages() {
+        return allowLongRunningQueryEmptyPages;
+    }
+    
+    public void setAllowLongRunningQueryEmptyPages(boolean allowLongRunningQueryEmptyPages) {
+        this.allowLongRunningQueryEmptyPages = allowLongRunningQueryEmptyPages;
     }
     
     public long getNextCount() {
@@ -332,14 +349,6 @@ public class QueryStatus implements Serializable {
     
     public void setLastUpdatedMillis(long lastUpdatedMillis) {
         this.lastUpdatedMillis = lastUpdatedMillis;
-    }
-    
-    public boolean isAllowLongRunningQueryEmptyPages() {
-        return allowLongRunningQueryEmptyPages;
-    }
-    
-    public void setAllowLongRunningQueryEmptyPages(boolean allowLongRunningQueryEmptyPages) {
-        this.allowLongRunningQueryEmptyPages = allowLongRunningQueryEmptyPages;
     }
     
     @Override

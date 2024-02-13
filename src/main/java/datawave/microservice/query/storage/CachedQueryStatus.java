@@ -350,6 +350,16 @@ public class CachedQueryStatus extends QueryStatus {
     }
     
     @Override
+    public int getMaxConcurrentNextCalls() {
+        return get().getMaxConcurrentNextCalls();
+    }
+    
+    @Override
+    public void setMaxConcurrentNextCalls(int maxConcurrentNextCalls) {
+        updateQueryStatus(() -> queryStatus.setMaxConcurrentNextCalls(maxConcurrentNextCalls));
+    }
+    
+    @Override
     public DatawaveErrorCode getErrorCode() {
         return get().getErrorCode();
     }
