@@ -1,7 +1,10 @@
 package datawave.microservice.query.logic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -58,11 +61,25 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
     }
     
     private QueryLogic<?> getQueryLogic(String name, ProxiedUserDetails currentUser, boolean checkRoles) throws QueryException {
+        String queryLogic = name;
+        
+        if (!queryLogicFactoryProperties.getQueryLogicsByName().isEmpty()) {
+            queryLogic = queryLogicFactoryProperties.getQueryLogicsByName().get(name);
+        }
+        
+        if (queryLogic == null) {
+            throw new IllegalArgumentException("Logic name '" + name + "' is not configured for this system");
+        }
+        
         QueryLogic<?> logic;
         try {
             logic = (QueryLogic<?>) applicationContext.getBean(name);
         } catch (ClassCastException | NoSuchBeanDefinitionException cce) {
-            throw new IllegalArgumentException("Logic name '" + name + "' does not exist in the configuration");
+            if (queryLogic.equals(name)) {
+                throw new IllegalArgumentException("Logic name '" + name + "' does not exist in the configuration");
+            } else {
+                throw new IllegalArgumentException("Logic name '" + name + "' which maps to '" + queryLogic + "' does not exist in the configuration");
+            }
         }
         
         Set<String> userRoles = new HashSet<>();
@@ -96,6 +113,16 @@ public class DefaultQueryLogicFactory implements QueryLogicFactory, ApplicationC
     @Override
     public List<QueryLogic<?>> getQueryLogicList() {
         Map<String,QueryLogic> logicMap = applicationContext.getBeansOfType(QueryLogic.class);
+        
+        if (!queryLogicFactoryProperties.getQueryLogicsByName().isEmpty()) {
+            Map<String,QueryLogic> renamedLogicMap = new LinkedHashMap<>();
+            for (Map.Entry<String,String> entry : queryLogicFactoryProperties.getQueryLogicsByName().entrySet()) {
+                if (logicMap.containsKey(entry.getValue())) {
+                    renamedLogicMap.put(entry.getKey(), logicMap.get(entry.getValue()));
+                }
+            }
+            logicMap = renamedLogicMap;
+        }
         
         List<QueryLogic<?>> logicList = new ArrayList<>();
         

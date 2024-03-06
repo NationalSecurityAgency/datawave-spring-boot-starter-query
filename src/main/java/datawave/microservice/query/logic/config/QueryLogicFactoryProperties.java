@@ -1,6 +1,8 @@
 package datawave.microservice.query.logic.config;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -8,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "datawave.query.logic.factory")
 public class QueryLogicFactoryProperties {
     private String xmlBeansPath = "classpath:QueryLogicFactory.xml,EdgeQueryLogicFactory.xml";
+    private Map<String,String> queryLogicsByName = new LinkedHashMap<>();
     private int maxPageSize = 10000;
     private long pageByteTrigger = 0;
     
@@ -19,6 +22,14 @@ public class QueryLogicFactoryProperties {
     
     public void setXmlBeansPath(String xmlBeansPath) {
         this.xmlBeansPath = xmlBeansPath;
+    }
+    
+    public Map<String,String> getQueryLogicsByName() {
+        return queryLogicsByName;
+    }
+    
+    public void setQueryLogicsByName(Map<String,String> queryLogicsByName) {
+        this.queryLogicsByName = queryLogicsByName;
     }
     
     public int getMaxPageSize() {
