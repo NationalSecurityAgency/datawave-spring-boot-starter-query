@@ -33,10 +33,12 @@
                 <bean class="datawave.data.type.LcNoDiacriticsType" />
             </list>
         </property>
-        <property name="logicDescription" value="Retrieve graph edges matching the search term(s)" />
+        <property name="logicDescription" value="${datawave.query.logic.logics.EdgeQuery.logicDescription}" />
         <property name="metadataHelperFactory" ref="metadataHelperFactory" />
         <property name="selectorExtractor" ref="DatawaveSelectorExtractor" />
         <property name="listSelectorExtractor" ref="SplitSelectorExtractorParamDefaultNull" />
+        <!-- This is injected via EdgeQueryConfiguration.java and configured via configuration properties -->
+        <property name="querySyntaxParsers" ref="edgeQuerySyntaxParsers" />
     </bean>
 
     <bean id="SplitSelectorExtractorParamDefaultNull" scope="prototype" class="datawave.audit.SplitSelectorExtractor">
