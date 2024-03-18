@@ -89,6 +89,13 @@ warehouse:
     edgeModelName: 'DATAWAVE_EDGE'
 
 datawave:
+  authorization:
+    federation:
+      # Each entry in the following map will be registered as a FederatedAuthorizationService bean, named after the key
+      services:
+        FederatedAuthorizationService:
+          federatedAuthorizationUri: "https://authorization:8443/authorization/v2"
+
   metadata:
     all-metadata-auths:
       - PRIVATE,PUBLIC
@@ -96,6 +103,13 @@ datawave:
       "[datawave.data.type.DateType]": "datawave.data.type.RawDateType"
 
   query:
+    federation:
+      # Each entry in the following map will be registered as a FederatedQueryService (RemoteQueryService) bean, named after the key
+      services:
+        FederatedQueryService:
+          queryServiceUri: 'https://query:8443/query/v1'
+          queryMetricServiceUri: 'https://querymetric:8443/querymetric/v1/id'
+
     parser:
       skipTokenizeUnfieldedFields:
         - "DOMETA"
@@ -128,6 +142,7 @@ datawave:
           "FacetedQuery": "FacetedQuery"
           "HitHighlights": "HitHighlights"
           "EdgeEventQuery": "EdgeEventQuery"
+          "FederatedEventQuery": "FederatedEventQuery"
 
         # The max page size that a user can request.  0 turns off this feature
         maxPageSize: 10000

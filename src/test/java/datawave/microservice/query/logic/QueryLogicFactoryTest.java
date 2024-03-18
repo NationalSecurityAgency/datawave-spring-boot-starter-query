@@ -35,6 +35,7 @@ public class QueryLogicFactoryTest {
     
     @Test
     public void createShardQueryLogicTest() throws QueryException, CloneNotSupportedException {
+        Assertions.assertNotNull(queryLogicFactory.getQueryLogic("FederatedEventQuery"));
         Assertions.assertNotNull(queryLogicFactory.getQueryLogic("ContentQuery"));
         Assertions.assertNotNull(queryLogicFactory.getQueryLogic("CountQuery"));
         Assertions.assertNotNull(queryLogicFactory.getQueryLogic("DiscoveryQuery"));

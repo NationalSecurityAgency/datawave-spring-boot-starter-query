@@ -22,6 +22,19 @@
 
     <bean id="dateIndexHelper" scope="prototype" class="datawave.query.util.DateIndexHelper" />
 
+    <!-- Here is an example of configuring a remote query service and a remote event query -->
+    <bean id="FederatedEventQuery" parent="baseQueryLogic" class="datawave.query.tables.RemoteEventQueryLogic">
+        <property name="tableName" value="remoteTable" />
+        <property name="auditType" value="NONE" />
+        <property name="logicDescription" value="Retrieve sharded events/documents, leveraging the global index tables as needed" />
+        <property name="maxResults" value="10" />
+        <property name="selectorExtractor" ref="DatawaveSelectorExtractor" />
+        <!-- This is injected via DynamicFederatedQueryServiceBeanDefinitionRegistrar.java and configured via configuration properties -->
+        <property name="remoteQueryService" ref="FederatedQueryService" />
+        <property name="remoteQueryLogic" value="EventQuery" />
+        <property name="userOperations" ref="FederatedAuthorizationService" />
+    </bean>
+
     <bean id="BaseEventQuery" parent="baseQueryLogic" class="datawave.query.tables.ShardQueryLogic" abstract="true">
         <property name="checkpointable" value="${datawave.query.logic.logics.BaseEventQuery.checkpointable}" />
         <property name="accumuloPassword" value="${datawave.query.logic.logics.BaseEventQuery.accumuloPassword}" />
