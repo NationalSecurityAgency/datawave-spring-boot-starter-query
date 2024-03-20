@@ -32,9 +32,7 @@ import datawave.webservice.query.result.event.ResponseObjectFactory;
         EdgeModelProperties.class})
 @ImportResource(locations = {"${datawave.query.logic.factory.xmlBeansPath:classpath:QueryLogicFactory.xml}"})
 public class QueryLogicFactoryConfiguration {
-    
     private final Logger log = LoggerFactory.getLogger(this.getClass());
-    
     @Bean
     @ConditionalOnMissingBean
     public ResponseObjectFactory responseObjectFactory() {
