@@ -96,6 +96,10 @@
                         <artifactId>*</artifactId>
                         <groupId>junit</groupId>
                     </exclusion>
+                    <exclusion>
+                        <artifactId>*</artifactId>
+                        <groupId>org.infinispan</groupId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
