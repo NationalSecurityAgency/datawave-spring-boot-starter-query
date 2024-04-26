@@ -206,7 +206,7 @@ public class TaskCache {
     public int deleteTasks(String queryId) {
         int deleted = cacheInspector.evictMatching(CACHE_NAME, QueryTask.class, QueryKey.toUUIDKey(queryId));
         if (log.isDebugEnabled()) {
-            log.debug("Deleted all ( " + deleted + ") tasks for query " + queryId);
+            log.debug("Deleted all (" + deleted + ") tasks for query " + queryId);
         }
         return deleted;
     }
