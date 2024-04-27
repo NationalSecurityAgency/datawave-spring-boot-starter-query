@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.hadoop.mapreduce.InputFormat;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import datawave.microservice.query.config.ThreadPoolTaskExecutorProperties;
+
 @ConfigurationProperties(prefix = MapReduceQueryProperties.PREFIX)
 public class MapReduceQueryProperties {
     
@@ -41,6 +43,8 @@ public class MapReduceQueryProperties {
     private TimeUnit lockLeaseTimeUnit = TimeUnit.MILLISECONDS;
     
     private String mapReduceQueryServiceName = "mrquery";
+    
+    private ThreadPoolTaskExecutorProperties executor = new ThreadPoolTaskExecutorProperties(8, 16, 100, "mapReduceCall-");
     
     public String getCallbackServletURL() {
         return callbackServletURL;
@@ -136,5 +140,13 @@ public class MapReduceQueryProperties {
     
     public void setMapReduceQueryServiceName(String mapReduceQueryServiceName) {
         this.mapReduceQueryServiceName = mapReduceQueryServiceName;
+    }
+    
+    public ThreadPoolTaskExecutorProperties getExecutor() {
+        return executor;
+    }
+    
+    public void setExecutor(ThreadPoolTaskExecutorProperties executor) {
+        this.executor = executor;
     }
 }
