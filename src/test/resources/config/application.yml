@@ -110,5 +110,18 @@ datawave:
 
 ---
 
+spring.config.activate.on-profile: federatedQueryServiceTest
+
+datawave:
+  query:
+    federation:
+      services:
+        FederatedQueryService:
+          queryServiceUri: 'https://query:8443/query/v1'
+          queryMetricServiceUri: 'https://querymetric:8443/querymetric/v1/id'
+
+---
+
 spring.config.activate.on-profile: missing
+
 
