@@ -193,9 +193,6 @@ public class BulkResultsJob extends MapReduceJob {
                 
                 AccumuloOutputFormat.configure().clientProperties(clientProps).createTables(true).defaultTable(tableName).store(job);
                 // formatter:on
-                
-                // TODO: this is not supported on the new output format -- just use normal logging configuration
-                // AccumuloOutputFormat.loglevel
             }
         } catch (WebApplicationException wex) {
             throw wex;
@@ -352,51 +349,7 @@ public class BulkResultsJob extends MapReduceJob {
         
         // Note: The logic used to submit a mapreduce query is not needed when running in the mapper
         systemProperties.put(MapReduceQueryProperties.PREFIX + ".enabled", "false");
-        
-        // TODO: JWO: Set properties for the data and edge dictionaries if necessary
-        
-        // TODO: JWO: Set properties for the user's JWT
-        
-        // TODO: JWO: What is the substitute for this?
-        // if (this.jsseSecurityDomain != null) {
-        // String useJobCacheString = systemProperties.getProperty("dw.mapreduce.securitydomain.useJobCache");
-        // boolean useJobCache = Boolean.parseBoolean(useJobCacheString);
-        // if (useJobCache) {
-        // try {
-        // String keyStoreURL = systemProperties.getProperty("dw.mapreduce.securitydomain.keyStoreURL");
-        // File keyStore = new File(keyStoreURL);
-        // Path keyStorePath = new Path(classpath, keyStore.getName());
-        // addSingleFile(keyStoreURL, keyStorePath, id, job, fs);
-        // systemProperties.setProperty("dw.mapreduce.securitydomain.keyStoreURL", keyStore.getName());
-        // } catch (IOException e) {
-        // log.error(e.getMessage(), e);
-        // }
-        // try {
-        // String trustStoreURL = systemProperties.getProperty("dw.mapreduce.securitydomain.trustStoreURL");
-        // File trustStore = new File(trustStoreURL);
-        // Path trustStorePath = new Path(classpath, trustStore.getName());
-        // addSingleFile(trustStoreURL, trustStorePath, id, job, fs);
-        // systemProperties.setProperty("dw.mapreduce.securitydomain.trustStoreURL", trustStore.getName());
-        // } catch (IOException e) {
-        // log.error(e.getMessage(), e);
-        // }
-        // }
-        //
-        // if (jsseSecurityDomain.getClientAlias() != null) {
-        // systemProperties.setProperty("dw.mapreduce.securitydomain.clientAlias", jsseSecurityDomain.getClientAlias());
-        // }
-        // if (jsseSecurityDomain.getServerAlias() != null) {
-        // systemProperties.setProperty("dw.mapreduce.securitydomain.serverAlias", jsseSecurityDomain.getServerAlias());
-        // }
-        // if (jsseSecurityDomain.getCipherSuites() != null) {
-        // systemProperties.setProperty("dw.mapreduce.securitydomain.cipherSuites", StringUtils.join(jsseSecurityDomain.getCipherSuites(), ','));
-        // }
-        // if (jsseSecurityDomain.getProtocols() != null) {
-        // systemProperties.setProperty("dw.mapreduce.securitydomain.protocols", StringUtils.join(jsseSecurityDomain.getProtocols(), ','));
-        // }
-        // systemProperties.setProperty("dw.mapreduce.securitydomain.clientAuth", Boolean.toString(jsseSecurityDomain.isClientAuth()));
-        // }
-        
+
         writeProperties(id, job, fs, classpath, systemProperties);
     }
     
