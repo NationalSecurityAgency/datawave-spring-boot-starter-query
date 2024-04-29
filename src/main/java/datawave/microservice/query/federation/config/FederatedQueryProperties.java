@@ -17,25 +17,25 @@ public class FederatedQueryProperties {
     private long createTimeout = TimeUnit.SECONDS.toMillis(30);
     
     @NotNull
-    private TimeUnit createTimeUnit = TimeUnit.MILLISECONDS;
+    private TimeUnit createTimeoutUnit = TimeUnit.MILLISECONDS;
     
     @PositiveOrZero
     private long nextTimeout = TimeUnit.HOURS.toMillis(1);
     
     @NotNull
-    private TimeUnit nextTimeUnit = TimeUnit.MILLISECONDS;
+    private TimeUnit nextTimeoutUnit = TimeUnit.MILLISECONDS;
     
     @PositiveOrZero
     private long closeTimeout = TimeUnit.HOURS.toMillis(1);
     
     @NotNull
-    private TimeUnit closeTimeUnit = TimeUnit.MILLISECONDS;
+    private TimeUnit closeTimeoutUnit = TimeUnit.MILLISECONDS;
     
     @PositiveOrZero
     private long planTimeout = TimeUnit.MINUTES.toMillis(20);
     
     @NotNull
-    private TimeUnit planTimeUnit = TimeUnit.MILLISECONDS;
+    private TimeUnit planTimeoutUnit = TimeUnit.MILLISECONDS;
     
     public String getQueryServiceUri() {
         return queryServiceUri;
@@ -66,19 +66,19 @@ public class FederatedQueryProperties {
     }
     
     public long getCreateTimeoutMillis() {
-        return createTimeUnit.toMillis(createTimeout);
+        return createTimeoutUnit.toMillis(createTimeout);
     }
     
     public void setCreateTimeout(long createTimeout) {
         this.createTimeout = createTimeout;
     }
     
-    public TimeUnit getCreateTimeUnit() {
-        return createTimeUnit;
+    public TimeUnit getCreateTimeoutUnit() {
+        return createTimeoutUnit;
     }
     
-    public void setCreateTimeUnit(TimeUnit createTimeUnit) {
-        this.createTimeUnit = createTimeUnit;
+    public void setCreateTimeoutUnit(TimeUnit createTimeoutUnit) {
+        this.createTimeoutUnit = createTimeoutUnit;
     }
     
     public long getNextTimeout() {
@@ -86,19 +86,19 @@ public class FederatedQueryProperties {
     }
     
     public long getNextTimeoutMillis() {
-        return nextTimeUnit.toMillis(nextTimeout);
+        return nextTimeoutUnit.toMillis(nextTimeout);
     }
     
     public void setNextTimeout(long nextTimeout) {
         this.nextTimeout = nextTimeout;
     }
     
-    public TimeUnit getNextTimeUnit() {
-        return nextTimeUnit;
+    public TimeUnit getNextTimeoutUnit() {
+        return nextTimeoutUnit;
     }
     
-    public void setNextTimeUnit(TimeUnit nextTimeUnit) {
-        this.nextTimeUnit = nextTimeUnit;
+    public void setNextTimeoutUnit(TimeUnit nextTimeoutUnit) {
+        this.nextTimeoutUnit = nextTimeoutUnit;
     }
     
     public long getCloseTimeout() {
@@ -106,19 +106,19 @@ public class FederatedQueryProperties {
     }
     
     public long getCloseTimeoutMillis() {
-        return closeTimeUnit.toMillis(closeTimeout);
+        return closeTimeoutUnit.toMillis(closeTimeout);
     }
     
     public void setCloseTimeout(long closeTimeout) {
         this.closeTimeout = closeTimeout;
     }
     
-    public TimeUnit getCloseTimeUnit() {
-        return closeTimeUnit;
+    public TimeUnit getCloseTimeoutUnit() {
+        return closeTimeoutUnit;
     }
     
-    public void setCloseTimeUnit(TimeUnit closeTimeUnit) {
-        this.closeTimeUnit = closeTimeUnit;
+    public void setCloseTimeoutUnit(TimeUnit closeTimeoutUnit) {
+        this.closeTimeoutUnit = closeTimeoutUnit;
     }
     
     public long getPlanTimeout() {
@@ -126,18 +126,18 @@ public class FederatedQueryProperties {
     }
     
     public long getPlanTimeoutMillis() {
-        return planTimeUnit.toMillis(planTimeout);
+        return planTimeoutUnit.toMillis(planTimeout);
     }
     
     public void setPlanTimeout(long planTimeout) {
         this.planTimeout = planTimeout;
     }
     
-    public TimeUnit getPlanTimeUnit() {
-        return planTimeUnit;
+    public TimeUnit getPlanTimeoutUnit() {
+        return planTimeoutUnit;
     }
     
-    public void setPlanTimeUnit(TimeUnit planTimeUnit) {
-        this.planTimeUnit = planTimeUnit;
+    public void setPlanTimeoutUnit(TimeUnit planTimeoutUnit) {
+        this.planTimeoutUnit = planTimeoutUnit;
     }
 }

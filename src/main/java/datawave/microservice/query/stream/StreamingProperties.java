@@ -19,7 +19,7 @@ public class StreamingProperties {
     @PositiveOrZero
     private long callTimeout = 1;
     @NotNull
-    private TimeUnit callTimeUnit = TimeUnit.DAYS;
+    private TimeUnit callTimeoutUnit = TimeUnit.DAYS;
     
     @NotEmpty
     private String defaultContentType = MediaType.APPLICATION_JSON_VALUE;
@@ -31,19 +31,19 @@ public class StreamingProperties {
     }
     
     public long getCallTimeoutMillis() {
-        return callTimeUnit.toMillis(callTimeout);
+        return callTimeoutUnit.toMillis(callTimeout);
     }
     
     public void setCallTimeout(long callTimeout) {
         this.callTimeout = callTimeout;
     }
     
-    public TimeUnit getCallTimeUnit() {
-        return callTimeUnit;
+    public TimeUnit getCallTimeoutUnit() {
+        return callTimeoutUnit;
     }
     
-    public void setCallTimeUnit(TimeUnit callTimeUnit) {
-        this.callTimeUnit = callTimeUnit;
+    public void setCallTimeoutUnit(TimeUnit callTimeoutUnit) {
+        this.callTimeoutUnit = callTimeoutUnit;
     }
     
     public String getDefaultContentType() {
