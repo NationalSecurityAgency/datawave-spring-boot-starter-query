@@ -349,7 +349,7 @@ public class BulkResultsJob extends MapReduceJob {
         
         // Note: The logic used to submit a mapreduce query is not needed when running in the mapper
         systemProperties.put(MapReduceQueryProperties.PREFIX + ".enabled", "false");
-
+        
         writeProperties(id, job, fs, classpath, systemProperties);
     }
     

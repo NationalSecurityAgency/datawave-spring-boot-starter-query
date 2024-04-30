@@ -28,18 +28,26 @@ import datawave.webservice.query.exception.DatawaveErrorCode;
 
 public class QueryStatus implements Serializable {
     /**
-     * These are the possible query states correlating with the activity that the user is requesting. DEFINE: define a query CREATE: create a query and get
-     * results PLAN: plan a query PREDICT: predict a query CLOSE: close the activity (finish executing tasks in progress) CANCEL: cancel the activity FAIL: the
-     * activity failed
+     * These are the possible query states correlating with the activity that the user is requesting.<br>
+     * DEFINE: define a query<br>
+     * CREATE: create a query and get results<br>
+     * PLAN: plan a query<br>
+     * PREDICT: predict a query<br>
+     * CLOSE: close the activity (finish executing tasks in progress)<br>
+     * CANCEL: cancel the activity<br>
+     * FAIL: the activity failed
      */
     public enum QUERY_STATE {
         DEFINE, CREATE, PLAN, PREDICT, CLOSE, CANCEL, FAIL
     }
     
     /**
-     * These are the possible stages of a query create/next/close CREATE: Create the query. PLAN: The query is being planned TASK: planning is complete and next
-     * tasks are being generated RESULTS: All next tasks have been generated and we are only generating results DONE: The query id done (QUERY_STATE should be
-     * set to CLOSE, CANCEL, or FAIL).
+     * These are the possible stages of a query create/next/close<br>
+     * CREATE: Create the query.<br>
+     * PLAN: The query is being planned<br>
+     * TASK: planning is complete and next tasks are being generated<br>
+     * RESULTS: All next tasks have been generated and we are only generating results<br>
+     * DONE: The query id done (QUERY_STATE should be set to CLOSE, CANCEL, or FAIL).
      */
     public enum CREATE_STAGE {
         CREATE, PLAN, TASK, RESULTS
