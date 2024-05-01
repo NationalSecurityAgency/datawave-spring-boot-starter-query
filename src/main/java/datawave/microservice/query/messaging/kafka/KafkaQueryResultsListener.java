@@ -2,6 +2,7 @@ package datawave.microservice.query.messaging.kafka;
 
 import static datawave.microservice.query.messaging.AcknowledgementCallback.Status.ACK;
 import static datawave.microservice.query.messaging.AcknowledgementCallback.Status.NACK;
+import static datawave.microservice.query.messaging.kafka.KafkaQueryResultsManager.TOPIC_PREFIX;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -45,12 +46,12 @@ class KafkaQueryResultsListener implements QueryResultsListener, AcknowledgingMe
             log.trace("Creating kafka query results listener for " + queryId + " with listenerId " + listenerId);
         }
         this.queryId = queryId;
-        ContainerProperties containerProps = new ContainerProperties(queryId);
+        ContainerProperties containerProps = new ContainerProperties(TOPIC_PREFIX + queryId);
         containerProps.setClientId(listenerId);
         
         // use the topicId (i.e. queryId) as the groupId. this makes it possible
         // to get the size of the queue later on using just the query id
-        containerProps.setGroupId(queryId);
+        containerProps.setGroupId(TOPIC_PREFIX + queryId);
         
         containerProps.setMessageListener(this);
         containerProps.setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
@@ -83,7 +84,7 @@ class KafkaQueryResultsListener implements QueryResultsListener, AcknowledgingMe
     }
     
     public String getQueryId() {
-        return container.getContainerProperties().getGroupId();
+        return queryId;
     }
     
     @Override

@@ -36,6 +36,8 @@ public class KafkaQueryResultsManager implements QueryResultsManager {
     
     public static final String KAFKA = "kafka";
     
+    static final String TOPIC_PREFIX = "queryResults.";
+    
     private final MessagingProperties messagingProperties;
     private final AdminClient adminClient;
     private final ProducerFactory<String,String> kafkaProducerFactory;
@@ -58,7 +60,7 @@ public class KafkaQueryResultsManager implements QueryResultsManager {
      */
     @Override
     public QueryResultsListener createListener(String listenerId, String queryId) {
-        createTopic(queryId);
+        createTopic(TOPIC_PREFIX + queryId);
         return new KafkaQueryResultsListener(messagingProperties, kafkaConsumerFactory, listenerId, queryId);
     }
     
@@ -71,9 +73,9 @@ public class KafkaQueryResultsManager implements QueryResultsManager {
      */
     @Override
     public QueryResultsPublisher createPublisher(String queryId) {
-        createTopic(queryId);
+        createTopic(TOPIC_PREFIX + queryId);
         KafkaTemplate<String,String> kafkaTemplate = new KafkaTemplate<>(kafkaProducerFactory);
-        kafkaTemplate.setDefaultTopic(queryId);
+        kafkaTemplate.setDefaultTopic(TOPIC_PREFIX + queryId);
         return new KafkaQueryResultsPublisher(kafkaTemplate);
     }
     
@@ -85,7 +87,7 @@ public class KafkaQueryResultsManager implements QueryResultsManager {
      */
     @Override
     public void deleteQuery(String queryId) {
-        deleteTopic(queryId);
+        deleteTopic(TOPIC_PREFIX + queryId);
     }
     
     private void deleteTopic(String topic) {
@@ -126,25 +128,34 @@ public class KafkaQueryResultsManager implements QueryResultsManager {
     
     @Override
     public void emptyQuery(String name) {
-        TopicDescription topic = describeTopic(name);
-        if (topic != null) {
+        emptyTopic(TOPIC_PREFIX + name);
+        
+    }
+    
+    private void emptyTopic(String topic) {
+        TopicDescription topicDesc = describeTopic(topic);
+        if (topicDesc != null) {
             Map<TopicPartition,RecordsToDelete> partitions = new HashMap<>();
             RecordsToDelete records = RecordsToDelete.beforeOffset(Long.MAX_VALUE);
-            for (TopicPartitionInfo info : topic.partitions()) {
-                TopicPartition partition = new TopicPartition(name, info.partition());
+            for (TopicPartitionInfo info : topicDesc.partitions()) {
+                TopicPartition partition = new TopicPartition(topic, info.partition());
                 partitions.put(partition, records);
             }
             DeleteRecordsResult result = adminClient.deleteRecords(partitions);
             try {
                 result.all();
             } catch (Exception e) {
-                log.debug("Unable to empty queue " + name, e);
+                log.debug("Unable to empty topic " + topic, e);
             }
         }
     }
     
     @Override
-    public int getNumResultsRemaining(final String topic) {
+    public int getNumResultsRemaining(final String queryId) {
+        return getNumResultsRemainingFromTopic(TOPIC_PREFIX + queryId);
+    }
+    
+    private int getNumResultsRemainingFromTopic(final String topic) {
         Map<TopicPartition,Long> consumerOffsetMap = new HashMap<>();
         try {
             // @formatter:off

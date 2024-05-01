@@ -1,6 +1,7 @@
 package datawave.microservice.query.messaging.hazelcast;
 
 import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResultsManager.HAZELCAST;
+import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResultsManager.QUEUE_PREFIX;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -44,7 +45,7 @@ public class HazelcastClaimCheck implements ClaimCheck {
         }
         
         String stringData = objectMapper.writeValueAsString(new DataWrapper<>(data));
-        getQueueForQueryId(queryId).put(stringData);
+        getQueueForQueryId(QUEUE_PREFIX + queryId).put(stringData);
     }
     
     @Override
@@ -53,7 +54,7 @@ public class HazelcastClaimCheck implements ClaimCheck {
             log.trace("Claiming large payload for query {}", queryId);
         }
         
-        String stringData = getQueueForQueryId(queryId).take();
+        String stringData = getQueueForQueryId(QUEUE_PREFIX + queryId).take();
         DataWrapper<T> wrapper = objectMapper.readerFor(DataWrapper.class).readValue(stringData);
         return wrapper.data;
     }
@@ -61,7 +62,7 @@ public class HazelcastClaimCheck implements ClaimCheck {
     private IQueue<String> getQueueForQueryId(String queryId) {
         // @formatter:off
         return claimCheckMap.computeIfAbsent(
-                queryId,
+                QUEUE_PREFIX + queryId,
                 key -> HazelcastMessagingUtils.getOrCreateQueue(
                         hazelcastInstance,
                         messagingProperties.getHazelcast().getBackupCount(),
@@ -74,7 +75,7 @@ public class HazelcastClaimCheck implements ClaimCheck {
             log.trace("Emptying claim check queue for query {}", queryId);
         }
         
-        IQueue<?> queue = claimCheckMap.remove(queryId);
+        IQueue<?> queue = claimCheckMap.remove(QUEUE_PREFIX + queryId);
         if (queue != null) {
             queue.clear();
         }
@@ -85,7 +86,7 @@ public class HazelcastClaimCheck implements ClaimCheck {
             log.trace("Deleting claim check queue for query {}", queryId);
         }
         
-        IQueue<?> queue = claimCheckMap.remove(queryId);
+        IQueue<?> queue = claimCheckMap.remove(QUEUE_PREFIX + queryId);
         if (queue != null) {
             queue.destroy();
         }

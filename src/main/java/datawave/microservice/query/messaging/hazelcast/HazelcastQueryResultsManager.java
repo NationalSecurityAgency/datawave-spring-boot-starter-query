@@ -22,6 +22,8 @@ public class HazelcastQueryResultsManager implements QueryResultsManager {
     
     public static final String HAZELCAST = "hazelcast";
     
+    static final String QUEUE_PREFIX = "queryResults.";
+    
     static final String SPLIT_BRAIN_PROTECTION_NAME = "splitBrainDefault";
     
     private final MessagingProperties messagingProperties;
@@ -35,22 +37,20 @@ public class HazelcastQueryResultsManager implements QueryResultsManager {
     
     @Override
     public QueryResultsListener createListener(String listenerId, String queryId) {
-        return new HazelcastQueryResultsListener(
-                        HazelcastMessagingUtils.getOrCreateQueue(hazelcastInstance, messagingProperties.getHazelcast().getBackupCount(), queryId), objectMapper,
-                        listenerId);
+        return new HazelcastQueryResultsListener(HazelcastMessagingUtils.getOrCreateQueue(hazelcastInstance,
+                        messagingProperties.getHazelcast().getBackupCount(), QUEUE_PREFIX + queryId), objectMapper, listenerId);
     }
     
     @Override
     public QueryResultsPublisher createPublisher(String queryId) {
-        return new HazelcastQueryResultsPublisher(
-                        HazelcastMessagingUtils.getOrCreateQueue(hazelcastInstance, messagingProperties.getHazelcast().getBackupCount(), queryId),
-                        objectMapper);
+        return new HazelcastQueryResultsPublisher(HazelcastMessagingUtils.getOrCreateQueue(hazelcastInstance,
+                        messagingProperties.getHazelcast().getBackupCount(), QUEUE_PREFIX + queryId), objectMapper);
     }
     
     @Override
     public void deleteQuery(String queryId) {
         try {
-            hazelcastInstance.getQueue(queryId).destroy();
+            hazelcastInstance.getQueue(QUEUE_PREFIX + queryId).destroy();
         } catch (Exception e) {
             log.error("Failed to delete queue {}", queryId, e);
         }
@@ -59,7 +59,7 @@ public class HazelcastQueryResultsManager implements QueryResultsManager {
     @Override
     public void emptyQuery(String queryId) {
         try {
-            hazelcastInstance.getQueue(queryId).clear();
+            hazelcastInstance.getQueue(QUEUE_PREFIX + queryId).clear();
         } catch (Exception e) {
             log.error("Unable to empty queue {}", queryId, e);
         }
@@ -67,6 +67,6 @@ public class HazelcastQueryResultsManager implements QueryResultsManager {
     
     @Override
     public int getNumResultsRemaining(String queryId) {
-        return hazelcastInstance.getQueue(queryId).size();
+        return hazelcastInstance.getQueue(QUEUE_PREFIX + queryId).size();
     }
 }
