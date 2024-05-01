@@ -1,9 +1,15 @@
 package datawave.microservice.query.storage;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -12,7 +18,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.zaxxer.sparsebits.SparseBitSet;
 
 import datawave.core.query.logic.QueryKey;
 import datawave.util.StringUtils;
@@ -35,7 +40,7 @@ public class TaskStates implements Serializable {
     private int nextTaskId = 1;
     
     @JsonIgnore
-    private Map<TASK_STATE,SparseBitSet> taskStates = new HashMap<>();
+    private Map<TASK_STATE,SortedSet<Integer>> taskStates = new HashMap<>();
     
     public TaskStates() {}
     
@@ -70,7 +75,7 @@ public class TaskStates implements Serializable {
      */
     @JsonProperty("taskStates")
     public Map<TASK_STATE,String> getTaskStatesAsStrings() {
-        return taskStates.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> bitSetToString(e.getValue())));
+        return taskStates.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> taskIdsToString(e.getValue())));
     }
     
     /**
@@ -80,26 +85,28 @@ public class TaskStates implements Serializable {
      */
     @JsonProperty("taskStates")
     public void setTaskStatesAsStrings(Map<TASK_STATE,String> taskStatesStrings) {
-        taskStates = taskStatesStrings.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> stringToBitSet(e.getValue())));
+        taskStates = taskStatesStrings.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> stringToTaskIds(e.getValue())));
     }
     
-    private String bitSetToString(SparseBitSet bitSet) {
+    private String taskIdsToString(Set<Integer> taskIds) {
         StringBuilder builder = new StringBuilder();
-        for (int i = bitSet.nextSetBit(0); i >= 0; i = bitSet.nextSetBit(i + 1)) {
-            builder.append(Integer.toString(i)).append(',');
-        }
-        if (builder.length() > 0) {
+        if (!taskIds.isEmpty()) {
+            List<Integer> sortedIds = new ArrayList<>(taskIds);
+            Collections.sort(sortedIds);
+            for (Integer i : sortedIds) {
+                builder.append(i).append(',');
+            }
             builder.setLength(builder.length() - 1);
         }
         return builder.toString();
     }
     
-    private SparseBitSet stringToBitSet(String bitSetStr) {
-        SparseBitSet bitSet = new SparseBitSet();
+    private SortedSet<Integer> stringToTaskIds(String bitSetStr) {
+        SortedSet<Integer> ids = new TreeSet<>();
         for (String taskId : StringUtils.splitIterable(bitSetStr, ',')) {
-            bitSet.set(Integer.parseInt(taskId));
+            ids.add(Integer.parseInt(taskId));
         }
-        return bitSet;
+        return ids;
     }
     
     public void setNextTaskId(int nextTaskId) {
@@ -133,17 +140,17 @@ public class TaskStates implements Serializable {
         return Math.min(getAvailableRunningSlots(), getReadyTaskCount());
     }
     
-    public Map<TASK_STATE,SparseBitSet> getTaskStates() {
+    public Map<TASK_STATE,SortedSet<Integer>> getTaskStates() {
         return taskStates;
     }
     
-    public void setTaskStates(Map<TASK_STATE,SparseBitSet> taskStates) {
+    public void setTaskStates(Map<TASK_STATE,SortedSet<Integer>> taskStates) {
         this.taskStates = taskStates;
     }
     
     public TASK_STATE getState(int taskId) {
         for (TASK_STATE state : TASK_STATE.values()) {
-            if (taskStates.containsKey(state) && taskStates.get(state).get(taskId)) {
+            if (taskStates.containsKey(state) && taskStates.get(state).contains(taskId)) {
                 return state;
             }
         }
@@ -162,19 +169,19 @@ public class TaskStates implements Serializable {
             }
         }
         if (currentState != null) {
-            taskStates.get(currentState).clear(taskId);
+            taskStates.get(currentState).remove(taskId);
         }
         if (taskState != null) {
             if (taskStates.get(taskState) == null) {
-                taskStates.put(taskState, new SparseBitSet());
+                taskStates.put(taskState, new TreeSet<>());
             }
-            taskStates.get(taskState).set(taskId);
+            taskStates.get(taskState).add(taskId);
         }
         return true;
     }
     
     public int getTaskCountForState(TASK_STATE state) {
-        return taskStates.containsKey(state) ? taskStates.get(state).cardinality() : 0;
+        return taskStates.containsKey(state) ? taskStates.get(state).size() : 0;
     }
     
     @JsonIgnore
@@ -228,26 +235,22 @@ public class TaskStates implements Serializable {
     
     public Iterable<TaskKey> getTasksForState(TASK_STATE state, int maxTasks) {
         return new Iterable<TaskKey>() {
-            private SparseBitSet states = (taskStates.containsKey(state) ? taskStates.get(state) : new SparseBitSet());
             
             @Override
             public Iterator<TaskKey> iterator() {
+                // creating a copy to avoid concurrent modification exceptions while using this task iterator
+                List<Integer> states = (taskStates.containsKey(state) ? new ArrayList<>(taskStates.get(state)) : Collections.emptyList());
+                final Iterator<Integer> statesIterator = states.iterator();
                 return new Iterator<TaskKey>() {
-                    private int nextTaskId = states.nextSetBit(0);
-                    private int count = 0;
-                    
                     @Override
                     public boolean hasNext() {
-                        return (count != maxTasks) && (nextTaskId >= 0);
+                        return statesIterator.hasNext();
                     }
                     
                     @Override
                     public TaskKey next() {
                         if (hasNext()) {
-                            TaskKey returnTask = new TaskKey(nextTaskId, queryKey);
-                            nextTaskId = states.nextSetBit(nextTaskId + 1);
-                            count++;
-                            return returnTask;
+                            return new TaskKey(statesIterator.next(), queryKey);
                         }
                         return null;
                     }

@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.UUID;
 
 import org.apache.accumulo.core.client.IteratorSetting;
@@ -15,7 +17,6 @@ import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
-import com.zaxxer.sparsebits.SparseBitSet;
 
 import datawave.core.query.configuration.QueryData;
 import datawave.core.query.logic.QueryCheckpoint;
@@ -263,11 +264,11 @@ public class QueryTaskCheckpointTest {
         String queryLogic = "EventQuery";
         QueryStatus queryStatus = new QueryStatus(new QueryKey(queryPool, uuid, queryLogic));
         TaskStates tasks = new TaskStates(new QueryKey(queryPool, uuid, queryLogic), 10);
-        Map<TaskStates.TASK_STATE,SparseBitSet> states = new HashMap<>();
+        Map<TaskStates.TASK_STATE,SortedSet<Integer>> states = new HashMap<>();
         QueryRequest.Method action = QueryRequest.Method.CREATE;
-        states.put(TaskStates.TASK_STATE.READY, new SparseBitSet());
-        states.get(TaskStates.TASK_STATE.READY).set(0);
-        states.get(TaskStates.TASK_STATE.READY).set(1);
+        states.put(TaskStates.TASK_STATE.READY, new TreeSet<>());
+        states.get(TaskStates.TASK_STATE.READY).add(0);
+        states.get(TaskStates.TASK_STATE.READY).add(1);
         tasks.setTaskStates(states);
         QueryState state = new QueryState(queryStatus, tasks);
         
@@ -292,10 +293,10 @@ public class QueryTaskCheckpointTest {
         String otherLogic = "EdgeQuery";
         QueryStatus otherProperties = new QueryStatus(new QueryKey(otherPool, otherId, otherLogic));
         TaskStates otherTasks = new TaskStates(new QueryKey(queryPool, uuid, queryLogic), 10);
-        Map<TaskStates.TASK_STATE,SparseBitSet> otherStates = new HashMap<>();
-        otherStates.put(TaskStates.TASK_STATE.READY, new SparseBitSet());
-        otherStates.get(TaskStates.TASK_STATE.READY).set(2);
-        otherStates.get(TaskStates.TASK_STATE.READY).set(3);
+        Map<TaskStates.TASK_STATE,SortedSet<Integer>> otherStates = new HashMap<>();
+        otherStates.put(TaskStates.TASK_STATE.READY, new TreeSet());
+        otherStates.get(TaskStates.TASK_STATE.READY).add(2);
+        otherStates.get(TaskStates.TASK_STATE.READY).add(3);
         otherTasks.setTaskStates(otherStates);
         QueryState otherState = new QueryState(otherProperties, tasks);
         Assertions.assertNotEquals(otherState, state);

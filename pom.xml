@@ -30,7 +30,6 @@
         <version.microservice.starter>4.0.0-SNAPSHOT</version.microservice.starter>
         <version.microservice.starter-metadata>3.0.0-SNAPSHOT</version.microservice.starter-metadata>
         <version.microservice.starter-metrics>3.0.0-SNAPSHOT</version.microservice.starter-metrics>
-        <version.sparse-bit-set>1.2</version.sparse-bit-set>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -38,11 +37,6 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${version.guava}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.zaxxer</groupId>
-                <artifactId>SparseBitSet</artifactId>
-                <version>${version.sparse-bit-set}</version>
             </dependency>
             <dependency>
                 <groupId>gov.nsa.datawave</groupId>
@@ -149,10 +143,6 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>SparseBitSet</artifactId>
-        </dependency>
         <dependency>
             <groupId>gov.nsa.datawave</groupId>
             <artifactId>datawave-query-core</artifactId>
