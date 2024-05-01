@@ -25,6 +25,8 @@ import datawave.microservice.query.messaging.config.MessagingProperties;
 class RabbitMQQueryResultsPublisher implements QueryResultsPublisher {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     
+    // As of RabbitMQ 3.8.0, the internal message size limit is 512MiB
+    // Reference: https://github.com/rabbitmq/rabbitmq-common/blob/v3.8.0/include/rabbit.hrl#L238
     private static final long DEFAULT_MAX_MSG_SIZE = 536870912L;
     
     private final MessagingProperties.RabbitMQProperties rabbitMQProperties;
@@ -74,9 +76,9 @@ class RabbitMQQueryResultsPublisher implements QueryResultsPublisher {
             
             try {
                 if (latch.await(interval, timeUnit) && ackMap.get(result.getId())) {
+                    success = true;
                     if (log.isTraceEnabled()) {
                         log.trace("Received RabbitMQ producer confirm ack for {}", result.getId());
-                        success = true;
                     }
                 } else {
                     log.error("Timed out while waiting for RabbitMQ producer confirm");

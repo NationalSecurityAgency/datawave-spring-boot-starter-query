@@ -18,9 +18,13 @@ import datawave.core.query.logic.QueryKey;
 import datawave.util.StringUtils;
 
 public class TaskStates implements Serializable {
-    /*
-     * The possible task states: READY: ready to run RUNNING: current running COMPLETED: completed successfully FAILED: failed to execute successfully ORPHANED:
-     * orphaned after the query is closed or cancelled.
+    /**
+     * The possible task states: <br>
+     * READY: ready to run <br>
+     * RUNNING: currently running <br>
+     * COMPLETED: completed successfully <br>
+     * FAILED: failed to execute successfully <br>
+     * ORPHANED: orphaned after the query is closed or cancelled.
      */
     public enum TASK_STATE implements Serializable {
         READY, RUNNING, COMPLETED, FAILED

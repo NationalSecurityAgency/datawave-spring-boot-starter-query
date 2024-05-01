@@ -134,9 +134,9 @@ public class KafkaQueryResultsManager implements QueryResultsManager {
                 TopicPartition partition = new TopicPartition(name, info.partition());
                 partitions.put(partition, records);
             }
-            DeleteRecordsResult result2 = adminClient.deleteRecords(partitions);
+            DeleteRecordsResult result = adminClient.deleteRecords(partitions);
             try {
-                result2.all();
+                result.all();
             } catch (Exception e) {
                 log.debug("Unable to empty queue " + name, e);
             }
