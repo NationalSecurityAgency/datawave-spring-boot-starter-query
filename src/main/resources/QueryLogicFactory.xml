@@ -15,7 +15,7 @@
         <property name="responseObjectFactory" ref="responseObjectFactory" />
     </bean>
 
-    <!-- TODO: JWO: This has traditionally been included via MetadataHelperContext.xml -->
+    <!-- NOTE: This has traditionally been included via MetadataHelperContext.xml -->
     <bean id="dateIndexHelperFactory" class="datawave.query.util.DateIndexHelperFactory" >
         <lookup-method name="createDateIndexHelper" bean="dateIndexHelper" />
     </bean>
@@ -369,7 +369,6 @@
         <property name="reverseIndexTableName" value="${datawave.query.logic.logics.ErrorCountQuery.indexTableName}" />
     </bean>
 
-    <!-- TODO: This works, but only with checkpointable set to 'false'.  We need custom logic to make this truly checkpointable. -->
     <!-- Query Logic which performs a count on fieldIndex keys -->
     <bean id="FieldIndexCountQuery" parent="baseQueryLogic" scope="prototype"  class="datawave.query.tables.shard.FieldIndexCountQueryLogic">
         <property name="checkpointable" value="${datawave.query.logic.logics.FieldIndexCountQuery.checkpointable}" />
@@ -391,7 +390,6 @@
         <property name="selectorExtractor" ref="DatawaveSelectorExtractor" />
     </bean>
 
-    <!-- TODO: This works, but only with checkpointable set to 'false'.  We need custom logic to make this truly checkpointable. -->
     <!-- Query Logic which performs a count on error table fieldIndex keys -->
     <bean id="ErrorFieldIndexCountQuery" parent="baseQueryLogic" scope="prototype"  class="datawave.query.tables.shard.FieldIndexCountQueryLogic">
         <property name="checkpointable" value="${datawave.query.logic.logics.ErrorFieldIndexCountQuery.checkpointable}" />
@@ -413,7 +411,6 @@
         <property name="selectorExtractor" ref="DatawaveSelectorExtractor" />
     </bean>
 
-    <!-- TODO: This works, but should this be checkpointable? -->
     <!-- Query Logic that returns document term frequency information -->
     <bean id="TermFrequencyQuery" parent="baseQueryLogic" scope="prototype"  class="datawave.query.tables.term.TermFrequencyQueryTable">
         <property name="tableName" value="${datawave.query.logic.logics.TermFrequencyQuery.tableName}" />
@@ -423,8 +420,6 @@
         <property name="logicDescription" value="${datawave.query.logic.logics.TermFrequencyQuery.logicDescription}" />
     </bean>
 
-    <!-- TODO: Should this be checkpointable? -->
-    <!-- TODO: Test this! -->
     <bean id="IndexStatsQuery" parent="baseQueryLogic" scope="prototype"  class="datawave.query.tables.shard.IndexStatsQueryLogic">
         <property name="auditType" value="${datawave.query.logic.logics.IndexStatsQuery.auditType}" />
         <property name="selectorExtractor"><null/></property>
@@ -454,8 +449,6 @@
         <property name="requiredRoles" ref="internalQueryMetricsQueryRequiredRoles" />
     </bean>
 
-    <!-- TODO: Should this be checkpointable? -->
-    <!-- TODO: Test this! -->
     <bean id="FacetedQuery" parent="BaseEventQuery" scope="prototype" class="datawave.query.tables.facets.FacetedQueryLogic">
         <property name="checkpointable" value="${datawave.query.logic.logics.FacetedQuery.checkpointable}" />
         <property name="auditType" value="${datawave.query.logic.logics.FacetedQuery.auditType}" />

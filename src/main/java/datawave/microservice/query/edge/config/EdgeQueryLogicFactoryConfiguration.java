@@ -41,8 +41,6 @@ public class EdgeQueryLogicFactoryConfiguration {
         if (queryStorageCache != null && webClientBuilder != null) {
             return new DefaultEdgeDictionaryProvider(edgeDictionaryProperties, queryStorageCache, webClientBuilder, jwtTokenHandler);
         } else {
-            // TODO: JWO: Figure out how to get the edge dictionary in a map reduce setting
-            // It could be passed as a property and loaded here
             return (settings, metadataTableName) -> new DefaultEdgeDictionary();
         }
     }

@@ -47,8 +47,6 @@ public class QueryStatusUpdateUtil {
             // update the last used datetime for the query
             queryStatus.setLastUsedMillis(System.currentTimeMillis());
             
-            // TODO: We should add a 'queueExists' call to determine whether this needs to be run
-            // if by the end of the call the query is no longer running, delete the results queue
             if (!queryStatus.isRunning()) {
                 queryResultsManager.deleteQuery(queryStatus.getQueryKey().getQueryId());
             }

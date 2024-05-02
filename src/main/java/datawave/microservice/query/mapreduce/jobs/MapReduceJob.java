@@ -65,8 +65,11 @@ public abstract class MapReduceJob {
     }
     
     /**
+     * @param conf
+     *            config
      * @return HDFS FileSystem
      * @throws IOException
+     *             for IOException
      */
     protected final FileSystem getFileSystem(Configuration conf) throws IOException {
         return FileSystem.get(conf);
@@ -75,9 +78,16 @@ public abstract class MapReduceJob {
     /**
      * Common code to setup distributed cache and classpath for the job
      *
+     * @param id
+     *            the job id
      * @param job
+     *            the job
+     * @param baseDir
+     *            the base directory
      * @param jobDir
+     *            the job directory
      * @throws Exception
+     *             if something goes wrong
      */
     protected void prepareClasspath(String id, Job job, Path baseDir, Path jobDir) throws Exception {
         FileSystem fs = getFileSystem(job.getConfiguration());
