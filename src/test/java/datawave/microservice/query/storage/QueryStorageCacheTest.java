@@ -71,7 +71,7 @@ public abstract class QueryStorageCacheTest {
     public static class HazelcastQueryStorageCacheTest extends QueryStorageCacheTest {
         @DirtiesContext
         @Test
-        public void testStorageErrorHandler() throws ParseException, IOException, TaskLockException {
+        public void testStorageErrorHandler() throws ParseException, IOException {
             Query query = new QueryImpl();
             query.setQuery("foo == bar");
             query.setQueryLogicName("EventQuery");
@@ -152,7 +152,7 @@ public abstract class QueryStorageCacheTest {
     
     @DirtiesContext
     @Test
-    public void testLocking() throws TaskLockException {
+    public void testLocking() {
         String queryId = UUID.randomUUID().toString();
         QueryKey queryKey = new QueryKey("default", queryId, "EventQuery");
         queryStatusCache.updateQueryStatus(new QueryStatus(queryKey));
@@ -178,7 +178,7 @@ public abstract class QueryStorageCacheTest {
     
     @DirtiesContext
     @Test
-    public void testCreateQuery() throws ParseException, IOException, TaskLockException {
+    public void testCreateQuery() throws ParseException, IOException {
         Query query = new QueryImpl();
         query.setQuery("foo == bar");
         query.setQueryLogicName("EventQuery");
@@ -222,7 +222,7 @@ public abstract class QueryStorageCacheTest {
     
     @DirtiesContext
     @Test
-    public void testStoreTask() throws ParseException, IOException, TaskLockException {
+    public void testStoreTask() throws ParseException, IOException {
         Query query = new QueryImpl();
         query.setQueryLogicName("EventQuery");
         query.setQuery("foo == bar");
@@ -280,7 +280,7 @@ public abstract class QueryStorageCacheTest {
     
     @DirtiesContext
     @Test
-    public void testCheckpointTask() throws ParseException, IOException, TaskLockException {
+    public void testCheckpointTask() throws ParseException, IOException {
         Query query = new QueryImpl();
         query.setQueryLogicName("EventQuery");
         query.setQuery("foo == bar");
@@ -335,7 +335,7 @@ public abstract class QueryStorageCacheTest {
     
     @DirtiesContext
     @Test
-    public void testGetAndDeleteTask() throws ParseException, IOException, TaskLockException {
+    public void testGetAndDeleteTask() throws ParseException, IOException {
         Query query = new QueryImpl();
         query.setQueryLogicName("EventQuery");
         query.setQuery("foo == bar");
@@ -365,7 +365,7 @@ public abstract class QueryStorageCacheTest {
     
     @DirtiesContext
     @Test
-    public void testGetAndDeleteQueryTasks() throws ParseException, IOException, TaskLockException {
+    public void testGetAndDeleteQueryTasks() throws ParseException, IOException {
         Query query = new QueryImpl();
         query.setQueryLogicName("EventQuery");
         query.setQuery("foo == bar");
@@ -400,7 +400,7 @@ public abstract class QueryStorageCacheTest {
     
     @DirtiesContext
     @Test
-    public void testGetAndDeleteTypeTasks() throws ParseException, IOException, TaskLockException {
+    public void testGetAndDeleteTypeTasks() throws ParseException, IOException {
         Query query = new QueryImpl();
         query.setQueryLogicName("EventQuery");
         query.setQuery("foo == bar");
@@ -438,7 +438,7 @@ public abstract class QueryStorageCacheTest {
     
     @DirtiesContext
     @Test
-    public void testTaskStateUpdate() throws ParseException, TaskLockException {
+    public void testTaskStateUpdate() throws ParseException {
         Query query = new QueryImpl();
         query.setQueryLogicName("EventQuery");
         query.setQuery("foo == bar");
@@ -472,7 +472,7 @@ public abstract class QueryStorageCacheTest {
     
     @DirtiesContext
     @Test
-    public void testQueryStateUpdate() throws ParseException, IOException, TaskLockException {
+    public void testQueryStateUpdate() throws ParseException, IOException {
         Query query = new QueryImpl();
         query.setQueryLogicName("EventQuery");
         query.setQuery("foo == bar");

@@ -399,8 +399,6 @@ public class QueryStorageCacheImpl implements QueryStorageCache {
      * @param taskKey
      *            The task key
      * @return The query task, null if deleted
-     * @throws TaskLockException
-     *             if the task is already locked
      */
     @Override
     public QueryTask getTask(TaskKey taskKey) {
