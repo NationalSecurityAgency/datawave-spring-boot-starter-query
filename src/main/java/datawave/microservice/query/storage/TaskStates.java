@@ -29,7 +29,6 @@ public class TaskStates implements Serializable {
      * RUNNING: currently running <br>
      * COMPLETED: completed successfully <br>
      * FAILED: failed to execute successfully <br>
-     * ORPHANED: orphaned after the query is closed or cancelled.
      */
     public enum TASK_STATE implements Serializable {
         READY, RUNNING, COMPLETED, FAILED

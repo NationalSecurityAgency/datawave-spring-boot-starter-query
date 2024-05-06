@@ -47,7 +47,6 @@ public class QueryStatus implements Serializable {
      * PLAN: The query is being planned<br>
      * TASK: planning is complete and next tasks are being generated<br>
      * RESULTS: All next tasks have been generated and we are only generating results<br>
-     * DONE: The query id done (QUERY_STATE should be set to CLOSE, CANCEL, or FAIL).
      */
     public enum CREATE_STAGE {
         CREATE, PLAN, TASK, RESULTS
