@@ -49,7 +49,7 @@ public class QueryStatus implements Serializable {
      * RESULTS: All next tasks have been generated and we are only generating results<br>
      */
     public enum CREATE_STAGE {
-        CREATE, PLAN, TASK, RESULTS
+        CREATE, PLAN, TASK, RESULTS, FLUSH
     }
     
     private QueryKey queryKey;
