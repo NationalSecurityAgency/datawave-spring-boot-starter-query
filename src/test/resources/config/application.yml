@@ -62,7 +62,7 @@ spring.config.activate.on-profile: use-rabbit
 datawave:
   query:
     messaging:
-      backend: rabbitmq
+      backend: query-results-rabbitmq
 
 ---
 
@@ -123,5 +123,3 @@ datawave:
 ---
 
 spring.config.activate.on-profile: missing
-
-
