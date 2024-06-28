@@ -72,13 +72,19 @@ public class BaseEventQueryConfiguration {
     public Map<String,String> baseEventQueryFilterOptions() {
         return baseEventQueryProperties().getFilterOptions();
     }
-    
+
+    @Bean
+    @Scope(SCOPE_PROTOTYPE)
+    public List<IvaratorCacheDirConfig> baseEventQueryLocalIvaratorCacheDirConfigs() {
+        return baseEventQueryProperties().getLocalIvaratorCacheDirConfigs();
+    }
+
     @Bean
     @Scope(SCOPE_PROTOTYPE)
     public List<IvaratorCacheDirConfig> baseEventQueryIvaratorCacheDirConfigs() {
         return baseEventQueryProperties().getIvaratorCacheDirConfigs();
     }
-    
+
     @Bean
     @Scope(SCOPE_PROTOTYPE)
     public EventQueryDataDecoratorTransformer baseEventQueryEventQueryDataDecoratorTransformer() {
