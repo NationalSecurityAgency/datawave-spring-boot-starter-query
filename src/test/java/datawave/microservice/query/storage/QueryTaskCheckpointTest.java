@@ -219,7 +219,7 @@ public class QueryTaskCheckpointTest {
         ShardQueryConfiguration config = new ShardQueryConfiguration();
         config.setQuery(query);
         QueryData queryData = new QueryData("table", "logic",
-                        Collections.singletonList(new Range(new Key("row1", "cf1", "cq1", "(FOO)"), true, new Key("row2", "cf2", "cq2", "(BAR)"), false)),
+                        Collections.singleton(new Range(new Key("row1", "cf1", "cq1", "(FOO)"), true, new Key("row2", "cf2", "cq2", "(BAR)"), false)),
                         Collections.emptySet(), Collections.singletonList(new IteratorSetting(10, "test", "test", Collections.singletonMap("key", "value"))));
         config.setQueries(Collections.singletonList(queryData));
         TaskDescription desc = new TaskDescription(key, config.getQueries());
@@ -229,6 +229,7 @@ public class QueryTaskCheckpointTest {
         
         String json = new ObjectMapper().registerModule(new GuavaModule()).writeValueAsString(desc);
         TaskDescription desc2 = new ObjectMapper().registerModule(new GuavaModule()).readerFor(TaskDescription.class).readValue(json);
+        Assertions.assertEquals(desc.getQueries().iterator().next(), desc2.getQueries().iterator().next());
         Assertions.assertEquals(desc, desc2);
         Assertions.assertEquals(desc.hashCode(), desc2.hashCode());
         
