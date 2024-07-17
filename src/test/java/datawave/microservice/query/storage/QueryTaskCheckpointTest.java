@@ -118,7 +118,7 @@ public class QueryTaskCheckpointTest {
         query.setQuery("foo == bar");
         ShardQueryConfiguration config = new ShardQueryConfiguration();
         config.setQuery(query);
-        QueryData queryData = new QueryData("table", "logic", Collections.singletonList(new Range()),
+        QueryData queryData = new QueryData("table", "logic", Collections.singletonList(new Range()), Collections.emptySet(),
                         Collections.singletonList(new IteratorSetting(10, "test", "test")));
         config.setQueries(Collections.singletonList(queryData));
         QueryCheckpoint qcp = new QueryCheckpoint(queryPool, uuid, queryLogic, config.getQueries());
@@ -169,7 +169,7 @@ public class QueryTaskCheckpointTest {
         query.setQuery("foo == bar");
         ShardQueryConfiguration config = new ShardQueryConfiguration();
         config.setQuery(query);
-        QueryData queryData = new QueryData("table", "logic", Collections.singletonList(new Range()),
+        QueryData queryData = new QueryData("table", "logic", Collections.singletonList(new Range()), Collections.emptySet(),
                         Collections.singletonList(new IteratorSetting(10, "test", "test")));
         config.setQueries(Collections.singletonList(queryData));
         QueryCheckpoint qcp = new QueryCheckpoint(queryPool, uuid, queryLogic, config.getQueries());
@@ -220,7 +220,7 @@ public class QueryTaskCheckpointTest {
         config.setQuery(query);
         QueryData queryData = new QueryData("table", "logic",
                         Collections.singletonList(new Range(new Key("row1", "cf1", "cq1", "(FOO)"), true, new Key("row2", "cf2", "cq2", "(BAR)"), false)),
-                        Collections.singletonList(new IteratorSetting(10, "test", "test", Collections.singletonMap("key", "value"))));
+                        Collections.emptySet(), Collections.singletonList(new IteratorSetting(10, "test", "test", Collections.singletonMap("key", "value"))));
         config.setQueries(Collections.singletonList(queryData));
         TaskDescription desc = new TaskDescription(key, config.getQueries());
         
