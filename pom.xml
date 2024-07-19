@@ -8,7 +8,7 @@
         <relativePath>../../microservice-service-parent/pom.xml</relativePath>
     </parent>
     <artifactId>spring-boot-starter-datawave-query</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
     <url>https://github.com/NationalSecurityAgency/datawave-spring-boot-starter-query</url>
     <licenses>
         <license>
@@ -26,10 +26,10 @@
         <datawave.webservice.namespace>http://webservice.datawave/v1</datawave.webservice.namespace>
         <version.datawave>7.2.0-SNAPSHOT</version.datawave>
         <version.guava>31.0.1-jre</version.guava>
-        <version.microservice.hazelcast-client>4.0.1</version.microservice.hazelcast-client>
-        <version.microservice.starter>4.0.2-SNAPSHOT</version.microservice.starter>
-        <version.microservice.starter-metadata>3.0.2-SNAPSHOT</version.microservice.starter-metadata>
-        <version.microservice.starter-metrics>3.0.3-SNAPSHOT</version.microservice.starter-metrics>
+        <version.microservice.hazelcast-client>4.0.2</version.microservice.hazelcast-client>
+        <version.microservice.starter>4.0.3-SNAPSHOT</version.microservice.starter>
+        <version.microservice.starter-metadata>3.0.3-SNAPSHOT</version.microservice.starter-metadata>
+        <version.microservice.starter-metrics>3.0.4-SNAPSHOT</version.microservice.starter-metrics>
     </properties>
     <dependencyManagement>
         <dependencies>
