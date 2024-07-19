@@ -22,7 +22,8 @@ import datawave.webservice.results.mr.JobExecution;
 import datawave.webservice.results.mr.MapReduceInfoResponse;
 
 public class MapReduceQueryStatus implements Serializable {
-    
+    private static final long serialVersionUID = -8731070243293603952L;
+
     public enum MapReduceQueryState {
         DEFINED, SUBMITTED, RUNNING, SUCCEEDED, CLOSED, CANCELED, FAILED
     }
