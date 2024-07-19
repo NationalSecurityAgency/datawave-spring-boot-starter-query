@@ -24,7 +24,7 @@ import datawave.util.StringUtils;
 
 public class TaskStates implements Serializable {
     private static final long serialVersionUID = 1361359960334155427L;
-
+    
     /**
      * The possible task states: <br>
      * READY: ready to run <br>
