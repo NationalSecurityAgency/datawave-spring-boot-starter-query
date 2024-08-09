@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
-import datawave.query.data.UUIDType;
+import datawave.core.query.data.UUIDType;
 
 @Validated
 @ConfigurationProperties(prefix = "datawave.query.translateid")

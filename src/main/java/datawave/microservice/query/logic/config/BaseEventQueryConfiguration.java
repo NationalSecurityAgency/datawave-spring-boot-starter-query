@@ -17,9 +17,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import datawave.core.query.language.parser.QueryParser;
 import datawave.query.config.IndexHole;
 import datawave.query.iterator.ivarator.IvaratorCacheDirConfig;
-import datawave.query.language.parser.QueryParser;
 import datawave.query.tables.QueryMacroFunction;
 import datawave.query.transformer.EventQueryDataDecorator;
 import datawave.query.transformer.EventQueryDataDecoratorTransformer;

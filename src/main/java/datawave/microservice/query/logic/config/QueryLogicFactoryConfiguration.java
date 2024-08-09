@@ -18,11 +18,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Scope;
 
+import datawave.core.query.data.UUIDType;
 import datawave.core.query.result.event.DefaultResponseObjectFactory;
 import datawave.microservice.query.edge.config.EdgeModelProperties;
 import datawave.microservice.query.lookup.LookupProperties;
 import datawave.microservice.query.translateid.TranslateIdProperties;
-import datawave.query.data.UUIDType;
 import datawave.webservice.query.result.event.ResponseObjectFactory;
 
 @Configuration
