@@ -54,7 +54,6 @@
         <property name="reverseIndexTableName" value="${datawave.query.logic.logics.BaseEventQuery.reverseIndexTableName}" />
         <property name="maxResults" value="${datawave.query.logic.logics.BaseEventQuery.maxResults}" />
         <property name="queryThreads" value="${datawave.query.logic.logics.BaseEventQuery.queryThreads}" />
-        <property name="maxConcurrentTasks" value="${datawave.query.logic.logics.BaseEventQuery.maxConcurrentTasks}" />
         <property name="indexLookupThreads" value="${datawave.query.logic.logics.BaseEventQuery.indexLookupThreads}" />
         <property name="dateIndexThreads" value="${datawave.query.logic.logics.BaseEventQuery.dateIndexThreads}" />
         <property name="fullTableScanEnabled" value="${datawave.query.logic.logics.BaseEventQuery.fullTableScanEnabled}" />
