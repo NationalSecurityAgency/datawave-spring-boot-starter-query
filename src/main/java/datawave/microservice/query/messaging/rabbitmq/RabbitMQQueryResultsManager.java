@@ -37,7 +37,11 @@ public class RabbitMQQueryResultsManager implements QueryResultsManager {
     private final DirectRabbitListenerContainerFactory listenerContainerFactory;
     
     public RabbitMQQueryResultsManager(MessagingProperties messagingProperties, RabbitListenerEndpointRegistry rabbitListenerEndpointRegistry,
+<<<<<<< HEAD
                     CachingConnectionFactory cachingConnectionFactory, ClaimCheck claimCheck) {
+=======
+                    CachingConnectionFactory connectionFactory, @Autowired(required = false) ClaimCheck claimCheck) {
+>>>>>>> e81a5f3 (port now wired in)
         this.messagingProperties = messagingProperties;
         this.rabbitListenerEndpointRegistry = rabbitListenerEndpointRegistry;
         this.connectionFactory = cachingConnectionFactory;
