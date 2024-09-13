@@ -28,7 +28,7 @@ import datawave.webservice.query.exception.DatawaveErrorCode;
 
 public class QueryStatus implements Serializable {
     private static final long serialVersionUID = -1633953472983032183L;
-
+    
     /**
      * These are the possible query states correlating with the activity that the user is requesting.<br>
      * DEFINE: define a query<br>

@@ -44,6 +44,8 @@ public class QueryProperties {
     private QueryExpirationProperties expiration = new QueryExpirationProperties();
     private NextCallProperties nextCall = new NextCallProperties();
     private DefaultParameterProperties defaultParams = new DefaultParameterProperties();
+    private String poolOverride = null;
+    private String poolHeader = "Pool";
     
     public List<String> getAdminRoles() {
         return adminRoles;
@@ -155,5 +157,21 @@ public class QueryProperties {
     
     public void setDefaultParams(DefaultParameterProperties defaultParams) {
         this.defaultParams = defaultParams;
+    }
+    
+    public String getPoolOverride() {
+        return poolOverride;
+    }
+    
+    public void setPoolOverride(String poolOverride) {
+        this.poolOverride = poolOverride;
+    }
+    
+    public String getPoolHeader() {
+        return poolHeader;
+    }
+    
+    public void setPoolHeader(String poolHeader) {
+        this.poolHeader = poolHeader;
     }
 }
