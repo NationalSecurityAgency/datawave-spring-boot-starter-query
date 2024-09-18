@@ -1,7 +1,9 @@
 package datawave.microservice.query.storage;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 import java.util.SortedSet;
@@ -219,8 +221,10 @@ public class QueryTaskCheckpointTest {
         ShardQueryConfiguration config = new ShardQueryConfiguration();
         config.setQuery(query);
         QueryData queryData = new QueryData("table", "logic",
-                        Collections.singletonList(new Range(new Key("row1", "cf1", "cq1", "(FOO)"), true, new Key("row2", "cf2", "cq2", "(BAR)"), false)),
-                        Collections.emptyList(), Collections.singletonList(new IteratorSetting(10, "test", "test", Collections.singletonMap("key", "value"))));
+                        new HashSet<>(Collections
+                                        .singleton(new Range(new Key("row1", "cf1", "cq1", "(FOO)"), true, new Key("row2", "cf2", "cq2", "(BAR)"), false))),
+                        new HashSet<>(),
+                        new ArrayList<>(Collections.singletonList(new IteratorSetting(10, "test", "test", Collections.singletonMap("key", "value")))));
         config.setQueries(Collections.singletonList(queryData));
         TaskDescription desc = new TaskDescription(key, config.getQueries());
         
@@ -229,6 +233,7 @@ public class QueryTaskCheckpointTest {
         
         String json = new ObjectMapper().registerModule(new GuavaModule()).writeValueAsString(desc);
         TaskDescription desc2 = new ObjectMapper().registerModule(new GuavaModule()).readerFor(TaskDescription.class).readValue(json);
+        // NOTE: This comparison is very brittle. It breaks if the collection types don't match (i.e. arraylist vs set vs singletonlist, etc.)
         Assertions.assertEquals(desc, desc2);
         Assertions.assertEquals(desc.hashCode(), desc2.hashCode());
         

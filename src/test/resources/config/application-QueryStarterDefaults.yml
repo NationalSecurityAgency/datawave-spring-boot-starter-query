@@ -326,6 +326,7 @@ datawave:
           queryThreads: 16
           auditType: "NONE"
           logicDescription: "Retrieve graph edges matching the search term(s)"
+          maxConcurrentTasks: 10
           querySyntaxParsers:
             "JEXL": ""
             "LIST": ""
@@ -358,6 +359,7 @@ datawave:
           maxUniqueValues: 20000
           auditType: "NONE"
           logicDescription: "Indexed Fields Only:  Given FIELDNAME returns counts for each unique value. Given FIELDNAME:FIELDVALUE returns count for only that value."
+          maxConcurrentTasks: 10
 
         ErrorFieldIndexCountQuery:
           checkpointable: false
@@ -373,6 +375,7 @@ datawave:
           maxUniqueValues: 20000
           auditType: "NONE"
           logicDescription: "FieldIndex count query (experimental)"
+          maxConcurrentTasks: 10
 
         TermFrequencyQuery:
           tableName: ${warehouse.tables.shard.name}
@@ -460,6 +463,7 @@ datawave:
           ivaratorMaxOpenFiles: ${warehouse.defaults.ivaratorMaxOpenFiles}
           ivaratorCacheScanPersistThreshold: 100000
           ivaratorCacheScanTimeoutMinutes: ${warehouse.defaults.ivaratorCacheScanTimeoutMinutes}
+          maxConcurrentTasks: 10
           querySyntaxParsers:
             JEXL: ""
             LUCENE: "LuceneToJexlQueryParser"
@@ -531,59 +535,45 @@ datawave:
           - fieldName: "SOURCE"
             modelFieldName: "VERTEXA"
             direction: "REVERSE"
-            indexOnly: false
           - fieldName: "SOURCE"
             modelFieldName: "VERTEXA"
             direction: "FORWARD"
-            indexOnly: false
           - fieldName: "SINK"
             modelFieldName: "VERTEXB"
             direction: "REVERSE"
-            indexOnly: false
           - fieldName: "SINK"
             modelFieldName: "VERTEXB"
             direction: "FORWARD"
-            indexOnly: false
           - fieldName: "RELATION"
             modelFieldName: "RELATION"
             direction: "REVERSE"
-            indexOnly: false
           - fieldName: "RELATION"
             modelFieldName: "RELATION"
             direction: "FORWARD"
-            indexOnly: false
           - fieldName: "TYPE"
             modelFieldName: "TYPE"
             direction: "REVERSE"
-            indexOnly: false
           - fieldName: "TYPE"
             modelFieldName: "TYPE"
             direction: "FORWARD"
-            indexOnly: false
           - fieldName: "ATTRIBUTE1"
             modelFieldName: "ATTR1"
             direction: "REVERSE"
-            indexOnly: false
           - fieldName: "ATTRIBUTE1"
             modelFieldName: "ATTR1"
             direction: "FORWARD"
-            indexOnly: false
           - fieldName: "ATTRIBUTE2"
             modelFieldName: "ATTR2"
             direction: "REVERSE"
-            indexOnly: false
           - fieldName: "ATTRIBUTE2"
             modelFieldName: "ATTR2"
             direction: "FORWARD"
-            indexOnly: false
           - fieldName: "ATTRIBUTE3"
             modelFieldName: "ATTR3"
             direction: "REVERSE"
-            indexOnly: false
           - fieldName: "ATTRIBUTE3"
             modelFieldName: "ATTR3"
             direction: "FORWARD"
-            indexOnly: false
     messaging:
       claimCheck:
         enabled: false

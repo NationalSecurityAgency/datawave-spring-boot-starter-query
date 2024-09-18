@@ -5,7 +5,10 @@ import static datawave.microservice.query.QueryParameters.QUERY_PAGESIZE;
 import static datawave.microservice.query.QueryParameters.QUERY_PAGETIMEOUT;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.validation.constraints.NotEmpty;
@@ -44,6 +47,11 @@ public class QueryProperties {
     private QueryExpirationProperties expiration = new QueryExpirationProperties();
     private NextCallProperties nextCall = new NextCallProperties();
     private DefaultParameterProperties defaultParams = new DefaultParameterProperties();
+    private String poolOverride = null;
+    private String poolHeader = "Pool";
+    
+    // here we're breaking this out by executor pool
+    private Map<String,PoolProperties> poolLimits = new HashMap<>();
     
     public List<String> getAdminRoles() {
         return adminRoles;
@@ -155,5 +163,66 @@ public class QueryProperties {
     
     public void setDefaultParams(DefaultParameterProperties defaultParams) {
         this.defaultParams = defaultParams;
+    }
+    
+    public String getPoolOverride() {
+        return poolOverride;
+    }
+    
+    public void setPoolOverride(String poolOverride) {
+        this.poolOverride = poolOverride;
+    }
+    
+    public String getPoolHeader() {
+        return poolHeader;
+    }
+    
+    public void setPoolHeader(String poolHeader) {
+        this.poolHeader = poolHeader;
+    }
+    
+    public Map<String,PoolProperties> getPoolLimits() {
+        return poolLimits;
+    }
+    
+    public void setPoolLimits(Map<String,PoolProperties> poolLimits) {
+        this.poolLimits = poolLimits;
+    }
+    
+    public static class PoolProperties {
+        // this is the max queries PER executor, keyed by connection factory pool
+        private Map<String,Integer> maxQueriesPerExecutor = new LinkedHashMap<>();
+        
+        // How long until we consider an executor to be dead
+        private long livenessTimeout = TimeUnit.SECONDS.toMillis(90);
+        private TimeUnit livenessTimeoutUnit = TimeUnit.MILLISECONDS;
+        
+        public Map<String,Integer> getMaxQueriesPerExecutor() {
+            return maxQueriesPerExecutor;
+        }
+        
+        public void setMaxQueriesPerExecutor(Map<String,Integer> maxQueriesPerExecutor) {
+            this.maxQueriesPerExecutor = maxQueriesPerExecutor;
+        }
+        
+        public long getLivenessTimeout() {
+            return livenessTimeout;
+        }
+        
+        public long getLivenessTimeoutMillis() {
+            return livenessTimeoutUnit.toMillis(livenessTimeout);
+        }
+        
+        public void setLivenessTimeout(long livenessTimeout) {
+            this.livenessTimeout = livenessTimeout;
+        }
+        
+        public TimeUnit getLivenessTimeoutUnit() {
+            return livenessTimeoutUnit;
+        }
+        
+        public void setLivenessTimeoutUnit(TimeUnit livenessTimeoutUnit) {
+            this.livenessTimeoutUnit = livenessTimeoutUnit;
+        }
     }
 }

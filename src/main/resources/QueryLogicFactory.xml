@@ -408,6 +408,7 @@
         <property name="maxResults" value="${datawave.query.logic.logics.FieldIndexCountQuery.maxResults}" />
         <property name="maxWork" value="${datawave.query.logic.logics.FieldIndexCountQuery.maxWork}" />
         <property name="queryThreads" value="${datawave.query.logic.logics.FieldIndexCountQuery.queryThreads}" />
+        <property name="maxConcurrentTasks" value="${datawave.query.logic.logics.FieldIndexCountQuery.maxConcurrentTasks}" />
         <property name="modelTableName" value="${datawave.query.logic.logics.FieldIndexCountQuery.modelTableName}" />
         <property name="modelName" value="${datawave.query.logic.logics.FieldIndexCountQuery.modelName}" />
         <property name="maxUniqueValues" value="${datawave.query.logic.logics.FieldIndexCountQuery.maxUniqueValues}" />
@@ -429,6 +430,7 @@
         <property name="maxResults" value="${datawave.query.logic.logics.ErrorFieldIndexCountQuery.maxResults}" />
         <property name="maxWork" value="${datawave.query.logic.logics.ErrorFieldIndexCountQuery.maxWork}" />
         <property name="queryThreads" value="${datawave.query.logic.logics.ErrorFieldIndexCountQuery.queryThreads}" />
+        <property name="maxConcurrentTasks" value="${datawave.query.logic.logics.ErrorFieldIndexCountQuery.maxConcurrentTasks}" />
         <property name="modelTableName" value="${datawave.query.logic.logics.ErrorFieldIndexCountQuery.modelTableName}" />
         <property name="modelName" value="${datawave.query.logic.logics.ErrorFieldIndexCountQuery.modelName}" />
         <property name="maxUniqueValues" value="${datawave.query.logic.logics.ErrorFieldIndexCountQuery.maxUniqueValues}" />
@@ -509,6 +511,7 @@
         <property name="indexTableName" value="${datawave.query.logic.logics.HitHighlights.indexTableName}" />
         <property name="reverseIndexTableName" value="${datawave.query.logic.logics.HitHighlights.reverseIndexTableName}" />
         <property name="queryThreads" value="${datawave.query.logic.logics.HitHighlights.queryThreads}" />
+        <property name="maxConcurrentTasks" value="${datawave.query.logic.logics.HitHighlights.maxConcurrentTasks}" />
         <property name="fullTableScanEnabled" value="${datawave.query.logic.logics.HitHighlights.fullTableScanEnabled}" />
         <property name="minimumSelectivity" value="${datawave.query.logic.logics.HitHighlights.minimumSelectivity}" />
         <property name="includeDataTypeAsField" value="${datawave.query.logic.logics.HitHighlights.includeDataTypeAsField}" />
