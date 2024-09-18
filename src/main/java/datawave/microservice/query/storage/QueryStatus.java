@@ -51,7 +51,7 @@ public class QueryStatus implements Serializable {
      * RESULTS: All next tasks have been generated and we are only generating results<br>
      */
     public enum CREATE_STAGE {
-        CREATE, PLAN, TASK, RESULTS
+        CREATE, PLAN, TASK, RESULTS, FLUSH
     }
     
     private QueryKey queryKey;
@@ -72,8 +72,6 @@ public class QueryStatus implements Serializable {
     private int activeNextCalls = 0;
     private int maxConcurrentNextCalls = 1;
     private long lastPageNumber = 0L;
-    private boolean allowLongRunningQueryEmptyPages = false;
-    
     private long nextCount;
     private long seekCount;
     
@@ -302,14 +300,6 @@ public class QueryStatus implements Serializable {
     
     public void setLastPageNumber(long lastPageNumber) {
         this.lastPageNumber = lastPageNumber;
-    }
-    
-    public boolean isAllowLongRunningQueryEmptyPages() {
-        return allowLongRunningQueryEmptyPages;
-    }
-    
-    public void setAllowLongRunningQueryEmptyPages(boolean allowLongRunningQueryEmptyPages) {
-        this.allowLongRunningQueryEmptyPages = allowLongRunningQueryEmptyPages;
     }
     
     public long getNextCount() {
