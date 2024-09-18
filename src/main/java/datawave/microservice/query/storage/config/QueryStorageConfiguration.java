@@ -32,10 +32,11 @@ public class QueryStorageConfiguration {
                     CacheManager cacheManager) {
         log.debug("Using " + cacheManager.getClass() + " for caching");
         LockableCacheInspector lockableCacheInspector;
-        if (cacheManager instanceof HazelcastCacheManager)
+        if (cacheManager instanceof HazelcastCacheManager) {
             lockableCacheInspector = new LockableHazelcastCacheInspector(cacheManager);
-        else
+        } else {
             lockableCacheInspector = new UniversalLockableCacheInspector(cacheInspectorFactory.apply(cacheManager));
+        }
         return new QueryStatusCache(lockableCacheInspector);
     }
     
@@ -44,10 +45,11 @@ public class QueryStorageConfiguration {
                     CacheManager cacheManager) {
         log.debug("Using " + cacheManager.getClass() + " for caching");
         LockableCacheInspector lockableCacheInspector;
-        if (cacheManager instanceof HazelcastCacheManager)
+        if (cacheManager instanceof HazelcastCacheManager) {
             lockableCacheInspector = new LockableHazelcastCacheInspector(cacheManager);
-        else
+        } else {
             lockableCacheInspector = new UniversalLockableCacheInspector(cacheInspectorFactory.apply(cacheManager));
+        }
         return new TaskStatesCache(lockableCacheInspector);
     }
     
@@ -55,10 +57,11 @@ public class QueryStorageConfiguration {
     public TaskCache taskCache(@Qualifier("cacheInspectorFactory") Function<CacheManager,CacheInspector> cacheInspectorFactory, CacheManager cacheManager) {
         log.debug("Using " + cacheManager.getClass() + " for caching");
         LockableCacheInspector lockableCacheInspector;
-        if (cacheManager instanceof HazelcastCacheManager)
+        if (cacheManager instanceof HazelcastCacheManager) {
             lockableCacheInspector = new LockableHazelcastCacheInspector(cacheManager);
-        else
+        } else {
             lockableCacheInspector = new UniversalLockableCacheInspector(cacheInspectorFactory.apply(cacheManager));
+        }
         return new TaskCache(lockableCacheInspector);
     }
 }
