@@ -1,9 +1,8 @@
 package datawave.microservice.query.messaging.config;
 
+import static datawave.microservice.query.messaging.config.MessagingProperties.AutoOffsetReset.EARLIEST;
 import static datawave.microservice.query.messaging.hazelcast.HazelcastQueryResultsManager.HAZELCAST;
 import static datawave.microservice.query.messaging.kafka.KafkaQueryResultsManager.KAFKA;
-
-import java.util.concurrent.TimeUnit;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -11,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
@@ -97,6 +97,9 @@ public class MessagingProperties {
         
         private int replicas = -1;
         
+        private boolean useDedicatedInstance = true;
+        private KafkaInstanceSettings instanceSettings = new KafkaInstanceSettings();
+        
         public long getPollTimeoutMillis() {
             return pollTimeoutMillis;
         }
@@ -128,6 +131,22 @@ public class MessagingProperties {
         public void setReplicas(int replicas) {
             this.replicas = replicas;
         }
+        
+        public boolean isUseDedicatedInstance() {
+            return useDedicatedInstance;
+        }
+        
+        public void setUseDedicatedInstance(boolean useDedicatedInstance) {
+            this.useDedicatedInstance = useDedicatedInstance;
+        }
+        
+        public KafkaInstanceSettings getInstanceSettings() {
+            return instanceSettings;
+        }
+        
+        public void setInstanceSettings(KafkaInstanceSettings instanceSettings) {
+            this.instanceSettings = instanceSettings;
+        }
     }
     
     public final static class RabbitMQProperties {
@@ -138,6 +157,9 @@ public class MessagingProperties {
         // the maximum message size to allow before using a claim check
         @Positive
         private long maxMessageSizeBytes = 536870912L;
+        
+        private boolean useDedicatedInstance = false;
+        private RabbitMQInstanceSettings instanceSettings = new RabbitMQInstanceSettings();
         
         public boolean isDurable() {
             return durable;
@@ -154,6 +176,140 @@ public class MessagingProperties {
         public void setMaxMessageSizeBytes(long maxMessageSizeBytes) {
             this.maxMessageSizeBytes = maxMessageSizeBytes;
         }
+        
+        public boolean isUseDedicatedInstance() {
+            return useDedicatedInstance;
+        }
+        
+        public void setUseDedicatedInstance(boolean useDedicatedInstance) {
+            this.useDedicatedInstance = useDedicatedInstance;
+        }
+        
+        public RabbitMQInstanceSettings getInstanceSettings() {
+            return instanceSettings;
+        }
+        
+        public void setInstanceSettings(RabbitMQInstanceSettings instanceSettings) {
+            this.instanceSettings = instanceSettings;
+        }
+    }
+    
+    public final static class RabbitMQInstanceSettings {
+        private String host = null;
+        private int port = 5672;
+        private String username = null;
+        private String password = null;
+        private String virtualHost = null;
+        private CachingConnectionFactory.ConfirmType publisherConfirmType = CachingConnectionFactory.ConfirmType.SIMPLE;
+        private boolean publisherConfirms = true;
+        private boolean publisherReturns = true;
+        
+        public String getHost() {
+            return host;
+        }
+        
+        public void setHost(String host) {
+            this.host = host;
+        }
+        
+        public int getPort() {
+            return port;
+        }
+        
+        public void setPort(int port) {
+            this.port = port;
+        }
+        
+        public String getUsername() {
+            return username;
+        }
+        
+        public void setUsername(String username) {
+            this.username = username;
+        }
+        
+        public String getPassword() {
+            return password;
+        }
+        
+        public void setPassword(String password) {
+            this.password = password;
+        }
+        
+        public String getVirtualHost() {
+            return virtualHost;
+        }
+        
+        public void setVirtualHost(String virtualHost) {
+            this.virtualHost = virtualHost;
+        }
+        
+        public CachingConnectionFactory.ConfirmType getPublisherConfirmType() {
+            return publisherConfirmType;
+        }
+        
+        public void setPublisherConfirmType(CachingConnectionFactory.ConfirmType publisherConfirmType) {
+            this.publisherConfirmType = publisherConfirmType;
+        }
+        
+        public boolean isPublisherConfirms() {
+            return publisherConfirms;
+        }
+        
+        public void setPublisherConfirms(boolean publisherConfirms) {
+            this.publisherConfirms = publisherConfirms;
+        }
+        
+        public boolean isPublisherReturns() {
+            return publisherReturns;
+        }
+        
+        public void setPublisherReturns(boolean publisherReturns) {
+            this.publisherReturns = publisherReturns;
+        }
+    }
+    
+    public final static class KafkaInstanceSettings {
+        private String bootstrapServers = null;
+        private AutoOffsetReset autoOffsetReset = EARLIEST;
+        private Boolean enableAutoCommit = false;
+        private Boolean allowAutoCreateTopics = false;
+        
+        public String getBootstrapServers() {
+            return bootstrapServers;
+        }
+        
+        public void setBootstrapServers(String bootstrapServers) {
+            this.bootstrapServers = bootstrapServers;
+        }
+        
+        public AutoOffsetReset getAutoOffsetReset() {
+            return autoOffsetReset;
+        }
+        
+        public void setAutoOffsetReset(AutoOffsetReset autoOffsetReset) {
+            this.autoOffsetReset = autoOffsetReset;
+        }
+        
+        public Boolean isEnableAutoCommit() {
+            return enableAutoCommit;
+        }
+        
+        public void setEnableAutoCommit(Boolean enableAutoCommit) {
+            this.enableAutoCommit = enableAutoCommit;
+        }
+        
+        public Boolean isAllowAutoCreateTopics() {
+            return allowAutoCreateTopics;
+        }
+        
+        public void setAllowAutoCreateTopics(Boolean allowAutoCreateTopics) {
+            this.allowAutoCreateTopics = allowAutoCreateTopics;
+        }
+    }
+    
+    public enum AutoOffsetReset {
+        EARLIEST, LATEST, NONE, ANYTHING
     }
     
     public final static class HazelcastProperties {
