@@ -97,7 +97,7 @@ public class MessagingProperties {
         
         private int replicas = -1;
         
-        private boolean useDedicatedInstance = true;
+        private boolean useDedicatedInstance = false;
         private KafkaInstanceSettings instanceSettings = new KafkaInstanceSettings();
         
         public long getPollTimeoutMillis() {
