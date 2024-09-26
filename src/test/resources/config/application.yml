@@ -123,5 +123,3 @@ datawave:
 ---
 
 spring.config.activate.on-profile: missing
-
-
