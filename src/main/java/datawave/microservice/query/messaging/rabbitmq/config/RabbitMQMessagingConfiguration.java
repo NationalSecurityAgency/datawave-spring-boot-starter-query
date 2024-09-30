@@ -65,9 +65,7 @@ public class RabbitMQMessagingConfiguration {
             if (rabbitMqProperties.getPublisherConfirmType() != null) {
                 finalConnectionFactory.setPublisherConfirmType(rabbitMqProperties.getPublisherConfirmType());
             }
-            
-            finalConnectionFactory.setPublisherConfirms(CachingConnectionFactory.ConfirmType.SIMPLE != rabbitMqProperties.getPublisherConfirmType()
-                            && rabbitMqProperties.isPublisherConfirms());
+
             finalConnectionFactory.setPublisherReturns(rabbitMqProperties.isPublisherReturns());
         }
         return finalConnectionFactory;
