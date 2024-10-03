@@ -162,6 +162,11 @@ public class FederatedQueryService implements RemoteQueryService {
         }
     }
     
+    // @Override
+    public void setNextQueryResponseClass(Class<? extends BaseQueryResponse> nextQueryResponseClass) {
+        // noop, required by interface.
+    }
+    
     @Override
     public VoidResponse close(String queryId, ProxiedUserDetails currentUser) throws QueryException {
         log.info("FederatedQueryService close {} for {}", queryId, currentUser.getPrimaryUser());
