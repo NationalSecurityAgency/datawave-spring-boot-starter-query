@@ -1,7 +1,5 @@
 package datawave.microservice.query.messaging.rabbitmq;
 
-import static datawave.microservice.query.messaging.rabbitmq.RabbitMQQueryResultsManager.RABBITMQ;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpIOException;
@@ -15,9 +13,6 @@ import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistry;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
 
 import datawave.microservice.query.messaging.ClaimCheck;
 import datawave.microservice.query.messaging.QueryResultsListener;
@@ -25,8 +20,6 @@ import datawave.microservice.query.messaging.QueryResultsManager;
 import datawave.microservice.query.messaging.QueryResultsPublisher;
 import datawave.microservice.query.messaging.config.MessagingProperties;
 
-@Component
-@ConditionalOnProperty(name = "datawave.query.messaging.backend", havingValue = RABBITMQ)
 public class RabbitMQQueryResultsManager implements QueryResultsManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     
@@ -44,15 +37,15 @@ public class RabbitMQQueryResultsManager implements QueryResultsManager {
     private final DirectRabbitListenerContainerFactory listenerContainerFactory;
     
     public RabbitMQQueryResultsManager(MessagingProperties messagingProperties, RabbitListenerEndpointRegistry rabbitListenerEndpointRegistry,
-                    CachingConnectionFactory connectionFactory, @Autowired(required = false) ClaimCheck claimCheck) {
+                    CachingConnectionFactory cachingConnectionFactory, ClaimCheck claimCheck) {
         this.messagingProperties = messagingProperties;
         this.rabbitListenerEndpointRegistry = rabbitListenerEndpointRegistry;
-        this.connectionFactory = connectionFactory;
+        this.connectionFactory = cachingConnectionFactory;
         this.claimCheck = claimCheck;
         
-        rabbitAdmin = new RabbitAdmin(connectionFactory);
+        rabbitAdmin = new RabbitAdmin(cachingConnectionFactory);
         listenerContainerFactory = new DirectRabbitListenerContainerFactory();
-        listenerContainerFactory.setConnectionFactory(connectionFactory);
+        listenerContainerFactory.setConnectionFactory(cachingConnectionFactory);
         listenerContainerFactory.setConsumersPerQueue(messagingProperties.getConcurrency());
     }
     
