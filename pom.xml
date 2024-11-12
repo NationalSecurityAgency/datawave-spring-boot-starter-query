@@ -33,7 +33,7 @@
         <version.guava>31.0.1-jre</version.guava>
         <version.hadoop>3.3.5</version.hadoop>
         <version.jts-core>1.19.0</version.jts-core>
-      <!--
+        <!--
         <version.microservice.query-api>1.0.0</version.microservice.query-api>
         <version.microservice.type-utils>3.0.0</version.microservice.type-utils> -->
         <version.reload4j>1.2.22</version.reload4j>
@@ -233,7 +233,7 @@
             <groupId>gov.nsa.datawave.microservice</groupId>
             <artifactId>spring-boot-starter-datawave-query-metric</artifactId>
         </dependency>
-      <!---
+        <!---
         <dependency>
             <groupId>gov.nsa.datawave.microservice</groupId>
             <artifactId>type-utils</artifactId>
@@ -244,7 +244,7 @@
                     <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>
-        </dependency> --->
+        </dependency> -->
         <dependency>
             <groupId>gov.nsa.datawave.webservices</groupId>
             <artifactId>datawave-ws-client</artifactId>
