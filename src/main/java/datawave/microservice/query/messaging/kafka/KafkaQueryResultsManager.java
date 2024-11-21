@@ -192,7 +192,7 @@ public class KafkaQueryResultsManager implements QueryResultsManager {
             // @formatter:off
             topicDesc = adminClient
                     .describeTopics(Collections.singleton(topic))
-                    .values()
+                    .topicNameValues()
                     .get(topic)
                     .get();
             // @formatter:on
