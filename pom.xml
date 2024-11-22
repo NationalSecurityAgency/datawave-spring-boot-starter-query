@@ -27,6 +27,7 @@
         <version.annotations>2.0.3</version.annotations>
         <version.datawave>7.3.0</version.datawave>
         <version.datawave.hazelcast>4.0.2</version.datawave.hazelcast>
+        <version.datawave.hazelcast-client>4.0.2</version.datawave.hazelcast-client>
         <version.datawave.query-api>1.0.0</version.datawave.query-api>
         <version.datawave.starter>4.0.3</version.datawave.starter>
         <version.datawave.starter-metadata>3.0.2</version.datawave.starter-metadata>
