@@ -1,7 +1,5 @@
 package datawave.microservice.query.messaging.kafka;
 
-import static datawave.microservice.query.messaging.kafka.KafkaQueryResultsManager.KAFKA;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,21 +14,16 @@ import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.TopicPartitionInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.ConsumerFactory;
-import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
-import org.springframework.stereotype.Component;
 
 import datawave.microservice.query.messaging.QueryResultsListener;
 import datawave.microservice.query.messaging.QueryResultsManager;
 import datawave.microservice.query.messaging.QueryResultsPublisher;
 import datawave.microservice.query.messaging.config.MessagingProperties;
 
-@Component
-@ConditionalOnProperty(name = "datawave.query.messaging.backend", havingValue = KAFKA)
 public class KafkaQueryResultsManager implements QueryResultsManager {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     
@@ -43,12 +36,12 @@ public class KafkaQueryResultsManager implements QueryResultsManager {
     private final ProducerFactory<String,String> kafkaProducerFactory;
     private final ConsumerFactory<String,String> kafkaConsumerFactory;
     
-    public KafkaQueryResultsManager(MessagingProperties messagingProperties, KafkaAdmin adminClient, ProducerFactory<String,String> kafkaProducerFactory,
-                    ConsumerFactory<String,String> kafkaConsumerFactory) {
+    public KafkaQueryResultsManager(MessagingProperties messagingProperties, AdminClient queryKafkaAdminClient,
+                    ProducerFactory<String,String> queryKafkaProducerFactory, ConsumerFactory<String,String> queryKafkaConsumerFactory) {
         this.messagingProperties = messagingProperties;
-        this.adminClient = AdminClient.create(adminClient.getConfigurationProperties());
-        this.kafkaProducerFactory = kafkaProducerFactory;
-        this.kafkaConsumerFactory = kafkaConsumerFactory;
+        this.adminClient = queryKafkaAdminClient;
+        this.kafkaProducerFactory = queryKafkaProducerFactory;
+        this.kafkaConsumerFactory = queryKafkaConsumerFactory;
     }
     
     /**
@@ -66,7 +59,7 @@ public class KafkaQueryResultsManager implements QueryResultsManager {
     
     /**
      * Create a publisher for a specific query id.
-     * 
+     *
      * @param queryId
      *            The query ID to publish to
      * @return a query result publisher

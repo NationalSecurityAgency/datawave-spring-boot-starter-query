@@ -14,6 +14,7 @@
         <property name="maxResults" value="${datawave.query.logic.logics.EdgeQuery.maxResults}" />
         <property name="maxWork" value="${datawave.query.logic.logics.EdgeQuery.maxWork}" />
         <property name="queryThreads" value="${datawave.query.logic.logics.EdgeQuery.queryThreads}" />
+        <property name="maxConcurrentTasks" value="${datawave.query.logic.logics.EdgeQuery.maxConcurrentTasks}" />
         <property name="auditType" value="${datawave.query.logic.logics.EdgeQuery.auditType}" />
         <property name="dataTypes">
             <list value-type="datawave.data.type.Type">

@@ -23,6 +23,8 @@ import datawave.core.query.logic.QueryKey;
 import datawave.util.StringUtils;
 
 public class TaskStates implements Serializable {
+    private static final long serialVersionUID = 1361359960334155427L;
+    
     /**
      * The possible task states: <br>
      * READY: ready to run <br>
@@ -30,7 +32,7 @@ public class TaskStates implements Serializable {
      * COMPLETED: completed successfully <br>
      * FAILED: failed to execute successfully <br>
      */
-    public enum TASK_STATE implements Serializable {
+    public enum TASK_STATE {
         READY, RUNNING, COMPLETED, FAILED
     }
     

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import org.locationtech.jts.geom.Geometry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.MessageProperties;
@@ -16,11 +17,15 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import datawave.microservice.query.messaging.ClaimCheck;
 import datawave.microservice.query.messaging.QueryResultsPublisher;
 import datawave.microservice.query.messaging.Result;
 import datawave.microservice.query.messaging.config.MessagingProperties;
+import datawave.microservice.query.util.GeometryDeserializer;
+import datawave.microservice.query.util.GeometrySerializer;
 
 class RabbitMQQueryResultsPublisher implements QueryResultsPublisher {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -52,7 +57,14 @@ class RabbitMQQueryResultsPublisher implements QueryResultsPublisher {
                 latchMap.get(correlationData.getId()).countDown();
             }
         });
-        this.rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
+        
+        // set a custom module for (de)serializing Geometry objects
+        ObjectMapper objectMapper = new ObjectMapper();
+        SimpleModule geometryModule = new SimpleModule(Geometry.class.getName());
+        geometryModule.addSerializer(Geometry.class, new GeometrySerializer());
+        geometryModule.addDeserializer(Geometry.class, new GeometryDeserializer());
+        
+        this.rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter(objectMapper));
     }
     
     @Override

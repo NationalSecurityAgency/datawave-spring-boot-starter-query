@@ -10,7 +10,7 @@ public class DefaultParameterProperties {
     @NotEmpty
     private String pool = "unassigned";
     @Nonnegative
-    private int maxConcurrentTasks = 10;
+    private int maxConcurrentTasks = 8;
     
     public String getPool() {
         return pool;
