@@ -34,7 +34,7 @@
         <version.datawave.starter-metrics>3.0.3</version.datawave.starter-metrics>
         <version.datawave.type-utils>3.0.0</version.datawave.type-utils>
         <version.guava>31.0.1-jre</version.guava>
-        <version.hadoop>3.3.5</version.hadoop>
+        <version.hadoop>3.3.6</version.hadoop>
         <version.jts-core>1.19.0</version.jts-core>
         <version.reload4j>1.2.22</version.reload4j>
     </properties>
